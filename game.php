@@ -437,6 +437,6 @@ $(document).ready(function() {
 <div id="score"><strong>Score: <span id="scorespan">0</span> </strong></div>
 <p>W, A, S, D to move. Mouse around to aim, click to shoot.</p>
 
-<img src="game/gravel.png" id="bgimg" />
+<img src="images/gravel.png" id="bgimg" />
 </body>
 </html>
