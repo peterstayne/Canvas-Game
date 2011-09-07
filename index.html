@@ -1,13 +1,4 @@
-<?php
-	$width = 700;
-	$height = 510;
-
-                     //                 cpi - 3.14 ... pointing up      
-                     // cpi3  4.71 ... pointing left     cpi2  1.57 ... pointing right
-                     //               cpi360/0  6.28 . pointing down
-   
-
-?><!doctype html>
+<!doctype html>
 <html>
 <head>
 <title>Game!</title>
@@ -15,7 +6,7 @@
 
 #score { position: absolute; font-family: helevetica, verdana, arial; color: white; }
 
-#gamecanvas { cursor: crosshair; }
+#gamecanvas { cursor: crosshair; width: 700px; height: 510px;}
 
 #bgimg { display: none; }
 
@@ -26,7 +17,7 @@
 </head>
 <body>
 
-<canvas id="gamecanvas" width="<?php echo $width; ?>" height="<?php echo $height; ?>">
+<canvas id="gamecanvas">
 </canvas>
 
 <script type="text/javascript">
@@ -58,8 +49,8 @@ function resetGame() {
    enemies = [];
    frame = 0.7;
    player = {
-      x: <?php echo floor($width / 2); ?>,
-      y: <?php echo floor($height / 2); ?>,
+      x: ~~(cwidth / 2),
+      y: ~~(cheight / 2),
       hp: 100,
       moveUp: false,
       moveDown: false,
@@ -84,7 +75,12 @@ function fail() {
    preResetGame();
 }
 
+var cwidth, cheight;
+
 $(document).ready(function() {
+
+	cwidth = $("#gamecanvas").width();
+	cheight = $("#gamecanvas").height();
 
 	$("#bgimg").load(function() {
 		bgimg = document.getElementById('bgimg');
@@ -123,8 +119,8 @@ $(document).ready(function() {
       
 
 	field = {
-		width: <?php echo $width; ?>,
-		height: <?php echo $height; ?>,
+		width: cwidth,
+		height: cheight,
 		offset: $("#gamecanvas").offset(),
 		image: 'gravel.png'
 	};
@@ -135,7 +131,7 @@ $(document).ready(function() {
 	};
 	
 	ctx.fillStyle = "#000";
-	ctx.fillRect(0,0,<?php echo $width; ?>,<?php echo $height; ?>);
+	ctx.fillRect(0,0,cwidth,cheight);
 	
 	$("#gamecanvas").mousemove(function(event) {
 		crosshair.x = event.pageX - field.offset.left;
@@ -421,18 +417,6 @@ $(document).ready(function() {
 	preResetGame();
    resetGame();
 });
-   var _gaq = _gaq || [];
-   _gaq.push(['_setAccount', 'UA-7903222-3']);
-   _gaq.push(['_trackPageview']);
-   
-   (function() {
-   var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-   ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-   var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-   })();
-   
-
-
 </script>
 <div id="score"><strong>Score: <span id="scorespan">0</span> </strong></div>
 <p>W, A, S, D to move. Mouse around to aim, click to shoot.</p>
