@@ -1,0 +1,7 @@
+
+#score { position: absolute; font-family: helevetica, verdana, arial; color: white; }
+
+#gamecanvas { cursor: crosshair; width: 700px; height: 510px;}
+
+#bgimg { display: none; }
+
