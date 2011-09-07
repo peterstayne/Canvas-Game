@@ -13,7 +13,7 @@
 </style>
 
 
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
 </head>
 <body>
 
@@ -44,6 +44,7 @@ function preResetGame() {
 }
 
 function resetGame() {
+      console.log(cwidth + " " + cheight);
    score = 0;
    bullets = [];
    enemies = [];
@@ -88,6 +89,8 @@ $(document).ready(function() {
 	
 	canvas = document.getElementById('gamecanvas');
 	ctx = canvas.getContext("2d");
+	canvas.setAttribute('width', cwidth);
+	canvas.setAttribute('height', cheight);
    enemy_types[0] = {
       size: 18,
       speed: 0.12,
@@ -117,7 +120,7 @@ $(document).ready(function() {
       behavior: 'wander-chase'
    }
       
-
+      console.log(cwidth + " " + cheight);
 	field = {
 		width: cwidth,
 		height: cheight,
@@ -130,6 +133,7 @@ $(document).ready(function() {
 		y: 0
 	};
 	
+      console.log(cwidth + " " + cheight);
 	ctx.fillStyle = "#000";
 	ctx.fillRect(0,0,cwidth,cheight);
 	
