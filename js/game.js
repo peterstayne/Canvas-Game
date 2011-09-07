@@ -21,7 +21,6 @@ function preResetGame() {
 }
 
 function resetGame() {
-      console.log(cwidth + " " + cheight);
    score = 0;
    bullets = [];
    enemies = [];
@@ -97,7 +96,6 @@ $(document).ready(function() {
       behavior: 'wander-chase'
    }
       
-      console.log(cwidth + " " + cheight);
 	field = {
 		width: cwidth,
 		height: cheight,
@@ -110,7 +108,6 @@ $(document).ready(function() {
 		y: 0
 	};
 	
-      console.log(cwidth + " " + cheight);
 	ctx.fillStyle = "#000";
 	ctx.fillRect(0,0,cwidth,cheight);
 	
@@ -169,8 +166,8 @@ $(document).ready(function() {
 	
 	function updateScore() {
 		ctx.font = "16px courier";
-      ctx.fillStyle = "rgba(0,0,0,0.7)";
-      ctx.fillRect(15, 15, 130, 22);
+        ctx.fillStyle = "rgba(0,0,0,0.7)";
+        ctx.fillRect(15, 15, 130, 22);
 		ctx.fillStyle = "#f0f";
 		ctx.fillText("Score: " + score, 30,30);
 	}
