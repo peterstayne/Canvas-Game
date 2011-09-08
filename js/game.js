@@ -25,9 +25,31 @@ for (var i = -fakeLimit; i < fakeLimit; i++) {
 }
 
 function preResetGame() {
-    ctx.font = "20px courier";
-    ctx.fillStyle = "#ff0";
-    ctx.fillText("Press space bar to start", 30, 130);
+    var centerX = cwidth >> 1;
+    var titleY = ~~(cheight * 0.48);
+    var pressSpaceY = ~~(cheight * 0.75);
+
+    ctx.fillStyle = "rgba(0,0,0,0.7)";
+    ctx.fillRect(centerX - 255, titleY - 88, 510, 106);
+
+    ctx.font = "98px arial";
+    ctx.fillStyle = "#538";
+    ctx.textAlign = "center";
+    ctx.fillText("UNTITLED", centerX, titleY);
+
+    ctx.font = "100px arial";
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = "#a7f";
+    ctx.textAlign = "center";
+    ctx.strokeText("UNTITLED", centerX, titleY);
+
+    ctx.fillStyle = "rgba(0,0,0,0.7)";
+    ctx.fillRect(centerX - 95, pressSpaceY - 18, 190, 26);
+
+    ctx.font = "15px arial";
+    ctx.fillStyle = "#fff";
+    ctx.textAlign = "center";
+    ctx.fillText("Press space to start", centerX, pressSpaceY);
 }
 
 function resetGame() {
@@ -175,7 +197,8 @@ $(document).ready(function () {
     });
 
     function updateScore() {
-        ctx.font = "16px courier";
+        ctx.font = "16px arial";
+        ctx.textAlign = "left";
         ctx.fillStyle = "rgba(0,0,0,0.7)";
         ctx.fillRect(15, 15, 130, 22);
         ctx.fillStyle = "#f0f";
