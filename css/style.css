@@ -1,4 +1,4 @@
-
+.main-container { width: 700px; margin: 0 auto; }
 #score { position: absolute; font-family: helevetica, verdana, arial; color: white; }
 
 #gamecanvas { cursor: none; width: 700px; height: 510px;}
