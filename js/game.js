@@ -80,7 +80,6 @@ function resetGame() {
 
 function fail() {
     //alert('The evil square ate you. :(\nYour score was ' + score);
-    gameOn = false;
     preResetGame();
 }
 
@@ -396,7 +395,7 @@ $(document).ready(function () {
                     if (
                     enemies[i].x < player.x + (size >> 1) && enemies[i].x > player.x - (size >> 1) && enemies[i].y < player.y + (size >> 1) && enemies[i].y > player.y - (size >> 1) && enemies[i].hp > 0) {
                         clearInterval(to);
-                        fail();
+                        gameOn = false;
                     }
                 }
                 else {
@@ -412,7 +411,9 @@ $(document).ready(function () {
                 }
             }
         }
-
+        if(!gameOn) {
+            fail();
+        }
         ctx.fillStyle = "#0f0";
         ctx.fillRect(player.x - 4, player.y - 4, 8, 8);
         ctx.strokeStyle = "#0ff";
