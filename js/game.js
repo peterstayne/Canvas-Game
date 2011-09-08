@@ -93,7 +93,7 @@ $(document).ready(function () {
     }
     enemy_types[2] = {
         size: 52,
-        speed: 0.08,
+        speed: 0.12,
         hp: 3,
         color: 'rgba(255,0,120',
         behavior: 'chase'
