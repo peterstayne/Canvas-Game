@@ -5,16 +5,17 @@ var canvas, ctx, player = {},
     frame = 0.7,
     score = 0,
     enemy_types = [],
-    to, gameOn = false;
+    to, gameOn = false, paused = false;
 var cpi = Math.PI,
     cpi2 = Math.PI / 2,
     cpi4 = Math.PI / 4,
     cpi3 = cpi + cpi2,
     cpi360 = Math.PI * 2;
 var bgimg = '';
-
+var cwidth, cheight;
 var fC, fS;
 var fakeLimit = (cpi360 * 100) >> 0;
+
 fS = [];
 for (var i = -fakeLimit; i < fakeLimit; i++) {
     fS[i] = Math.sin(i / 100);
@@ -82,8 +83,6 @@ function fail() {
     //alert('The evil square ate you. :(\nYour score was ' + score);
     preResetGame();
 }
-
-var cwidth, cheight;
 
 $(document).ready(function () {
 
@@ -175,6 +174,29 @@ $(document).ready(function () {
                 to = window.setInterval(renderFrame, 5);
                 gameOn = true;
                 resetGame();
+            } else {
+                if(paused) {
+                    to = window.setInterval(renderFrame, 5);
+                    paused = false;
+                } else {
+                    ctx.fillStyle = "rgba(0,0,0,0.7)";
+                    ctx.fillRect(cwidth >> 1 - 255, ~~(cheight * 0.55) - 25, 340, 35);
+                    
+                    ctx.font = "25px arial";
+                    ctx.fillStyle = "#538";
+                    ctx.textAlign = "center";
+                    ctx.fillText("Press space to unpause.", cwidth >> 1, ~~(cheight * 0.55));
+
+                    ctx.fillStyle = "rgba(0,0,0,0.7)";
+                    ctx.fillRect(cwidth >> 1 - 255, ~~(cheight * 0.75) - 22, 340, 35);
+
+                    ctx.font = "15px arial";
+                    ctx.fillStyle = "#fff";
+                    ctx.textAlign = "center";
+                    ctx.fillText("Press space to unpause.", cwidth >> 1, ~~(cheight * 0.75));
+                    clearInterval(to);
+                    paused = true;
+                }
             }
         }
     });
