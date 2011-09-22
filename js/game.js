@@ -108,6 +108,25 @@ function resetGame() {
                 y: player.y,
                 angle: Math.atan2(crosshair.x - player.x, crosshair.y - player.y)
             };
+        },
+        logic: function() {
+            if (this.moveLeft && this.x > 0 && !this.moveRight) {
+                this.x -= 1;
+            }
+            if (player.moveRight && this.x < field.width && !this.moveLeft) {
+                this.x += 1;
+            }
+            if (this.moveUp && this.y > 0 && !this.moveDown) {
+                this.y -= 1;
+            }
+            if (this.moveDown && this.y < field.height && !this.moveUp) {
+                this.y += 1;
+            }
+            if (this.firing && --this.cooldown == 0) {
+                this.fireShot();
+                this.cooldown = 25;
+            }
+
         }
     };
 }
@@ -246,36 +265,12 @@ $(document).ready(function () {
         });
     }
 
-    function renderFrame() {
-        if (player.moveLeft && player.x > 0 && !player.moveRight) {
-            player.x -= 1;
-        }
-        if (player.moveRight && player.x < field.width && !player.moveLeft) {
-            player.x += 1;
-        }
-        if (player.moveUp && player.y > 0 && !player.moveDown) {
-            player.y -= 1;
-        }
-        if (player.moveDown && player.y < field.height && !player.moveUp) {
-            player.y += 1;
-        }
-        if (bgimg != '') {
-            ctx.drawImage(bgimg, 0, 0);
-        }
-        else {
-            ctx.fillStyle = "#000";
-            ctx.fillRect(0, 0, field.width, field.height);
-        }
-        if (player.firing && --player.cooldown == 0) {
-            player.fireShot();
-            player.cooldown = 25;
-        }
+    function gameLogic() {
+        player.logic();
         for (var i in bullets) {
             var cacheIndex = ~~ (bullets[i].angle * 100);
             bullets[i].x += fS[cacheIndex] * 2;
             bullets[i].y += fC[cacheIndex] * 2;
-            ctx.fillStyle = "rgba(255,255,255,1)";
-            ctx.fillRect(~~bullets[i].x, ~~bullets[i].y, 2, 2);
             for (var j in enemies) {
                 size = enemy_types[enemies[j].type].size >> 1;
                 if (bullets[i] !== undefined && bullets[i].x < enemies[j].x + size && bullets[i].x > enemies[j].x - size && bullets[i].y < enemies[j].y + size && bullets[i].y > enemies[j].y - size && enemies[j].hp > 0) {
@@ -292,7 +287,6 @@ $(document).ready(function () {
                 }
             }
         }
-        frame += 0.00015;
         if (frame > Math.random() * 200) {
             var ni = enemies.length;
             var whichwall = ~~ (Math.random() * 4);
@@ -431,16 +425,39 @@ $(document).ready(function () {
                         enemies[i].x += fS[cacheIndex] * speed;
                         enemies[i].y += fC[cacheIndex] * speed;
                     }
-
-                    ctx.fillStyle = enemy_types[enemies[i].type].color + ",1)";
-                    ctx.fillRect(~~enemies[i].x - (size >> 1), ~~enemies[i].y - (size >> 1), size, size);
                     if (
                     enemies[i].x < player.x + (size >> 1) && enemies[i].x > player.x - (size >> 1) && enemies[i].y < player.y + (size >> 1) && enemies[i].y > player.y - (size >> 1) && enemies[i].hp > 0) {
                         clearInterval(to);
                         gameOn = false;
                     }
                 }
-                else {
+            }
+        }
+    }
+
+    function renderFrame() {
+
+        frame += 0.00015;
+        gameLogic();
+
+        if (bgimg != '') {
+            ctx.drawImage(bgimg, 0, 0);
+        }
+        else {
+            ctx.fillStyle = "#000";
+            ctx.fillRect(0, 0, field.width, field.height);
+        }
+        for (var i in bullets) {
+            ctx.fillStyle = "rgba(255,255,255,1)";
+            ctx.fillRect(~~bullets[i].x, ~~bullets[i].y, 2, 2);
+        }
+        for (var i in enemies) {
+            size = enemy_types[enemies[i].type].size;
+            if (enemies[i] !== undefined) {
+                if(enemies[i].hp > 0) {
+                    ctx.fillStyle = enemy_types[enemies[i].type].color + ",1)";
+                    ctx.fillRect(~~enemies[i].x - (size >> 1), ~~enemies[i].y - (size >> 1), size, size);
+                } else {
                     enemies[i].cooldown -= 1;
                     if (enemies[i].cooldown < 0) {
                         enemies.splice(i, 1);
@@ -453,14 +470,16 @@ $(document).ready(function () {
                 }
             }
         }
-        if(!gameOn) {
-            fail();
-        }
         ctx.fillStyle = "#0f0";
         ctx.fillRect(player.x - 4, player.y - 4, 8, 8);
         ctx.strokeStyle = "#0ff";
         ctx.strokeRect(crosshair.x - 4, crosshair.y - 4, 8, 8);
+
         updateScore();
+
+        if(!gameOn) {
+            fail();
+        }
     }
     preResetGame();
     resetGame();
