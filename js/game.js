@@ -25,11 +25,47 @@ for (var i = -fakeLimit; i < fakeLimit; i++) {
     fC[i] = Math.cos(i / 100);
 }
 
+function drawText(params) {
+    // params:
+    // text: the text of the string to display.
+    // color: color of the text (any css format)
+    // align: "left", "center", "right"
+    // size: must be integer, px of font size.
+    // x: (optional) default will be to center for center align
+    // y: (optional) default will be to center row
+    var defaults = {
+        "color": "#fff",
+        "align": "center",
+        "size": 15,
+        "x": cwidth >> 1,
+        "y": cheight >> 1
+    };
+    for(var i in defaults) {
+        params[i] = params[i] ? params[i] : defaults[i];
+    }
+    if(typeof params.text === "undefined" || params.text.length == 0) {
+        console.log('no text passed');
+        return false;
+    }
+
+    ctx.font = params.size + "px arial";
+    var thisTextWidth = ctx.measureText(params.text).width;
+
+    ctx.fillStyle = "rgba(0,0,0,0.7)";
+    ctx.fillRect(params.x - (thisTextWidth >> 1)- 10, params.y - 8, thisTextWidth + 17, params.size + 18);
+
+    ctx.textAlign = params.align;
+    ctx.textBaseline = "top";
+    ctx.fillStyle = params.color;
+    ctx.fillText(params.text, params.x, params.y);
+}
+
 function preResetGame() {
     var centerX = cwidth >> 1;
     var titleY = ~~(cheight * 0.48);
     var pressSpaceY = ~~(cheight * 0.75);
 
+    ctx.textBaseline = "alphabetic";
     ctx.fillStyle = "rgba(0,0,0,0.7)";
     ctx.fillRect(centerX - 255, titleY - 88, 510, 106);
 
@@ -44,13 +80,10 @@ function preResetGame() {
     ctx.textAlign = "center";
     ctx.strokeText("UNTITLED", centerX, titleY);
 
-    ctx.fillStyle = "rgba(0,0,0,0.7)";
-    ctx.fillRect(centerX - 95, pressSpaceY - 18, 190, 26);
-
-    ctx.font = "15px arial";
-    ctx.fillStyle = "#fff";
-    ctx.textAlign = "center";
-    ctx.fillText("Press space to start", centerX, pressSpaceY);
+    drawText({
+       "text": "Press space to start",
+       "y": pressSpaceY - 18
+    });
 }
 
 function resetGame() {
@@ -179,21 +212,8 @@ $(document).ready(function () {
                     to = window.setInterval(renderFrame, 5);
                     paused = false;
                 } else {
-                    ctx.fillStyle = "rgba(0,0,0,0.7)";
-                    ctx.fillRect(cwidth >> 1 - 255, ~~(cheight * 0.55) - 25, 340, 35);
-                    
-                    ctx.font = "25px arial";
-                    ctx.fillStyle = "#538";
-                    ctx.textAlign = "center";
-                    ctx.fillText("Press space to unpause.", cwidth >> 1, ~~(cheight * 0.55));
-
-                    ctx.fillStyle = "rgba(0,0,0,0.7)";
-                    ctx.fillRect(cwidth >> 1 - 255, ~~(cheight * 0.75) - 22, 340, 35);
-
-                    ctx.font = "15px arial";
-                    ctx.fillStyle = "#fff";
-                    ctx.textAlign = "center";
-                    ctx.fillText("Press space to unpause.", cwidth >> 1, ~~(cheight * 0.75));
+                    drawText({ text: "PAUSED", size: 60, color: "#538" });
+                    drawText({ text: "Press space to unpause.", y: (cheight >> 1) + 100  });
                     clearInterval(to);
                     paused = true;
                 }
@@ -218,12 +238,12 @@ $(document).ready(function () {
     });
 
     function updateScore() {
-        ctx.font = "16px arial";
-        ctx.textAlign = "left";
-        ctx.fillStyle = "rgba(0,0,0,0.7)";
-        ctx.fillRect(15, 15, 130, 22);
-        ctx.fillStyle = "#f0f";
-        ctx.fillText("Score: " + score, 30, 30);
+        drawText({
+            color: "#f0f",
+            text: "Score: " + score,
+            x: 80,
+            y: 30
+        });
     }
 
     function renderFrame() {
