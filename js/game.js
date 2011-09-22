@@ -11,7 +11,6 @@ var cpi = Math.PI,
     cpi4 = Math.PI / 4,
     cpi3 = cpi + cpi2,
     cpi360 = Math.PI * 2;
-var bgimg = '';
 var cwidth, cheight;
 var fC, fS;
 var fakeLimit = (cpi360 * 100) >> 0;
@@ -106,7 +105,7 @@ function resetGame() {
             bullets[ni] = {
                 x: player.x,
                 y: player.y,
-                angle: Math.atan2(crosshair.x - player.x, crosshair.y - player.y)
+                angle: Math.atan2(crosshair.x - this.x, crosshair.y - this.y)
             };
         },
         logic: function() {
@@ -127,6 +126,10 @@ function resetGame() {
                 this.cooldown = 25;
             }
 
+        },
+        render: function() {
+            ctx.fillStyle = "#0f0";
+            ctx.fillRect(player.x - 4, player.y - 4, 8, 8);
         }
     };
 }
@@ -142,7 +145,7 @@ $(document).ready(function () {
     cheight = $("#gamecanvas").height();
 
     $("#bgimg").load(function () {
-        bgimg = document.getElementById('bgimg');
+        field.bgimg = document.getElementById('bgimg');
     });
 
     canvas = document.getElementById('gamecanvas');
@@ -182,7 +185,16 @@ $(document).ready(function () {
         width: cwidth,
         height: cheight,
         offset: $("#gamecanvas").offset(),
-        image: 'gravel.png'
+        image: 'gravel.png',
+        render: function() {
+            if (this.bgimg != '') {
+                ctx.drawImage(this.bgimg, 0, 0);
+            }
+            else {
+                ctx.fillStyle = "#000";
+                ctx.fillRect(0, 0, this.width, this.height);
+            }
+        }
     };
 
     crosshair = {
@@ -223,12 +235,12 @@ $(document).ready(function () {
             break;
         case 32:
             if (!gameOn) {
-                to = window.setInterval(renderFrame, 5);
+                to = window.setInterval(doFrame, 5);
                 gameOn = true;
                 resetGame();
             } else {
                 if(paused) {
-                    to = window.setInterval(renderFrame, 5);
+                    to = window.setInterval(doFrame, 5);
                     paused = false;
                 } else {
                     drawText({ text: "PAUSED", size: 60, color: "#538" });
@@ -437,16 +449,7 @@ $(document).ready(function () {
 
     function renderFrame() {
 
-        frame += 0.00015;
-        gameLogic();
-
-        if (bgimg != '') {
-            ctx.drawImage(bgimg, 0, 0);
-        }
-        else {
-            ctx.fillStyle = "#000";
-            ctx.fillRect(0, 0, field.width, field.height);
-        }
+        field.render();
         for (var i in bullets) {
             ctx.fillStyle = "rgba(255,255,255,1)";
             ctx.fillRect(~~bullets[i].x, ~~bullets[i].y, 2, 2);
@@ -470,8 +473,7 @@ $(document).ready(function () {
                 }
             }
         }
-        ctx.fillStyle = "#0f0";
-        ctx.fillRect(player.x - 4, player.y - 4, 8, 8);
+        player.render();
         ctx.strokeStyle = "#0ff";
         ctx.strokeRect(crosshair.x - 4, crosshair.y - 4, 8, 8);
 
@@ -480,6 +482,12 @@ $(document).ready(function () {
         if(!gameOn) {
             fail();
         }
+    }
+
+    function doFrame() {
+        frame += 0.00015;
+        gameLogic();
+        renderFrame();
     }
     preResetGame();
     resetGame();
