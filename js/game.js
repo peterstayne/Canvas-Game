@@ -205,18 +205,18 @@ $(document).ready(function () {
     ctx.fillStyle = "#000";
     ctx.fillRect(0, 0, cwidth, cheight);
 
-    $("#gamecanvas").mousemove(function (event) {
+    $(document).mousemove(function (event) {
         crosshair.x = event.pageX - field.offset.left;
         crosshair.y = event.pageY - field.offset.top;
     });
-    $("#gamecanvas").mousedown(function (event) {
+    $(document).mousedown(function (event) {
         player.fireShot();
         player.firing = true;
         player.cooldown = 20;
         event.stopPropagation();
         return false;
     });
-    $("#gamecanvas").mouseup(function () {
+    $(document).mouseup(function () {
         player.firing = false;
     });
     $(window).keydown(function (event) {
