@@ -1,6 +1,6 @@
 var canvas, ctx, player = {},
     field = {},
-    enemies = [],
+    enemies = {},
     frame = 0.7,
     score = 0,
     to, gameOn = false, paused = false,
@@ -11,7 +11,8 @@ var canvas, ctx, player = {},
     cpi360 = Math.PI * 2,
     cwidth, cheight,
     fC, fS,
-    fakeLimit = (cpi360 * 100) >> 0;
+    fakeLimit = (cpi360 * 100) >> 0,
+    crosshair = {};
 
 fS = [];
 for (var i = -fakeLimit; i < fakeLimit; i++) {
@@ -39,8 +40,7 @@ function drawText(params) {
     for(var i in defaults) {
         params[i] = params[i] ? params[i] : defaults[i];
     }
-    if(typeof params.text === "undefined" || params.text.length == 0) {
-        console.log('no text passed');
+    if(typeof params.text === "undefined" || params.text.length === 0) {
         return false;
     }
 
@@ -57,6 +57,7 @@ function drawText(params) {
 }
 
 function preResetGame() {
+
     var centerX = cwidth >> 1;
     var titleY = ~~(cheight * 0.48);
     var pressSpaceY = ~~(cheight * 0.75);
@@ -84,7 +85,6 @@ function preResetGame() {
 
 function resetGame() {
     score = 0;
-    enemies = [];
     frame = 0.7;
     player = {
         x: ~~ (cwidth / 2),
@@ -96,7 +96,7 @@ function resetGame() {
         moveRight: false,
         firing: false,
         cooldown: 25,
-        bullets: Array(),
+        bullets: [],
         fireShot: function () {
             var ni = this.bullets.length + 1;
             this.bullets[ni] = {
@@ -118,7 +118,7 @@ function resetGame() {
             if (this.moveDown && this.y < field.height && !this.moveUp) {
                 this.y += 1;
             }
-            if (this.firing && --this.cooldown == 0) {
+            if (this.firing && --this.cooldown === 0) {
                 this.fireShot();
                 this.cooldown = 25;
             }
@@ -127,15 +127,8 @@ function resetGame() {
                 this.bullets[i].x += fS[cacheIndex] * 2;
                 this.bullets[i].y += fC[cacheIndex] * 2;
                 for (var j in enemies.enemy) {
-                    size = enemies.enemy[j].size >> 1;
-                    if (
-                        this.bullets[i] !== undefined && 
-                        this.bullets[i].x < enemies.enemy[j].x + size && 
-                        this.bullets[i].x > enemies.enemy[j].x - size && 
-                        this.bullets[i].y < enemies.enemy[j].y + size && 
-                        this.bullets[i].y > enemies.enemy[j].y - size && 
-                        enemies.enemy[j].hp > 0
-                    ) {
+                    var size = enemies.enemy[j].size >> 1;
+                    if (this.bullets[i] !== undefined && this.bullets[i].x < enemies.enemy[j].x + enemies.enemy[j].size && this.bullets[i].x > enemies.enemy[j].x - enemies.enemy[j].size && this.bullets[i].y < enemies.enemy[j].y + enemies.enemy[j].size && this.bullets[i].y > enemies.enemy[j].y - enemies.enemy[j].size && enemies.enemy[j].hp > 0) {
                         if (!--enemies.enemy[j].hp) {
                             enemies.enemy[j].cooldown = 100;
                             score++;
@@ -160,35 +153,92 @@ function resetGame() {
         }
     };
     enemies = {
-        enemy: Array(),
-        enemy_types: {
+        enemy: [],
+        behaviors: {
+            chase: function() {
+                var angleToPlayer = Math.atan2(player.x - this.x, player.y - this.y);
+                if (this.cooldown < 0) {
+                    this.angle = angleToPlayer;
+                    this.cooldown = ~~ (Math.random() * 1500) + 500;
+                }
+                var cacheIndex = ~~ (this.angle * 100);
+                this.x += fS[cacheIndex] * this.speed;
+                this.y += fC[cacheIndex] * this.speed;
+                this.cooldown -= 1;
+            },
+            wanderChase: function() {
+                var angleToPlayer = Math.atan2(player.x - this.x, player.y - this.y);
+                var cacheIndex = ~~ (angleToPlayer * 100);
+                this.x += fC[cacheIndex] * this.speed;
+                this.y += fC[cacheIndex] * this.speed;
+            },
+            wander: function() {
+                var oldangle = this.angle;
+                if (this.x < 0) {
+                    if (this.angle < cpi3 && this.angle > cpi) {
+                        this.angle = cpi - (this.angle - cpi);
+                    }
+                    if (this.angle > cpi3 && this.angle === oldangle) {
+                        this.angle = cpi360 - this.angle;
+                    }
+                }
+                if (this.x > field.width) {
+                    if (this.angle > cpi2 && this.angle < cpi && this.angle === oldangle) {
+                        this.angle = cpi + (cpi - this.angle);
+                    }
+                    if (this.angle < cpi2 && this.angle === oldangle) {
+                        this.angle = cpi360 - this.angle;
+                    }
+                }
+                if (this.y < 0) {
+                    if (this.angle > cpi2 && this.angle < cpi && this.angle === oldangle) {
+                        this.angle = cpi2 + (cpi2 - this.angle);
+                    }
+                    if (this.angle > cpi && this.angle < cpi3 && this.angle === oldangle) {
+                        this.angle = cpi3 + (cpi3 - this.angle);
+                    }
+                }
+                if (this.y > field.height) {
+                    if (this.angle > cpi3 && this.angle === oldangle) {
+                        this.angle = cpi3 - (this.angle - cpi3);
+                    }
+                    if (this.angle < cpi2 && this.angle === oldangle) {
+                        this.angle = cpi2 + (cpi2 - this.angle);
+                    }
+                }
+                var cacheIndex = ~~ (this.angle * 100);
+                this.x += fS[cacheIndex] * this.speed;
+                this.y += fC[cacheIndex] * this.speed;
+            }            
+        },
+        types: {
             "0": {
                 size: 36,
                 speed: 0.18,
                 hp: 1,
                 color: 'rgba(255,0,0',
-                behavior: 'wander'
+                behavior: enemies.behaviors.wander
             },
             "1": {
                 size: 20,
                 speed: 0.42,
                 hp: 1,
                 color: 'rgba(255,100,0',
-                behavior: 'bounce'
+                behavior: enemies.behaviors.wander
             },
             "2": {
                 size: 52,
                 speed: 0.12,
                 hp: 3,
                 color: 'rgba(255,0,120',
-                behavior: 'chase'
+                behavior: enemies.behaviors.wanderChase
             },
             "3": {
                 size: 28,
                 speed: 0.42,
                 hp: 2,
                 color: 'rgba(255,255,0',
-                behavior: 'wander-chase'
+                behavior: enemies.behaviors.chase
             }
         },
         spawnEnemy: function(x, y, type) {
@@ -198,8 +248,8 @@ function resetGame() {
                 y: y, 
                 angle: Math.random() * cpi360 
             };
-            for(var i in this.enemy_types[type]) {
-                thisenemy[i] = thisenemy[i] ? thisenemy[i] : this.enemy_types[type][i];
+            for(var i in this.types[type]) {
+                thisenemy[i] = thisenemy[i] ? thisenemy[i] : this.types[type][i];
             }
             this.enemy.push(thisenemy);
         },
@@ -207,7 +257,9 @@ function resetGame() {
             if (frame > Math.random() * 200) {
                 var whichwall = ~~(Math.random() * 4);
                 var type = ~~(Math.random() * ~~frame);
-                if (type > this.enemy_types.length - 1) type = this.enemy_types.length - 1;
+                if (type > this.types.length - 1) {
+                    type = this.types.length - 1;
+                }
                 switch (whichwall) {
                 case 0:
                     // top wall
@@ -229,77 +281,13 @@ function resetGame() {
             }
             for (var i in enemies.enemy) {
                 if (this.enemy[i] !== undefined) {
-                    size = this.enemy[i].size;
-                    speed = this.enemy[i].speed;
-                    ebehavior = this.enemy[i].behavior;
-                    oldangle = this.enemy[i].angle;
-                    if (enemies.enemy[i].hp > 0) {
-                        switch (ebehavior) {
-                        case "chase":
-                            angleToPlayer = Math.atan2(player.x - this.enemy[i].x, player.y - this.enemy[i].y);
-                            cacheIndex = ~~ (angleToPlayer * 100);
-                            this.enemy[i].x += fC[cacheIndex] * speed;
-                            this.enemy[i].y += fC[cacheIndex] * speed;
-                            break;
-                        case "wander-chase":
-                            angleToPlayer = Math.atan2(player.x - this.enemy[i].x, player.y - this.enemy[i].y);
-                            if (this.enemy[i].cooldown < 0) {
-                                this.enemy[i].angle = angleToPlayer;
-                                this.enemy[i].cooldown = ~~ (Math.random() * 1500) + 500;
-                            }
-                            cacheIndex = ~~ (this.enemy[i].angle * 100);
-                            this.enemy[i].x += fS[cacheIndex] * speed;
-                            this.enemy[i].y += fC[cacheIndex] * speed;
-                            this.enemy[i].cooldown -= 1;
-                            break;
-                        case "wander":
-                            if (this.enemy[i].cooldown < 0) {
-                                this.enemy[i].angle = Math.random() * cpi360;
-                                this.enemy[i].cooldown = ~~ (Math.random() * 2000) + 1000;
-                            }
-                            this.enemy[i].cooldown -= 1;
-                        case "bounce":
-                            if (this.enemy[i].x < 0) {
-                                if (this.enemy[i].angle < cpi3 && this.enemy[i].angle > cpi) {
-                                    this.enemy[i].angle = cpi - (this.enemy[i].angle - cpi);
-                                }
-                                if (this.enemy[i].angle > cpi3 && this.enemy[i].angle == oldangle) {
-                                    this.enemy[i].angle = cpi360 - this.enemy[i].angle;
-                                }
-                            }
-                            if (this.enemy[i].x > field.width) {
-                                if (this.enemy[i].angle > cpi2 && this.enemy[i].angle < cpi && this.enemy[i].angle == oldangle) {
-                                    this.enemy[i].angle = cpi + (cpi - this.enemy[i].angle);
-                                }
-                                if (this.enemy[i].angle < cpi2 && this.enemy[i].angle == oldangle) {
-                                    this.enemy[i].angle = cpi360 - this.enemy[i].angle;
-                                }
-                            }
-                            if (this.enemy[i].y < 0) {
-                                if (this.enemy[i].angle > cpi2 && this.enemy[i].angle < cpi && this.enemy[i].angle == oldangle) {
-                                    this.enemy[i].angle = cpi2 + (cpi2 - this.enemy[i].angle);
-                                }
-                                if (this.enemy[i].angle > cpi && this.enemy[i].angle < cpi3 && this.enemy[i].angle == oldangle) {
-                                    this.enemy[i].angle = cpi3 + (cpi3 - this.enemy[i].angle);
-                                }
-                            }
-                            if (this.enemy[i].y > field.height) {
-                                if (this.enemy[i].angle > cpi3 && this.enemy[i].angle == oldangle) {
-                                    this.enemy[i].angle = cpi3 - (this.enemy[i].angle - cpi3);
-                                }
-                                if (this.enemy[i].angle < cpi2 && this.enemy[i].angle == oldangle) {
-                                    this.enemy[i].angle = cpi2 + (cpi2 - this.enemy[i].angle);
-                                }
-                            }
-                            cacheIndex = ~~ (this.enemy[i].angle * 100);
-                            enemies.enemy[i].x += fS[cacheIndex] * speed;
-                            enemies.enemy[i].y += fC[cacheIndex] * speed;
-                        }
+                    if (this.enemy[i].hp > 0) {
+                        this.enemy[i].behavior();
                         if (
-                            this.enemy[i].x < player.x + (size >> 1) && 
-                            this.enemy[i].x > player.x - (size >> 1) && 
-                            this.enemy[i].y < player.y + (size >> 1) && 
-                            this.enemy[i].y > player.y - (size >> 1) && 
+                            this.enemy[i].x < player.x + (this.enemy[i].size >> 1) && 
+                            this.enemy[i].x > player.x - (this.enemy[i].size >> 1) && 
+                            this.enemy[i].y < player.y + (this.enemy[i].size >> 1) && 
+                            this.enemy[i].y > player.y - (this.enemy[i].size >> 1) && 
                             this.enemy[i].hp > 0
                         ) {
                             clearInterval(to);
@@ -312,7 +300,7 @@ function resetGame() {
         },
         render: function() {
             for (var i in this.enemy) {
-                size = this.enemy[i].size;
+                var size = this.enemy[i].size;
                 if (this.enemy[i] !== undefined) {
                     if(this.enemy[i].hp > 0) {
                         ctx.fillStyle = this.enemy[i].color + ",1)";
