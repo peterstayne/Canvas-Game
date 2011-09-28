@@ -158,7 +158,7 @@ function resetGame() {
                 var angleToPlayer = Math.atan2(player.x - enemies.enemy[i].x, player.y - enemies.enemy[i].y);
                 if (enemies.enemy[i].cooldown < 0) {
                     enemies.enemy[i].angle = angleToPlayer;
-                    enemies.enemy[i].cooldown = ~~ (Math.random() * 1000) + 400;
+                    enemies.enemy[i].cooldown = ~~ (Math.random() * 900) + 300;
                 }
                 var cacheIndex = ~~ (enemies.enemy[i].angle * 100);
                 enemies.enemy[i].x += fS[cacheIndex] * enemies.enemy[i].speed;
@@ -210,37 +210,51 @@ function resetGame() {
                 enemies.enemy[i].y += fC[cacheIndex] * enemies.enemy[i].speed;
             }            
         },
-        types: {
-            "0": {
+        types: [
+            {
                 size: 36,
                 speed: 0.18,
                 hp: 1,
                 color: 'rgba(255,0,0',
                 behavior: "wander"
             },
-            "1": {
+            {
                 size: 20,
-                speed: 0.42,
+                speed: 0.52,
                 hp: 1,
                 color: 'rgba(255,100,0',
                 behavior: "wander"
             },
-            "2": {
+            {
                 size: 52,
                 speed: 0.12,
                 hp: 3,
                 color: 'rgba(255,0,120',
                 behavior: "chase"
             },
-            "3": {
+            {
                 size: 28,
                 speed: 0.42,
                 hp: 2,
                 color: 'rgba(255,255,0',
                 behavior: "wanderChase",
                 cooldown: 1000
-            }
-        },
+            },
+            {
+                size: 22,
+                speed: 0.62,
+                hp: 1,
+                color: 'rgba(0,255,255',
+                behavior: "chase"
+            },
+            {
+                size: 42,
+                speed: 0.12,
+                hp: 6,
+                color: 'rgba(255,155,255',
+                behavior: "wander"
+            },
+        ],
         spawnEnemy: function(x, y, type) {
             type = type + "";
             var thisenemy = {
@@ -254,7 +268,7 @@ function resetGame() {
             this.enemy.push(thisenemy);
         },
         logic: function() {
-            if (frame > Math.random() * 200) {
+            if (frame > Math.random() * 150) {
                 var whichwall = ~~(Math.random() * 4);
                 var type = ~~(Math.random() * ~~frame);
                 if (type > this.types.length - 1) {
