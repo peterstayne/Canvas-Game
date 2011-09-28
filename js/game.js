@@ -98,12 +98,11 @@ function resetGame() {
         cooldown: 25,
         bullets: [],
         fireShot: function () {
-            var ni = this.bullets.length + 1;
-            this.bullets[ni] = {
+            this.bullets.push({
                 x: player.x,
                 y: player.y,
                 angle: Math.atan2(crosshair.x - this.x, crosshair.y - this.y)
-            };
+            });
         },
         logic: function() {
             if (this.moveLeft && this.x > 0 && !this.moveRight) {
