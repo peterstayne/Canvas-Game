@@ -242,7 +242,7 @@ function resetGame() {
             },
             {
                 size: 22,
-                speed: 0.62,
+                speed: 0.54,
                 hp: 1,
                 color: 'rgba(0,255,255',
                 behavior: "chase"
@@ -250,10 +250,10 @@ function resetGame() {
             {
                 size: 42,
                 speed: 0.12,
-                hp: 6,
+                hp: 5,
                 color: 'rgba(255,155,255',
                 behavior: "wander"
-            },
+            }
         ],
         spawnEnemy: function(x, y, type) {
             type = type + "";
@@ -268,7 +268,7 @@ function resetGame() {
             this.enemy.push(thisenemy);
         },
         logic: function() {
-            if (frame > Math.random() * 150) {
+            if (frame > Math.random() * 200) {
                 var whichwall = ~~(Math.random() * 4);
                 var type = ~~(Math.random() * ~~frame);
                 if (type > this.types.length - 1) {
