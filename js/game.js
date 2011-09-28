@@ -11,7 +11,7 @@ var canvas, ctx, player = {},
     cpi360 = Math.PI * 2,
     cwidth, cheight,
     fC, fS,
-    fakeLimit = (cpi360 * 100) >> 0,
+    fakeLimit = (cpi360 * 200) >> 0,
     crosshair = {};
 
 fS = [];
@@ -99,8 +99,8 @@ function resetGame() {
         bullets: [],
         fireShot: function () {
             this.bullets.push({
-                x: player.x,
-                y: player.y,
+                x: this.x,
+                y: this.y,
                 angle: Math.atan2(crosshair.x - this.x, crosshair.y - this.y)
             });
         },
@@ -154,21 +154,21 @@ function resetGame() {
     enemies = {
         enemy: [],
         behaviors: {
-            chase: function(i) {
+            wanderChase: function(i) {
                 var angleToPlayer = Math.atan2(player.x - enemies.enemy[i].x, player.y - enemies.enemy[i].y);
-                if (this.cooldown < 0) {
-                    this.angle = angleToPlayer;
-                    this.cooldown = ~~ (Math.random() * 1500) + 500;
+                if (enemies.enemy[i].cooldown < 0) {
+                    enemies.enemy[i].angle = angleToPlayer;
+                    enemies.enemy[i].cooldown = ~~ (Math.random() * 1000) + 400;
                 }
-                var cacheIndex = ~~ (this.angle * 100);
+                var cacheIndex = ~~ (enemies.enemy[i].angle * 100);
                 enemies.enemy[i].x += fS[cacheIndex] * enemies.enemy[i].speed;
                 enemies.enemy[i].y += fC[cacheIndex] * enemies.enemy[i].speed;
                 enemies.enemy[i].cooldown -= 1;
             },
-            wanderChase: function(i) {
-                var angleToPlayer = Math.atan2(player.x - enemies.enemy[i].x, player.y - enemies.enemy[i].y);
-                var cacheIndex = ~~ (angleToPlayer * 100);
-                enemies.enemy[i].x += fC[cacheIndex] * enemies.enemy[i].speed;
+            chase: function(i) {
+                enemies.enemy[i].angle = Math.atan2(player.x - enemies.enemy[i].x, player.y - enemies.enemy[i].y);
+                var cacheIndex = ~~ (enemies.enemy[i].angle * 100);
+                enemies.enemy[i].x += fS[cacheIndex] * enemies.enemy[i].speed;
                 enemies.enemy[i].y += fC[cacheIndex] * enemies.enemy[i].speed;
             },
             wander: function(i) {
@@ -230,14 +230,15 @@ function resetGame() {
                 speed: 0.12,
                 hp: 3,
                 color: 'rgba(255,0,120',
-                behavior: "wanderChase"
+                behavior: "chase"
             },
             "3": {
                 size: 28,
                 speed: 0.42,
                 hp: 2,
                 color: 'rgba(255,255,0',
-                behavior: "chase"
+                behavior: "wanderChase",
+                cooldown: 1000
             }
         },
         spawnEnemy: function(x, y, type) {
@@ -245,7 +246,7 @@ function resetGame() {
             var thisenemy = {
                 x: x,
                 y: y, 
-                angle: Math.random() * cpi360 
+                angle: Math.atan2(player.x - x, player.y - y)
             };
             for(var i in this.types[type]) {
                 thisenemy[i] = thisenemy[i] ? thisenemy[i] : this.types[type][i];
