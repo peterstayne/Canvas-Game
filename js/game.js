@@ -123,8 +123,8 @@ function resetGame() {
             }
             for (var i in this.bullets) {
                 var cacheIndex = ~~ (this.bullets[i].angle * 100);
-                this.bullets[i].x += fS[cacheIndex] * 2.5;
-                this.bullets[i].y += fC[cacheIndex] * 2.5;
+                this.bullets[i].x += fS[cacheIndex] * 3;
+                this.bullets[i].y += fC[cacheIndex] * 3;
                 for (var j in enemies.enemy) {
                     var size = enemies.enemy[j].size >> 1;
                     if (this.bullets[i] !== undefined && this.bullets[i].x < enemies.enemy[j].x + enemies.enemy[j].size && this.bullets[i].x > enemies.enemy[j].x - enemies.enemy[j].size && this.bullets[i].y < enemies.enemy[j].y + enemies.enemy[j].size && this.bullets[i].y > enemies.enemy[j].y - enemies.enemy[j].size && enemies.enemy[j].hp > 0) {
