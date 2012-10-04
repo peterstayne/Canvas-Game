@@ -12,7 +12,8 @@ var canvas, ctx, player = {},
     cwidth, cheight,
     fC, fS,
     fakeLimit = (cpi360 * 200) >> 0,
-    crosshair = {};
+    crosshair = {},
+    gameClock = Date.now();
 
 fS = [];
 for (var i = -fakeLimit; i < fakeLimit; i++) {
@@ -420,6 +421,7 @@ $(document).ready(function () {
                 resetGame();
             } else {
                 if(paused) {
+                    gameClock = Date.now();
                     to = window.setInterval(doFrame, 5);
                     paused = false;
                 } else {
@@ -476,7 +478,9 @@ $(document).ready(function () {
     }
 
     function doFrame() {
-        frame += 0.00015;
+        var newGameClock = Date.now();
+        frame += ((Date.now() - newGameClock) * 0.00001);
+        gameClock = newGameClock;
         gameLogic();
         renderFrame();
     }
