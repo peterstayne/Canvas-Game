@@ -44,6 +44,7 @@ function drawText(params) {
     if(typeof params.text === "undefined" || params.text.length === 0) {
         return false;
     }
+    ctx.shadowColor = 'rgba(0,0,0,0)';
 
     ctx.font = params.size + "px arial";
     var thisTextWidth = ctx.measureText(params.text).width;
@@ -62,6 +63,8 @@ function preResetGame() {
     var centerX = cwidth >> 1;
     var titleY = ~~(cheight * 0.48);
     var pressSpaceY = ~~(cheight * 0.75);
+
+    ctx.shadowColor = 'rgba(0,0,0,0)';
 
     ctx.textBaseline = "alphabetic";
     ctx.fillStyle = "rgba(0,0,0,0.7)";
@@ -144,9 +147,17 @@ function resetGame() {
             }
         },
         render: function() {
+            ctx.shadowColor = 'rgba(0,0,0,1)';
+            ctx.shadowBlur = 5;
+            ctx.shadowOffsetX = 3;
+            ctx.shadowOffsetY = 3;
             ctx.fillStyle = "#0f0";
             ctx.fillRect(player.x - 4, player.y - 4, 8, 8);
             for (var i in this.bullets) {
+                ctx.shadowColor = 'rgba(255,255,0,1)';
+                ctx.shadowBlur = 10;
+                ctx.shadowOffsetX = 0;
+                ctx.shadowOffsetY = 0;
                 ctx.fillStyle = "rgba(255,255,255,1)";
                 ctx.fillRect(~~this.bullets[i].x, ~~this.bullets[i].y, 2, 2);
             }
@@ -314,10 +325,16 @@ function resetGame() {
 
         },
         render: function() {
+            var shadowColor = 'rgba(0,0,0,';
+            var opacity = 1;
+            ctx.shadowBlur = 5;
+            ctx.shadowOffsetX = 3;
+            ctx.shadowOffsetY = 3;
             for (var i in this.enemy) {
                 var size = this.enemy[i].size;
                 if (this.enemy[i] !== undefined) {
                     if(this.enemy[i].hp > 0) {
+                        ctx.shadowColor = shadowColor + '1)';
                         ctx.fillStyle = this.enemy[i].color + ",1)";
                         ctx.fillRect(~~this.enemy[i].x - (size >> 1), ~~this.enemy[i].y - (size >> 1), size, size);
                     } else {
@@ -326,7 +343,9 @@ function resetGame() {
                             this.enemy.splice(i, 1);
                         }
                         else {
-                            ctx.fillStyle = this.enemy[i].color + "," + (this.enemy[i].cooldown / 100).toFixed(2) + ")";
+                            opacity = (this.enemy[i].cooldown / 100).toFixed(2);
+                            ctx.shadowColor = shadowColor + opacity + ')';
+                            ctx.fillStyle = this.enemy[i].color + "," + opacity + ")";
                             size += ~~ (size * ((100 - this.enemy[i].cooldown) / 100));
                             ctx.fillRect(~~this.enemy[i].x - (size >> 1), ~~this.enemy[i].y - (size >> 1), size, size);
                         }
@@ -364,6 +383,7 @@ $(document).ready(function () {
         offset: $("#gamecanvas").offset(),
         image: 'gravel.png',
         render: function() {
+            ctx.shadowColor = 'rgba(0,0,0,0)';
             if (this.bgimg != '') {
                 ctx.drawImage(this.bgimg, 0, 0);
             }
@@ -378,11 +398,13 @@ $(document).ready(function () {
         x: 0,
         y: 0,
         render: function() {
+            ctx.shadowColor = 'rgba(0,0,0,0)';
             ctx.strokeStyle = "#0ff";
             ctx.strokeRect(crosshair.x - 4, crosshair.y - 4, 8, 8);
         }
     };
 
+    ctx.shadowColor = 'rgba(0,0,0,0)';
     ctx.fillStyle = "#000";
     ctx.fillRect(0, 0, cwidth, cheight);
 
