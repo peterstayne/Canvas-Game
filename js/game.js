@@ -479,7 +479,7 @@ $(document).ready(function () {
 
     function doFrame() {
         var newGameClock = Date.now();
-        frame += ((newGameClock - gameClock) * 0.00001);
+        frame += ((newGameClock - gameClock) * 0.00003);
         gameClock = newGameClock;
         gameLogic();
         renderFrame();
