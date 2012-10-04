@@ -154,10 +154,7 @@ function resetGame() {
             ctx.fillStyle = "#0f0";
             ctx.fillRect(player.x - 4, player.y - 4, 8, 8);
 
-            ctx.shadowColor = 'rgba(255,255,0,1)';
-            ctx.shadowBlur = 3
-            ctx.shadowOffsetX = 1;
-            ctx.shadowOffsetY = 1;
+            ctx.shadowColor = 'rgba(255,255,0,0)';
             for (var i in this.bullets) {
                 ctx.fillStyle = "rgba(255,255,255,1)";
                 ctx.fillRect(~~this.bullets[i].x, ~~this.bullets[i].y, 3, 3);
