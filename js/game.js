@@ -133,6 +133,7 @@ function resetGame() {
                     var size = enemies.enemy[j].size >> 1;
                     if (this.bullets[i] !== undefined && this.bullets[i].x < enemies.enemy[j].x + enemies.enemy[j].size && this.bullets[i].x > enemies.enemy[j].x - enemies.enemy[j].size && this.bullets[i].y < enemies.enemy[j].y + enemies.enemy[j].size && this.bullets[i].y > enemies.enemy[j].y - enemies.enemy[j].size && enemies.enemy[j].hp > 0) {
                         if (!--enemies.enemy[j].hp) {
+                            enemies.enemy[j].angle = this.bullets[i].angle;
                             enemies.enemy[j].cooldown = 100;
                             score++;
                         }
@@ -341,6 +342,9 @@ function resetGame() {
                             this.enemy.splice(i, 1);
                         }
                         else {
+                            cacheIndex = ~~ (this.enemy[i].angle * 100);
+                            this.enemy[i].x += fS[cacheIndex] * 0.5;
+                            this.enemy[i].y += fC[cacheIndex] * 0.5;
                             opacity = (this.enemy[i].cooldown / 100).toFixed(2);
                             ctx.shadowColor = shadowColor + opacity + ')';
                             ctx.fillStyle = this.enemy[i].color + "," + opacity + ")";
