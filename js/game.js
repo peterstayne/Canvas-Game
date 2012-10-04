@@ -160,7 +160,7 @@ function resetGame() {
             ctx.shadowOffsetY = 3;
             for (var i in this.bullets) {
                 ctx.fillStyle = "rgba(255,255,255,1)";
-                ctx.fillRect(~~this.bullets[i].x, ~~this.bullets[i].y, 2, 2);
+                ctx.fillRect(~~this.bullets[i].x, ~~this.bullets[i].y, 3, 3);
             }
         }
     };
