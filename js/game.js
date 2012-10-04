@@ -156,8 +156,8 @@ function resetGame() {
             for (var i in this.bullets) {
                 ctx.shadowColor = 'rgba(255,255,0,1)';
                 ctx.shadowBlur = 10;
-                ctx.shadowOffsetX = 0;
-                ctx.shadowOffsetY = 0;
+                ctx.shadowOffsetX = 1;
+                ctx.shadowOffsetY = 1;
                 ctx.fillStyle = "rgba(255,255,255,1)";
                 ctx.fillRect(~~this.bullets[i].x, ~~this.bullets[i].y, 2, 2);
             }
@@ -501,7 +501,7 @@ $(document).ready(function () {
 
     function doFrame() {
         var newGameClock = Date.now();
-        frame += ((newGameClock - gameClock) * 0.00003);
+        frame += ((newGameClock - gameClock) * 0.00002);
         gameClock = newGameClock;
         gameLogic();
         renderFrame();
