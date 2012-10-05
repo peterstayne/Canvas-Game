@@ -350,11 +350,11 @@ function resetGame() {
                         else {
                             sparks = 5;
                             ctx.shadowColor = 'rgba(0,0,0,0)';
-                            ctx.strokeStyle = '#efaa00';
+                            ctx.strokeStyle = 'rgba(200, 150, 0, 1)';
                             while(--sparks) {
                                 sparkAngle = ~~((Math.random() * 628) - 314);
-                                ctx.moveTo(this.enemy[i].death.x + fS[sparkAngle] * 4, this.enemy[i].death.y + fC[sparkAngle] * 4);
-                                ctx.lineTo(this.enemy[i].death.x + fS[sparkAngle] * 4, this.enemy[i].death.y + fC[sparkAngle] * 4);
+                                ctx.moveTo(~~(this.enemy[i].death.x + fS[sparkAngle] * 4), ~~(this.enemy[i].death.y + fC[sparkAngle] * 4));
+                                ctx.lineTo(~~(this.enemy[i].death.x + fS[sparkAngle] * 4), ~~(this.enemy[i].death.y + fC[sparkAngle] * 4));
                                 ctx.stroke();
                             }
                             cacheIndex = ~~ (this.enemy[i].angle * 100);
