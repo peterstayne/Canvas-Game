@@ -381,12 +381,29 @@ function fail() {
     //alert('The evil square ate you. :(\nYour score was ' + score);
     preResetGame();
 }
-
+function resizeEverything() {
+    var aspectRatio = cwidth / cheight;
+    var sw = $(window).width();
+    var sh = $(window).height();
+    if(sw / sh > aspectRatio) {
+        $("#bgimg").css({
+            height:sh,
+            width: sh * aspectRatio
+        });
+    } else {
+        $("#bgimg").css({
+            height: sw * aspectRatio,
+            width: sw
+        });
+    }
+}
+$(window).resize(resizeEverything);
 $(document).ready(function () {
 
     cwidth = 700;
     cheight = 510;
-
+    resizeEverything();
+ 
     $("#bgimg").load(function () {
         field.bgimg = document.getElementById('bgimg');
     });
