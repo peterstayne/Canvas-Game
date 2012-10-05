@@ -23,12 +23,13 @@ a, a:visited, a:hover, a:active {
 	color: #aaa;
 }
 .main-container {
-	width: 700px; 
+    width: 100%;
+	min-width: 700px; 
 	margin: 0 auto; 
 }
 #score { position: absolute; font-family: helevetica, verdana, arial; color: white; }
 
-#gamecanvas { cursor: none; width: 700px; height: 510px;}
+#gamecanvas { cursor: none; width: 100%; }
 
 #bgimg { display: none; }
 
