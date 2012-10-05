@@ -399,6 +399,12 @@ function resizeEverything() {
         });
         canvasScale = sw / cwidth;
     }
+    if (typeof this.bgimg === 'object') {
+        $("#bgimg").css({
+            width: 700 * canvasScale
+        });
+        field.bgimg = document.getElementById('bgimg');
+    }
 }
 $(window).resize(resizeEverything);
 $(document).ready(function () {
