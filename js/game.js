@@ -85,6 +85,7 @@ function preResetGame() {
        "text": "Press space to start",
        "y": pressSpaceY - 18
     });
+    gameClock = Date.now();
 }
 
 function resetGame() {
