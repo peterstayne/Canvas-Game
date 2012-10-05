@@ -137,8 +137,11 @@ function resetGame() {
                             enemies.enemy[j].angle = this.bullets[i].angle;
                             enemies.enemy[j].cooldown = 100;
                             score++;
+                            enemies.enemy[j].death = {
+                                x: this.bullets[i].x,
+                                y: this.bullets[i].y
+                            };
                         }
-
                         this.bullets.splice(i, 1);
                     }
                 }
@@ -328,6 +331,7 @@ function resetGame() {
         render: function() {
             var shadowColor = 'rgba(0,0,0,';
             var opacity = 1;
+            var sparks, sparkAngle;
             ctx.shadowBlur = 5;
             ctx.shadowOffsetX = 3;
             ctx.shadowOffsetY = 3;
@@ -344,6 +348,15 @@ function resetGame() {
                             this.enemy.splice(i, 1);
                         }
                         else {
+                            sparks = 5;
+                            ctx.shadowColor = 'rgba(0,0,0,0)';
+                            ctx.strokeStyle = 'rgba(200, 150, 0, 1)';
+                            while(--sparks) {
+                                sparkAngle = ~~((Math.random() * 628) - 314);
+                                ctx.moveTo(this.enemy[i].death.x + fS[sparkAngle] * 4, this.enemy[i].death.y + fC[sparkAngle] * 4);
+                                ctx.lineTo(this.enemy[i].death.x + fS[sparkAngle] * 4, this.enemy[i].death.y + fC[sparkAngle] * 4);
+                                ctx.stroke();
+                            }
                             cacheIndex = ~~ (this.enemy[i].angle * 100);
                             this.enemy[i].x += fS[cacheIndex] * (this.enemy[i].cooldown * 0.01);
                             this.enemy[i].y += fC[cacheIndex] * (this.enemy[i].cooldown * 0.01);
