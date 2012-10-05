@@ -137,6 +137,7 @@ function resetGame() {
                             enemies.enemy[j].cooldown = 100;
                             score++;
                         }
+
                         this.bullets.splice(i, 1);
                     }
                 }
@@ -343,8 +344,8 @@ function resetGame() {
                         }
                         else {
                             cacheIndex = ~~ (this.enemy[i].angle * 100);
-                            this.enemy[i].x += fS[cacheIndex] * 0.5;
-                            this.enemy[i].y += fC[cacheIndex] * 0.5;
+                            this.enemy[i].x += fS[cacheIndex] * (this.enemy[i].cooldown * 0.003);
+                            this.enemy[i].y += fC[cacheIndex] * (this.enemy[i].cooldown * 0.003);
                             opacity = (this.enemy[i].cooldown / 100).toFixed(2);
                             ctx.shadowColor = shadowColor + opacity + ')';
                             ctx.fillStyle = this.enemy[i].color + "," + opacity + ")";
@@ -386,10 +387,9 @@ $(document).ready(function () {
         image: 'gravel.png',
         render: function() {
             ctx.shadowColor = 'rgba(0,0,0,0)';
-            if (this.bgimg != '') {
+            if (typeof this.bgimg === 'object') {
                 ctx.drawImage(this.bgimg, 0, 0);
-            }
-            else {
+            } else {
                 ctx.fillStyle = "#000";
                 ctx.fillRect(0, 0, this.width, this.height);
             }
