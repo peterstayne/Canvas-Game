@@ -351,6 +351,7 @@ function resetGame() {
                             sparks = 5;
                             ctx.shadowColor = 'rgba(0,0,0,0)';
                             ctx.strokeStyle = 'rgba(200, 150, 0, 1)';
+                            ctx.lineWidth = 1;
                             ctx.beginPath();
                             while(--sparks) {
                                 sparkAngle = ~~((Math.random() * 628) - 314);
