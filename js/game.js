@@ -447,8 +447,8 @@ $(document).ready(function () {
     ctx.fillRect(0, 0, cwidth, cheight);
 
     $(document).mousemove(function (event) {
-        crosshair.x = (event.pageX - field.offset.left) * canvasScale;
-        crosshair.y = (event.pageY - field.offset.top) * canvasScale;
+        crosshair.x = (event.pageX - field.offset.left) / canvasScale;
+        crosshair.y = (event.pageY - field.offset.top) / canvasScale;
     });
     $(document).mousedown(function (event) {
         player.fireShot();
