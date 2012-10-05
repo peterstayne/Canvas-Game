@@ -29,7 +29,7 @@ a, a:visited, a:hover, a:active {
 }
 #score { position: absolute; font-family: helevetica, verdana, arial; color: white; }
 
-#gamecanvas { cursor: none; width: 100%; }
+#gamecanvas { cursor: none;  margin: 0 auto; }
 
 #bgimg { display: none; }
 
