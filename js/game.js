@@ -386,12 +386,12 @@ function resizeEverything() {
     var sw = $(window).width();
     var sh = $(window).height();
     if(sw / sh > aspectRatio) {
-        $("#bgimg").css({
+        $("#gamecanvas").css({
             height:sh,
             width: sh * aspectRatio
         });
     } else {
-        $("#bgimg").css({
+        $("#gamecanvas").css({
             height: sw * aspectRatio,
             width: sw
         });
