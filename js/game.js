@@ -408,10 +408,11 @@ $(document).ready(function () {
     resizeEverything();
  
     $("#bgimg").load(function () {
+        var $this = $(this);
         field.bgimg = {
             img: document.getElementById('bgimg'),
-            width: this.width(),
-            height: this.height()
+            width: $this.width(),
+            height: $this.height()
         };
     });
 
