@@ -350,7 +350,7 @@ function resetGame() {
                         else {
                             sparks = 5;
                             ctx.shadowColor = 'rgba(0,0,0,0)';
-                            ctx.strokeStyle = 'rgba(200, 150, 0, 1)';
+                            ctx.strokeStyle = '#efaa00';
                             while(--sparks) {
                                 sparkAngle = ~~((Math.random() * 628) - 314);
                                 ctx.moveTo(this.enemy[i].death.x + fS[sparkAngle] * 4, this.enemy[i].death.y + fC[sparkAngle] * 4);
