@@ -399,12 +399,6 @@ function resizeEverything() {
         });
         canvasScale = sw / cwidth;
     }
-    if (typeof this.bgimg === 'object') {
-        $("#bgimg").css({
-            width: 700 * canvasScale
-        });
-        field.bgimg = document.getElementById('bgimg');
-    }
 }
 $(window).resize(resizeEverything);
 $(document).ready(function () {
@@ -414,7 +408,11 @@ $(document).ready(function () {
     resizeEverything();
  
     $("#bgimg").load(function () {
-        field.bgimg = document.getElementById('bgimg');
+        field.bgimg = {
+            img: document.getElementById('bgimg'),
+            width: this.width(),
+            height: this.height()
+        };
     });
 
     canvas = document.getElementById('gamecanvas');
@@ -430,7 +428,7 @@ $(document).ready(function () {
         render: function() {
             ctx.shadowColor = 'rgba(0,0,0,0)';
             if (typeof this.bgimg === 'object') {
-                ctx.drawImage(this.bgimg, 0, 0);
+                ctx.drawImage(this.bgimg.img, 0, 0, this.bgimg.width, this.bgimg.height, 0, 0, cwidth, cheight);
             } else {
                 ctx.fillStyle = "#000";
                 ctx.fillRect(0, 0, this.width, this.height);
