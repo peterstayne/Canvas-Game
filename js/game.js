@@ -1,5 +1,6 @@
 var canvas, ctx, player = {},
     field = {},
+    canvasScale = 1,
     enemies = {},
     frame = 0.7,
     score = 0,
@@ -390,11 +391,13 @@ function resizeEverything() {
             height:sh,
             width: sh * aspectRatio
         });
+        canvasScale = (sh * aspectRatio) / cwidth;
     } else {
         $("#gamecanvas").css({
             height: sw * aspectRatio,
             width: sw
         });
+        canvasScale = sw / cwidth;
     }
 }
 $(window).resize(resizeEverything);
@@ -444,8 +447,8 @@ $(document).ready(function () {
     ctx.fillRect(0, 0, cwidth, cheight);
 
     $(document).mousemove(function (event) {
-        crosshair.x = event.pageX - field.offset.left;
-        crosshair.y = event.pageY - field.offset.top;
+        crosshair.x = (event.pageX - field.offset.left) * canvasScale;
+        crosshair.y = (event.pageY - field.offset.top) * canvasScale;
     });
     $(document).mousedown(function (event) {
         player.fireShot();
