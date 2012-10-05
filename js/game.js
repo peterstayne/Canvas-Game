@@ -344,8 +344,8 @@ function resetGame() {
                         }
                         else {
                             cacheIndex = ~~ (this.enemy[i].angle * 100);
-                            this.enemy[i].x += fS[cacheIndex] * (this.enemy[i].cooldown * 0.003);
-                            this.enemy[i].y += fC[cacheIndex] * (this.enemy[i].cooldown * 0.003);
+                            this.enemy[i].x += fS[cacheIndex] * (this.enemy[i].cooldown * 0.01);
+                            this.enemy[i].y += fC[cacheIndex] * (this.enemy[i].cooldown * 0.01);
                             opacity = (this.enemy[i].cooldown / 100).toFixed(2);
                             ctx.shadowColor = shadowColor + opacity + ')';
                             ctx.fillStyle = this.enemy[i].color + "," + opacity + ")";
