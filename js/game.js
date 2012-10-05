@@ -403,8 +403,8 @@ function resizeEverything() {
 $(window).resize(resizeEverything);
 $(document).ready(function () {
 
-    cwidth = 700;
-    cheight = 510;
+    cwidth = 900;
+    cheight = 660;
     resizeEverything();
  
     $("#bgimg").load(function () {
