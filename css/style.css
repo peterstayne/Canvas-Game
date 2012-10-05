@@ -18,17 +18,13 @@ body {
     font-family: 'Source Sans Pro', Verdana, sans-serif;
     line-height: 1.4;
 }
-
+p { color: #fff; }
+a, a:visited, a:hover, a:active {
+	color: #aaa;
+}
 .main-container {
 	width: 700px; 
 	margin: 0 auto; 
-    background-color: #cccccc;
-    background-image: -webkit-gradient(radial, left top, left bottom, from(#fff), to(#888));
-    background-image: -webkit-radial-gradient(center center, #fff, #888);
-    background-image:    -moz-radial-gradient(center center, #fff, #888);   
-    background-image:     -ms-radial-gradient(center center, #fff, #888);
-    background-image:      -o-radial-gradient(center center, #fff, #888);
-    background-image:         radial-gradient(to bottom, #fff, #888);
 }
 #score { position: absolute; font-family: helevetica, verdana, arial; color: white; }
 
