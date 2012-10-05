@@ -393,8 +393,8 @@ $(document).ready(function () {
 
     canvas = document.getElementById('gamecanvas');
     ctx = canvas.getContext("2d");
-    canvas.setAttribute('width', cwidth);
-    canvas.setAttribute('height', cheight);
+    canvas.setAttribute('width', 700);
+    canvas.setAttribute('height', 510);
 
     field = {
         width: cwidth,
