@@ -357,6 +357,7 @@ function resetGame() {
                                 ctx.lineTo(~~(this.enemy[i].death.x + fS[sparkAngle] * 4), ~~(this.enemy[i].death.y + fC[sparkAngle] * 4));
                                 ctx.stroke();
                             }
+                            console.log(this.enemy[i]);
                             cacheIndex = ~~ (this.enemy[i].angle * 100);
                             this.enemy[i].x += fS[cacheIndex] * (this.enemy[i].cooldown * 0.01);
                             this.enemy[i].y += fC[cacheIndex] * (this.enemy[i].cooldown * 0.01);
