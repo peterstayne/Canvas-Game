@@ -384,8 +384,8 @@ function fail() {
 
 $(document).ready(function () {
 
-    cwidth = $("#gamecanvas").width();
-    cheight = $("#gamecanvas").height();
+    cwidth = 700;
+    cheight = 510;
 
     $("#bgimg").load(function () {
         field.bgimg = document.getElementById('bgimg');
@@ -393,8 +393,8 @@ $(document).ready(function () {
 
     canvas = document.getElementById('gamecanvas');
     ctx = canvas.getContext("2d");
-    canvas.setAttribute('width', 700);
-    canvas.setAttribute('height', 510);
+    canvas.setAttribute('width', cwidth);
+    canvas.setAttribute('height', cheight);
 
     field = {
         width: cwidth,
