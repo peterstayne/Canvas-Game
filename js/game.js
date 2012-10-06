@@ -345,29 +345,34 @@ function resetGame() {
                         ctx.fillRect(~~this.enemy[i].x - (size >> 1), ~~this.enemy[i].y - (size >> 1), size, size);
                     } else {
                         this.enemy[i].cooldown -= 1;
-                        if (this.enemy[i].cooldown < 0) {
+                        var cooldown = cooldown;
+                        if (cooldown < 0) {
                             this.enemy.splice(i, 1);
                         }
                         else {
-                            sparks = 5;
-                            ctx.shadowColor = 'rgba(0,0,0,0)';
-                            ctx.strokeStyle = 'rgba(200, 150, 0, 1)';
-                            ctx.lineWidth = 1;
-                            ctx.beginPath();
-                            while(--sparks) {
-                                sparkAngle = ~~((Math.random() * 628) - 314);
-                                ctx.moveTo(~~(this.enemy[i].death.x + fS[sparkAngle] * 4), ~~(this.enemy[i].death.y + fC[sparkAngle] * 4));
-                                ctx.lineTo(~~(this.enemy[i].death.x + fS[sparkAngle] * 18), ~~(this.enemy[i].death.y + fC[sparkAngle] * 18));
+                            if(cooldown > 200) {
+                                sparks = 5;
+                                ctx.shadowColor = 'rgba(0,0,0,0)';
+                                ctx.strokeStyle = 'rgba(255, 255, 0, 1)';
+                                ctx.lineWidth = 1;
+                                ctx.beginPath();
+                                sparkStart = Math.random() * (300 - cooldown) >> 4;
+                                sparkend = Math.random() * (400 - cooldown) >> 4;
+                                while(--sparks) {
+                                    sparkAngle = ~~((Math.random() * 628) - 314);
+                                    ctx.moveTo(~~(this.enemy[i].death.x + fS[sparkAngle] * sparkStart), ~~(this.enemy[i].death.y + fC[sparkAngle] * sparkStart));
+                                    ctx.lineTo(~~(this.enemy[i].death.x + fS[sparkAngle] * sparkEnd), ~~(this.enemy[i].death.y + fC[sparkAngle] * sparkEnd));
+                                }
+                                ctx.stroke();
+                                ctx.closePath();
                             }
-                            ctx.stroke();
-                            ctx.closePath();
                             cacheIndex = ~~ (this.enemy[i].angle * 100);
-                            this.enemy[i].x += fS[cacheIndex] * (this.enemy[i].cooldown * 0.01);
-                            this.enemy[i].y += fC[cacheIndex] * (this.enemy[i].cooldown * 0.01);
-                            opacity = (this.enemy[i].cooldown / 100).toFixed(2);
+                            this.enemy[i].x += fS[cacheIndex] * (cooldown * 0.01);
+                            this.enemy[i].y += fC[cacheIndex] * (cooldown * 0.01);
+                            opacity = (cooldown / 100).toFixed(2);
                             ctx.shadowColor = shadowColor + opacity + ')';
                             ctx.fillStyle = this.enemy[i].color + "," + opacity + ")";
-                            size += ~~ (size * ((100 - this.enemy[i].cooldown) / 100));
+                            size += ~~ (size * ((100 - cooldown) / 100));
                             ctx.fillRect(~~this.enemy[i].x - (size >> 1), ~~this.enemy[i].y - (size >> 1), size, size);
                         }
                     }
