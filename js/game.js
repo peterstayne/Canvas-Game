@@ -74,13 +74,13 @@ function preResetGame() {
     ctx.font = "98px arial";
     ctx.fillStyle = "#538";
     ctx.textAlign = "center";
-    ctx.fillText("UNTITLED", centerX, titleY);
+    ctx.fillText("SQUARE'D", centerX, titleY);
 
     ctx.font = "100px arial";
     ctx.lineWidth = 1;
     ctx.strokeStyle = "#a7f";
     ctx.textAlign = "center";
-    ctx.strokeText("UNTITLED", centerX, titleY);
+    ctx.strokeText("SQUARE'D", centerX, titleY);
 
     drawText({
        "text": "Press space to start",
