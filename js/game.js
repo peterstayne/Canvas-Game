@@ -352,7 +352,7 @@ function resetGame() {
                         }
                         else {
                             if(cooldown > 84) {
-                                sparks = 5;
+                                sparks = 3;
                                 ctx.shadowColor = 'rgba(0,0,0,0)';
                                 ctx.strokeStyle = 'rgba(255, 255, 0, 1)';
                                 ctx.lineWidth = 2;
