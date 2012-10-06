@@ -352,12 +352,12 @@ function resetGame() {
                             sparks = 5;
                             ctx.shadowColor = 'rgba(0,0,0,0)';
                             ctx.strokeStyle = 'rgba(200, 150, 0, 1)';
-                            ctx.lineWidth = 3;
+                            ctx.lineWidth = 1;
                             ctx.beginPath();
                             while(--sparks) {
                                 sparkAngle = ~~((Math.random() * 628) - 314);
                                 ctx.moveTo(~~(this.enemy[i].death.x + fS[sparkAngle] * 4), ~~(this.enemy[i].death.y + fC[sparkAngle] * 4));
-                                ctx.lineTo(~~(this.enemy[i].death.x + fS[sparkAngle] * 8), ~~(this.enemy[i].death.y + fC[sparkAngle] * 8));
+                                ctx.lineTo(~~(this.enemy[i].death.x + fS[sparkAngle] * 18), ~~(this.enemy[i].death.y + fC[sparkAngle] * 18));
                             }
                             ctx.stroke();
                             ctx.closePath();
