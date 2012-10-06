@@ -144,6 +144,7 @@ function resetGame() {
                             };
                         }
                         this.bullets.splice(i, 1);
+                        break;
                     }
                 }
                 if (this.bullets[i] !== undefined) {
@@ -312,14 +313,13 @@ function resetGame() {
             }
             for (var i in enemies.enemy) {
                 if (this.enemy[i] !== undefined) {
-                    if (this.enemy[i].hp > 0) {
+                    if (this.enemy[i].hp) {
                         this.behaviors[this.enemy[i].behavior](i);
                         if (
                             this.enemy[i].x < player.x + (this.enemy[i].size >> 1) && 
                             this.enemy[i].x > player.x - (this.enemy[i].size >> 1) && 
                             this.enemy[i].y < player.y + (this.enemy[i].size >> 1) && 
-                            this.enemy[i].y > player.y - (this.enemy[i].size >> 1) && 
-                            this.enemy[i].hp > 0
+                            this.enemy[i].y > player.y - (this.enemy[i].size >> 1)
                         ) {
                             clearInterval(to);
                             gameOn = false;
