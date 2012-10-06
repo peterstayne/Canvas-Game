@@ -351,11 +351,11 @@ function resetGame() {
                             this.enemy.splice(i, 1);
                         }
                         else {
-                            if(cooldown > 20) {
+                            if(cooldown > 70) {
                                 sparks = 5;
                                 ctx.shadowColor = 'rgba(0,0,0,0)';
                                 ctx.strokeStyle = 'rgba(255, 255, 0, 1)';
-                                ctx.lineWidth = 1;
+                                ctx.lineWidth = 2;
                                 ctx.beginPath();
                                 sparkStart = Math.random() * (100 - cooldown);
                                 sparkEnd = Math.random() * (120 - cooldown);
