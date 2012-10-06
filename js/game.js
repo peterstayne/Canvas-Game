@@ -357,7 +357,7 @@ function resetGame() {
                             while(--sparks) {
                                 sparkAngle = ~~((Math.random() * 628) - 314);
                                 ctx.moveTo(~~(this.enemy[i].death.x + fS[sparkAngle] * 4), ~~(this.enemy[i].death.y + fC[sparkAngle] * 4));
-                                ctx.lineTo(~~(this.enemy[i].death.x + fS[sparkAngle] * 4), ~~(this.enemy[i].death.y + fC[sparkAngle] * 4));
+                                ctx.lineTo(~~(this.enemy[i].death.x + fS[sparkAngle] * 8), ~~(this.enemy[i].death.y + fC[sparkAngle] * 8));
                             }
                             ctx.stroke();
                             ctx.closePath();
