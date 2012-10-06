@@ -351,14 +351,14 @@ function resetGame() {
                             this.enemy.splice(i, 1);
                         }
                         else {
-                            if(cooldown > 200) {
+                            if(cooldown > 20) {
                                 sparks = 5;
                                 ctx.shadowColor = 'rgba(0,0,0,0)';
                                 ctx.strokeStyle = 'rgba(255, 255, 0, 1)';
                                 ctx.lineWidth = 1;
                                 ctx.beginPath();
-                                sparkStart = Math.random() * (300 - cooldown) >> 4;
-                                sparkend = Math.random() * (400 - cooldown) >> 4;
+                                sparkStart = Math.random() * (100 - cooldown);
+                                sparkend = Math.random() * (120 - cooldown);
                                 while(--sparks) {
                                     sparkAngle = ~~((Math.random() * 628) - 314);
                                     ctx.moveTo(~~(this.enemy[i].death.x + fS[sparkAngle] * sparkStart), ~~(this.enemy[i].death.y + fC[sparkAngle] * sparkStart));
