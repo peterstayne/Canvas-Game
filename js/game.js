@@ -86,10 +86,10 @@ function preResetGame() {
        "text": "Press space to start",
        "y": pressSpaceY - 18
     });
-    gameClock = Date.now();
 }
 
 function resetGame() {
+    gameClock = Date.now();
     score = 0;
     frame = 0.7;
     player = {
@@ -332,22 +332,22 @@ function resetGame() {
         render: function() {
             var shadowColor = 'rgba(0,0,0,';
             var opacity = 1;
-            var sparks, sparkAngle;
-            var cooldown;
+            var sparks, sparkAngle, sparkStart, sparkEnd;
+            var cooldown, size;
             ctx.shadowBlur = 5;
             ctx.shadowOffsetX = 3;
             ctx.shadowOffsetY = 3;
             for (var i in this.enemy) {
-                var size = this.enemy[i].size;
                 if (this.enemy[i] !== undefined) {
-                    if(this.enemy[i].hp > 0) {
+                    size = this.enemy[i].size;
+                    if(this.enemy[i].hp) {
                         ctx.shadowColor = shadowColor + '1)';
                         ctx.fillStyle = this.enemy[i].color + ",1)";
                         ctx.fillRect(~~this.enemy[i].x - (size >> 1), ~~this.enemy[i].y - (size >> 1), size, size);
                     } else {
                         this.enemy[i].cooldown -= 1;
                         cooldown = this.enemy[i].cooldown;
-                        if (cooldown < 0) {
+                        if (!cooldown) {
                             this.enemy.splice(i, 1);
                         }
                         else {
