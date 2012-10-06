@@ -333,6 +333,7 @@ function resetGame() {
             var shadowColor = 'rgba(0,0,0,';
             var opacity = 1;
             var sparks, sparkAngle;
+            var cooldown;
             ctx.shadowBlur = 5;
             ctx.shadowOffsetX = 3;
             ctx.shadowOffsetY = 3;
@@ -345,7 +346,7 @@ function resetGame() {
                         ctx.fillRect(~~this.enemy[i].x - (size >> 1), ~~this.enemy[i].y - (size >> 1), size, size);
                     } else {
                         this.enemy[i].cooldown -= 1;
-                        var cooldown = cooldown;
+                        cooldown = this.enemy[i].cooldown;
                         if (cooldown < 0) {
                             this.enemy.splice(i, 1);
                         }
