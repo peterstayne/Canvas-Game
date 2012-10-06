@@ -358,7 +358,7 @@ function resetGame() {
                                 ctx.lineWidth = 1;
                                 ctx.beginPath();
                                 sparkStart = Math.random() * (100 - cooldown);
-                                sparkend = Math.random() * (120 - cooldown);
+                                sparkEnd = Math.random() * (120 - cooldown);
                                 while(--sparks) {
                                     sparkAngle = ~~((Math.random() * 628) - 314);
                                     ctx.moveTo(~~(this.enemy[i].death.x + fS[sparkAngle] * sparkStart), ~~(this.enemy[i].death.y + fC[sparkAngle] * sparkStart));
