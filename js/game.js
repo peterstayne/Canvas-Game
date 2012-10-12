@@ -87,7 +87,7 @@ function preResetGame() {
        "y": pressSpaceY - 18
     });
     drawText({
-       "text": "Controls\nW, A, S, D to move\nMouse to aim and fire",
+       "text": "Controls: W, A, S, D to move; Mouse to aim and fire",
        "y": pressSpaceY + 18
     });
     gameClock = Date.now();
@@ -493,18 +493,17 @@ $(document).ready(function () {
             break;
         case 32:
             if (!gameOn) {
-                to = window.setInterval(doFrame, 5);
                 gameOn = true;
                 resetGame();
+                requestAnimationFrame(doFrame);
             } else {
                 if(paused) {
                     gameClock = Date.now();
-                    to = window.setInterval(doFrame, 5);
                     paused = false;
+                    requestAnimationFrame(doFrame);
                 } else {
                     drawText({ text: "PAUSED", size: 60, color: "#538" });
                     drawText({ text: "Press space to unpause.", y: (cheight >> 1) + 100  });
-                    clearInterval(to);
                     paused = true;
                 }
             }
@@ -560,6 +559,7 @@ $(document).ready(function () {
         gameClock = newGameClock;
         gameLogic();
         renderFrame();
+        requestAnimationFrame(doFrame);
     }
     preResetGame();
     resetGame();
