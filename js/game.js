@@ -86,6 +86,14 @@ function preResetGame() {
        "text": "Press space to start",
        "y": pressSpaceY - 18
     });
+<<<<<<< HEAD
+=======
+    drawText({
+       "text": "Controls\nW, A, S, D to move\nMouse to aim and fire",
+       "y": pressSpaceY + 18
+    });
+    gameClock = Date.now();
+>>>>>>> controls text
 }
 
 function resetGame() {
