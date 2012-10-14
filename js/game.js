@@ -538,7 +538,7 @@ $(document).ready(function () {
         });
         drawText({
             color: "#f0f",
-            text: "FPS: " + ~~(fpsTimer / fpsCount),
+            text: "FPS: " + ~~(fpsCount / (fpsTimer / 1000)),
             x: 80,
             y: 55
         });
