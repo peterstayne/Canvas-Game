@@ -198,14 +198,19 @@ function resetGame() {
                 enemies.enemy[i].y += fC[cacheIndex] * (enemies.enemy[i].speed * minusClock);
             },
             wander: function(i) {
+                // PI, -PI = up
+                // -half PI = left
+                // +half PI = right
+                // 0 = down
+                var oldangle = enemies.enemy[i].angle;
                 if (enemies.enemy[i].x < 0) {
-                    console.log(oldangle);
-                    if (enemies.enemy[i].angle < cpi3 && enemies.enemy[i].angle > cpi) {
+/*                    if (enemies.enemy[i].angle < cpi3 && enemies.enemy[i].angle > cpi) {
                         enemies.enemy[i].angle = cpi - (enemies.enemy[i].angle - cpi);
                     }
                     if (enemies.enemy[i].angle > cpi3 && enemies.enemy[i].angle === oldangle) {
                         enemies.enemy[i].angle = cpi360 - enemies.enemy[i].angle;
-                    }
+                    }*/
+                    enemies.enemy[i].angle = -enemies.enemy[i].angle;
                 }
                 if (enemies.enemy[i].x > field.width) {
                     if (enemies.enemy[i].angle > cpi2 && enemies.enemy[i].angle < cpi && enemies.enemy[i].angle === oldangle) {
