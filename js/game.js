@@ -403,7 +403,7 @@ function fail() {
     bgcanvas.setAttribute('width', cwidth);
     bgcanvas.setAttribute('height', cheight);
 
-    document.getElementById('bgimg').onload = function() {
+    var bgload = function() {
         var $this = $(this);
         field.bgimg = {
             img: document.getElementById('bgimg'),
@@ -412,13 +412,9 @@ function fail() {
         };
         bgctx.drawImage(field.bgimg.img, 0, 0, field.bgimg.width, field.bgimg.height, 0, 0, cwidth, cheight);
     };
-    if(document.getElementById('bgimg').complete) {
-        if(document.createEvent) {
-            document.getElementById('bgimg').dispatchEvent({ eventName: 'load', memo: ''});
-        } else {
-            document.getElementById('bgimg').fireEvent("onload", { eventName: 'load', memo: ''});
-        }
-    }
+
+    document.getElementById('bgimg').onload = bgload;
+    if(document.getElementById('bgimg').complete) bgload();
 
     field = {
         width: cwidth,
