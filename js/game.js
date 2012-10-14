@@ -490,6 +490,7 @@ $(document).ready(function () {
             player.moveDown = true;
             break;
         case 32:
+            console.log('dsfasdfasdf');
             if (!gameOn) {
                 gameOn = true;
                 resetGame();
