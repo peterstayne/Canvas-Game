@@ -351,7 +351,7 @@ function resetGame() {
                         ctx.fillStyle = this.enemy[i].color + ",1)";
                         ctx.fillRect(~~this.enemy[i].x - (size >> 1), ~~this.enemy[i].y - (size >> 1), size, size);
                     } else {
-                        this.enemy[i].cooldown -= (minusClock * 0.01);
+                        this.enemy[i].cooldown -= (minusClock * 0.1);
                         cooldown = this.enemy[i].cooldown;
                         if (!cooldown) {
                             this.enemy.splice(i, 1);
