@@ -389,8 +389,6 @@ function fail() {
     preResetGame();
 }
 
-$(document).ready(function () {
-
     cwidth = 900;
     cheight = 660;
   //  resizeEverything();
@@ -564,6 +562,5 @@ $(document).ready(function () {
     }
     preResetGame();
     resetGame();
-});
 
 })();
