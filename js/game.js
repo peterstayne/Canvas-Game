@@ -250,7 +250,7 @@ function resetGame() {
             },
             {
                 size: 28,
-                speed: 0.112,
+                speed: 0.102,
                 hp: 2,
                 color: 'rgba(255,255,0',
                 behavior: "wanderChase",
@@ -258,7 +258,7 @@ function resetGame() {
             },
             {
                 size: 22,
-                speed: 0.054,
+                speed: 0.064,
                 hp: 1,
                 color: 'rgba(0,255,255',
                 behavior: "chase"
