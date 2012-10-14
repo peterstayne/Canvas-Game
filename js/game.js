@@ -210,7 +210,7 @@ function resetGame() {
                     if (enemies.enemy[i].angle > cpi3 && enemies.enemy[i].angle === oldangle) {
                         enemies.enemy[i].angle = cpi360 - enemies.enemy[i].angle;
                     }*/
-                    enemies.enemy[i].angle = -enemies.enemy[i].angle;
+                    if(enemies.enemy[i].angle < 0) enemies.enemy[i].angle = -enemies.enemy[i].angle;
                 }
                 if (enemies.enemy[i].x > field.width) {
                     if (enemies.enemy[i].angle > cpi2 && enemies.enemy[i].angle < cpi && enemies.enemy[i].angle === oldangle) {
