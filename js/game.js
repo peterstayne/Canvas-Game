@@ -1,3 +1,5 @@
+;(function() {
+
 var canvas, ctx, player = {},
     field = {},
     canvasScale = 1,
@@ -577,3 +579,5 @@ $(document).ready(function () {
     preResetGame();
     resetGame();
 });
+
+})();
