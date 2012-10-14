@@ -413,6 +413,11 @@ $(document).ready(function () {
     cheight = 660;
   //  resizeEverything();
  
+    canvas = document.getElementById('gamecanvas');
+    ctx = canvas.getContext("2d");
+    bgcanvas = document.getElementById('bgcanvas');
+    bgctx = bgcanvas.getContext("2d");
+
     $("#bgimg").one('load', function () {
         var $this = $(this);
         field.bgimg = {
@@ -425,11 +430,6 @@ $(document).ready(function () {
     }).each(function(){
         if(this.complete) $(this).trigger("load");
     });;
-
-    canvas = document.getElementById('gamecanvas');
-    ctx = canvas.getContext("2d");
-    bgcanvas = document.getElementById('bgcanvas');
-    bgctx = bgcanvas.getContext("2d");
 
     canvas.setAttribute('width', cwidth);
     canvas.setAttribute('height', cheight);
