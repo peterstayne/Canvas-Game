@@ -350,9 +350,9 @@ function resetGame() {
                             this.enemy.splice(i, 1);
                         }
                         else {
+                            if(shadowEnabled) ctx.shadowColor = 'rgba(0,0,0,0)';
                             if(cooldown > 84) {
                                 sparks = 3;
-                                if(shadowEnabled) ctx.shadowColor = 'rgba(0,0,0,0)';
                                 ctx.strokeStyle = 'rgba(255, 255, 0, 1)';
                                 ctx.lineWidth = 2;
                                 ctx.beginPath();
@@ -370,7 +370,6 @@ function resetGame() {
                             this.enemy[i].x += fS[cacheIndex] * (cooldown * 0.01);
                             this.enemy[i].y += fC[cacheIndex] * (cooldown * 0.01);
                             opacity = (cooldown / 100).toFixed(2);
-                            if(shadowEnabled) ctx.shadowColor = shadowColor + opacity + ')';
                             ctx.fillStyle = this.enemy[i].color + "," + opacity + ")";
                             size += ~~ (size * ((100 - cooldown) / 100));
                             ctx.fillRect(~~this.enemy[i].x - (size >> 1), ~~this.enemy[i].y - (size >> 1), size, size);
@@ -475,7 +474,6 @@ $(document).ready(function () {
         player.firing = false;
     });
     $(window).keydown(function (event) {
-        console.log(event);
         switch (event.keyCode) {
         case 87:
             player.moveUp = true;
