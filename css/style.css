@@ -17,6 +17,7 @@ body {
     font-size: 14px;
     font-family: 'Source Sans Pro', Verdana, sans-serif;
     line-height: 1.4;
+    position: relative;
 }
 p { color: #fff; }
 a, a:visited, a:hover, a:active {
@@ -29,7 +30,7 @@ a, a:visited, a:hover, a:active {
 }
 #score { position: absolute; font-family: helevetica, verdana, arial; color: white; }
 
-#gamecanvas { cursor: none;  margin: 0 auto; display: block; }
+canvas { position: absolute; left: 0; top: 0; cursor: none;  margin: 0 auto; display: block; }
 
 #bgimg { display: none; }
 
