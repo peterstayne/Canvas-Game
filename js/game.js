@@ -418,6 +418,11 @@ $(document).ready(function () {
     bgcanvas = document.getElementById('bgcanvas');
     bgctx = bgcanvas.getContext("2d");
 
+    canvas.setAttribute('width', cwidth);
+    canvas.setAttribute('height', cheight);
+    bgcanvas.setAttribute('width', cwidth);
+    bgcanvas.setAttribute('height', cheight);
+
     $("#bgimg").one('load', function () {
         var $this = $(this);
         field.bgimg = {
@@ -430,11 +435,6 @@ $(document).ready(function () {
     }).each(function(){
         if(this.complete) $(this).trigger("load");
     });;
-
-    canvas.setAttribute('width', cwidth);
-    canvas.setAttribute('height', cheight);
-    bgcanvas.setAttribute('width', cwidth);
-    bgcanvas.setAttribute('height', cheight);
 
     field = {
         width: cwidth,
