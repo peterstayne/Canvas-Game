@@ -14,6 +14,7 @@ var canvas, ctx, player = {},
     fC, fS,
     fakeLimit = (cpi360 * 200) >> 0,
     crosshair = {},
+    minusClock = 0,
     gameClock = Date.now();
 
 fS = [];
@@ -134,8 +135,8 @@ function resetGame() {
             }
             for (var i in this.bullets) {
                 var cacheIndex = ~~ (this.bullets[i].angle * 100);
-                this.bullets[i].x += fS[cacheIndex] * 3;
-                this.bullets[i].y += fC[cacheIndex] * 3;
+                this.bullets[i].x += fS[cacheIndex] * (0.03 * minusClock);
+                this.bullets[i].y += fC[cacheIndex] * (0.03 * minusClock);
                 for (var j in enemies.enemy) {
                     var size = enemies.enemy[j].size >> 1;
                     if (this.bullets[i] !== undefined && this.bullets[i].x < enemies.enemy[j].x + enemies.enemy[j].size && this.bullets[i].x > enemies.enemy[j].x - enemies.enemy[j].size && this.bullets[i].y < enemies.enemy[j].y + enemies.enemy[j].size && this.bullets[i].y > enemies.enemy[j].y - enemies.enemy[j].size && enemies.enemy[j].hp > 0) {
@@ -184,15 +185,15 @@ function resetGame() {
                     enemies.enemy[i].cooldown = ~~ (Math.random() * 900) + 300;
                 }
                 var cacheIndex = ~~ (enemies.enemy[i].angle * 100);
-                enemies.enemy[i].x += fS[cacheIndex] * enemies.enemy[i].speed;
-                enemies.enemy[i].y += fC[cacheIndex] * enemies.enemy[i].speed;
+                enemies.enemy[i].x += fS[cacheIndex] * (enemies.enemy[i].speed * minusClock);
+                enemies.enemy[i].y += fC[cacheIndex] * (enemies.enemy[i].speed * minusClock);
                 enemies.enemy[i].cooldown -= 1;
             },
             chase: function(i) {
                 enemies.enemy[i].angle = Math.atan2(player.x - enemies.enemy[i].x, player.y - enemies.enemy[i].y);
                 var cacheIndex = ~~ (enemies.enemy[i].angle * 100);
-                enemies.enemy[i].x += fS[cacheIndex] * enemies.enemy[i].speed;
-                enemies.enemy[i].y += fC[cacheIndex] * enemies.enemy[i].speed;
+                enemies.enemy[i].x += fS[cacheIndex] * (enemies.enemy[i].speed * minusClock);
+                enemies.enemy[i].y += fC[cacheIndex] * (enemies.enemy[i].speed * minusClock);
             },
             wander: function(i) {
                 var oldangle = enemies.enemy[i].angle;
@@ -229,8 +230,8 @@ function resetGame() {
                     }
                 }
                 var cacheIndex = ~~ (enemies.enemy[i].angle * 100);
-                enemies.enemy[i].x += fS[cacheIndex] * enemies.enemy[i].speed;
-                enemies.enemy[i].y += fC[cacheIndex] * enemies.enemy[i].speed;
+                enemies.enemy[i].x += fS[cacheIndex] * (enemies.enemy[i].speed * minusClock);
+                enemies.enemy[i].y += fC[cacheIndex] * (enemies.enemy[i].speed * minusClock);
             }            
         },
         types: [
@@ -556,7 +557,8 @@ $(document).ready(function () {
     function doFrame() {
         if(!gameOn || paused) return false;
         var newGameClock = Date.now();
-        frame += ((newGameClock - gameClock) * 0.00002);
+        minusClock = newGameClock - gameClock;
+        frame += (minusClock * 0.00002);
         gameClock = newGameClock;
         gameLogic();
         renderFrame();
