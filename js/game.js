@@ -416,11 +416,11 @@ $(document).ready(function () {
     };
     if(document.getElementById('bgimg').complete) {
         if(document.createEvent) {
-            document.getElementById('bgimg').dispatchEvent({ 'load', ''});
+            document.getElementById('bgimg').dispatchEvent({ eventName: 'load', memo: ''});
         } else {
-            document.getElementById('bgimg').fireEvent("onload", { 'load', ''});
+            document.getElementById('bgimg').fireEvent("onload", { eventName: 'load', memo: ''});
         }
-    };
+    }
 
     field = {
         width: cwidth,
