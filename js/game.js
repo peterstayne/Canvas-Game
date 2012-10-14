@@ -129,7 +129,7 @@ function resetGame() {
             if (this.moveDown && this.y < field.height && !this.moveUp) {
                 this.y += (0.12 * minusClock);
             }
-            if (this.firing && (this.cooldown = this.cooldown - minusclock) <= 0) {
+            if (this.firing && (this.cooldown = this.cooldown - minusClock) <= 0) {
                 this.fireShot();
                 this.cooldown = 25;
             }
