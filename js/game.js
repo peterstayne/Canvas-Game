@@ -554,6 +554,7 @@ $(document).ready(function () {
     }
 
     function doFrame() {
+        if(!gameOn) return false;
         var newGameClock = Date.now();
         frame += ((newGameClock - gameClock) * 0.00002);
         gameClock = newGameClock;
