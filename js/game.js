@@ -386,28 +386,9 @@ function resetGame() {
 
 
 function fail() {
-    //alert('The evil square ate you. :(\nYour score was ' + score);
     preResetGame();
 }
-function resizeEverything() {
-    var aspectRatio = cwidth / cheight;
-    var sw = $(window).width();
-    var sh = $(window).height();
-    if(sw / sh > aspectRatio) {
-        $("#gamecanvas").css({
-            height:sh,
-            width: sh * aspectRatio
-        });
-        canvasScale = (sh * aspectRatio) / cwidth;
-    } else {
-        $("#gamecanvas").css({
-            height: sw * aspectRatio,
-            width: sw
-        });
-        canvasScale = sw / cwidth;
-    }
-}
-//$(window).resize(resizeEverything);
+
 $(document).ready(function () {
 
     cwidth = 900;
@@ -424,17 +405,22 @@ $(document).ready(function () {
     bgcanvas.setAttribute('width', cwidth);
     bgcanvas.setAttribute('height', cheight);
 
-    $("#bgimg").one('load', function () {
+    document.getElementById('bgimg').onload = function() {
         var $this = $(this);
         field.bgimg = {
             img: document.getElementById('bgimg'),
-            width: $this.width(),
-            height: $this.height()
+            width: this.width,
+            height: this.height
         };
         bgctx.drawImage(field.bgimg.img, 0, 0, field.bgimg.width, field.bgimg.height, 0, 0, cwidth, cheight);
-    }).each(function(){
-        if(this.complete) $(this).trigger("load");
-    });;
+    };
+    if(document.getElementById('bgimg').complete) {
+        if(document.createEvent) {
+            document.getElementById('bgimg').dispatchEvent({ 'load', ''});
+        } else {
+            document.getElementById('bgimg').fireEvent("onload", { 'load', ''});
+        }
+    };
 
     field = {
         width: cwidth,
