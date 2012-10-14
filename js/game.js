@@ -452,9 +452,9 @@ function fail() {
         event.stopPropagation();
         return false;
     };
-    $(document).mouseup(function () {
+    document.onmouseup = function () {
         player.firing = false;
-    });
+    };
     $(window).keydown(function (event) {
         switch (event.keyCode) {
         case 87:
