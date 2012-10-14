@@ -3,8 +3,6 @@
 <head>
 	<title>Game!</title>
 	<link rel="stylesheet" type="text/css" href="css/style.css" />
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-	<script type="text/javascript" src="js/requestAnimationFrame-shim.js"></script>
 	<script type="text/javascript" src="js/game.min.js"></script>
 <script type="text/javascript">
 
@@ -25,7 +23,7 @@
 		<canvas id="gamecanvas"></canvas>
 
 <!--
-java -jar /Applications/compiler-latest/compiler.jar --js /Users/pmilkman/projects/Canvas-Game/js/game.js --js_output_file /Users/pmilkman/projects/Canvas-Game/js/game.min.js
+java -jar /Applications/compiler-latest/compiler.jar --compilation_level ADVANCED_OPTIMIZATIONS --js /Users/pmilkman/projects/Canvas-Game/js/game.js --externs /Users/pmilkman/projects/Canvas-Game/js/jQuery.1.8.2.min.js --js_output_file /Users/pmilkman/projects/Canvas-Game/js/game.min.js
 -->
 			<img src="images/gravel.png" id="bgimg" />
 
