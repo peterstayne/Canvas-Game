@@ -406,12 +406,12 @@ function resizeEverything() {
         canvasScale = sw / cwidth;
     }
 }
-$(window).resize(resizeEverything);
+//$(window).resize(resizeEverything);
 $(document).ready(function () {
 
     cwidth = 900;
     cheight = 660;
-    resizeEverything();
+  //  resizeEverything();
  
     $("#bgimg").load(function () {
         var $this = $(this);
