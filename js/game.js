@@ -207,12 +207,6 @@ function resetGame() {
                 
                 var oldangle = enemies.enemy[i].angle;
                 if (enemies.enemy[i].x < 0) {
-/*                    if (enemies.enemy[i].angle < cpi3 && enemies.enemy[i].angle > cpi) {
-                        enemies.enemy[i].angle = cpi - (enemies.enemy[i].angle - cpi);
-                    }
-                    if (enemies.enemy[i].angle > cpi3 && enemies.enemy[i].angle === oldangle) {
-                        enemies.enemy[i].angle = cpi360 - enemies.enemy[i].angle;
-                    }*/
                     if(enemies.enemy[i].angle < 0) enemies.enemy[i].angle = -enemies.enemy[i].angle;
                 }
                 if (enemies.enemy[i].x > field.width) {
@@ -224,12 +218,8 @@ function resetGame() {
                     }
                 }
                 if (enemies.enemy[i].y < 0) {
-                    if (enemies.enemy[i].angle > cpi2 && enemies.enemy[i].angle < cpi && enemies.enemy[i].angle === oldangle) {
-                        enemies.enemy[i].angle = cpi2 + (cpi2 - enemies.enemy[i].angle);
-                    }
-                    if (enemies.enemy[i].angle > cpi && enemies.enemy[i].angle < cpi3 && enemies.enemy[i].angle === oldangle) {
-                        enemies.enemy[i].angle = cpi3 + (cpi3 - enemies.enemy[i].angle);
-                    }
+                    if(enemies.enemy[i].angle < -cpi2) enemies.enemy[i].angle = -cpi2 + (-cpi2 - enemies.enemy[i].angle);
+                    if(enemies.enemy[i].angle > cpi2) enemies.enemy[i].angle = cpi2 + (cpi2 - enemies.enemy[i].angle);
                 }
                 if (enemies.enemy[i].y > field.height) {
                     if (enemies.enemy[i].angle > cpi3 && enemies.enemy[i].angle === oldangle) {
