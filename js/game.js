@@ -420,6 +420,7 @@ $(document).ready(function () {
             width: $this.width(),
             height: $this.height()
         };
+        console.log('got here');
         bgctx.drawImage(field.bgimg.img, 0, 0, field.bgimg.width, field.bgimg.height, 0, 0, cwidth, cheight);
     });
 
