@@ -420,7 +420,7 @@ $(document).ready(function () {
             width: $this.width(),
             height: $this.height()
         };
-        bgctx.drawImage(this.bgimg.img, 0, 0, this.bgimg.width, this.bgimg.height, 0, 0, cwidth, cheight);
+        bgctx.drawImage(field.bgimg.img, 0, 0, field.bgimg.width, field.bgimg.height, 0, 0, cwidth, cheight);
     });
 
     canvas = document.getElementById('gamecanvas');
