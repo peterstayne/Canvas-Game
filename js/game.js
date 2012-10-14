@@ -217,8 +217,8 @@ function resetGame() {
                     if(enemies.enemy[i].angle > cpi2) enemies.enemy[i].angle = cpi2 + (cpi2 - enemies.enemy[i].angle);
                 }
                 if (enemies.enemy[i].y > field.height) {
-                    if(enemies.enemy[i].angle < 0 && enemies.enemy[i].angle < -cpi2) enemies.enemy[i].angle = -cpi2 + (-cpi2 - enemies.enemy[i].angle);
-                    if(enemies.enemy[i].angle > 0 && enemies.enemy[i].angle > cpi2) enemies.enemy[i].angle = cpi2 + (cpi2 - enemies.enemy[i].angle);
+                    if(enemies.enemy[i].angle < 0 && enemies.enemy[i].angle > -cpi2) enemies.enemy[i].angle = -cpi2 + (-cpi2 - enemies.enemy[i].angle);
+                    if(enemies.enemy[i].angle > 0 && enemies.enemy[i].angle < cpi2) enemies.enemy[i].angle = cpi2 + (cpi2 - enemies.enemy[i].angle);
                 }
                 var cacheIndex = ~~ (enemies.enemy[i].angle * 100);
                 enemies.enemy[i].x += fS[cacheIndex] * (enemies.enemy[i].speed * minusClock);
