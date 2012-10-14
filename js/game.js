@@ -404,11 +404,11 @@ function fail() {
     bgcanvas.setAttribute('height', cheight);
 
     var bgload = function() {
-        var $this = $(this);
+        var theimg = document.getElementById('bgimg');
         field.bgimg = {
-            img: document.getElementById('bgimg'),
-            width: this.width,
-            height: this.height
+            img: theimg,
+            width: theimg.width,
+            height: theimg.height
         };
         bgctx.drawImage(field.bgimg.img, 0, 0, field.bgimg.width, field.bgimg.height, 0, 0, cwidth, cheight);
     };
@@ -441,10 +441,10 @@ function fail() {
     ctx.fillStyle = "#000";
     ctx.fillRect(0, 0, cwidth, cheight);
 
-    $(document).mousemove(function (event) {
+    document.onmousemove = function (event) {
         crosshair.x = (event.pageX - field.offset.left) / canvasScale;
         crosshair.y = (event.pageY - field.offset.top) / canvasScale;
-    });
+    };
     $(document).mousedown(function (event) {
         player.fireShot();
         player.firing = true;
