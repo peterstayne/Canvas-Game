@@ -198,7 +198,6 @@ function resetGame() {
                 enemies.enemy[i].y += fC[cacheIndex] * (enemies.enemy[i].speed * minusClock);
             },
             wander: function(i) {
-                var oldangle = enemies.enemy[i].angle;
                 if (enemies.enemy[i].x < 0) {
                     console.log(oldangle);
                     if (enemies.enemy[i].angle < cpi3 && enemies.enemy[i].angle > cpi) {
