@@ -420,12 +420,18 @@ $(document).ready(function () {
             width: $this.width(),
             height: $this.height()
         };
+        bgctx.drawImage(this.bgimg.img, 0, 0, this.bgimg.width, this.bgimg.height, 0, 0, cwidth, cheight);
     });
 
     canvas = document.getElementById('gamecanvas');
     ctx = canvas.getContext("2d");
+    bgcanvas = document.getElementById('bgcanvas');
+    bgctx = bgcanvas.getContext("2d");
+
     canvas.setAttribute('width', cwidth);
     canvas.setAttribute('height', cheight);
+    bgcanvas.setAttribute('width', cwidth);
+    bgcanvas.setAttribute('height', cheight);
 
     field = {
         width: cwidth,
@@ -434,12 +440,7 @@ $(document).ready(function () {
         image: 'gravel.png',
         render: function() {
             if(shadowEnabled) ctx.shadowColor = 'rgba(0,0,0,0)';
-            if (typeof this.bgimg === 'object') {
-                ctx.drawImage(this.bgimg.img, 0, 0, this.bgimg.width, this.bgimg.height, 0, 0, cwidth, cheight);
-            } else {
-                ctx.fillStyle = "#000";
-                ctx.fillRect(0, 0, this.width, this.height);
-            }
+            canvas.width = canvas.width;
         }
     };
 
