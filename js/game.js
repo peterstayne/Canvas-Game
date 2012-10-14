@@ -283,7 +283,7 @@ function resetGame() {
             this.enemy.push(thisenemy);
         },
         logic: function() {
-            if (frame > Math.random() * 200) {
+            if (frame > Math.random() * 100) {
                 var whichwall = ~~(Math.random() * 4);
                 var type = ~~(Math.random() * ~~frame);
                 if (type > this.types.length - 1) {
