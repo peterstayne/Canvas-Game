@@ -118,16 +118,16 @@ function resetGame() {
         },
         logic: function() {
             if (this.moveLeft && this.x > 0 && !this.moveRight) {
-                this.x -= (0.1 * minusClock);
+                this.x -= (0.12 * minusClock);
             }
             if (player.moveRight && this.x < field.width && !this.moveLeft) {
-                this.x += (0.1 * minusClock);
+                this.x += (0.12 * minusClock);
             }
             if (this.moveUp && this.y > 0 && !this.moveDown) {
-                this.y -= (0.1 * minusClock);
+                this.y -= (0.12 * minusClock);
             }
             if (this.moveDown && this.y < field.height && !this.moveUp) {
-                this.y += (0.1 * minusClock);
+                this.y += (0.12 * minusClock);
             }
             if (this.firing && --this.cooldown === 0) {
                 this.fireShot();
@@ -135,8 +135,8 @@ function resetGame() {
             }
             for (var i in this.bullets) {
                 var cacheIndex = ~~ (this.bullets[i].angle * 100);
-                this.bullets[i].x += fS[cacheIndex] * (0.3 * minusClock);
-                this.bullets[i].y += fC[cacheIndex] * (0.3 * minusClock);
+                this.bullets[i].x += fS[cacheIndex] * (0.4 * minusClock);
+                this.bullets[i].y += fC[cacheIndex] * (0.4 * minusClock);
                 for (var j in enemies.enemy) {
                     var size = enemies.enemy[j].size >> 1;
                     if (this.bullets[i] !== undefined && this.bullets[i].x < enemies.enemy[j].x + enemies.enemy[j].size && this.bullets[i].x > enemies.enemy[j].x - enemies.enemy[j].size && this.bullets[i].y < enemies.enemy[j].y + enemies.enemy[j].size && this.bullets[i].y > enemies.enemy[j].y - enemies.enemy[j].size && enemies.enemy[j].hp > 0) {
@@ -237,28 +237,28 @@ function resetGame() {
         types: [
             {
                 size: 36,
-                speed: 0.018,
+                speed: 0.038,
                 hp: 1,
                 color: 'rgba(255,0,0',
                 behavior: "wander"
             },
             {
                 size: 20,
-                speed: 0.052,
+                speed: 0.082,
                 hp: 1,
                 color: 'rgba(255,100,0',
                 behavior: "wander"
             },
             {
                 size: 52,
-                speed: 0.012,
+                speed: 0.022,
                 hp: 3,
                 color: 'rgba(255,0,120',
                 behavior: "chase"
             },
             {
                 size: 28,
-                speed: 0.042,
+                speed: 0.062,
                 hp: 2,
                 color: 'rgba(255,255,0',
                 behavior: "wanderChase",
@@ -273,7 +273,7 @@ function resetGame() {
             },
             {
                 size: 42,
-                speed: 0.012,
+                speed: 0.032,
                 hp: 5,
                 color: 'rgba(255,155,255',
                 behavior: "wander"
