@@ -172,8 +172,8 @@ function resetGame() {
             ctx.fillRect(player.x - 4, player.y - 4, 8, 8);
 
             if(shadowEnabled) ctx.shadowColor = 'rgba(255,255,0,0)';
+            ctx.fillStyle = "rgba(255,255,255,1)";
             for (var i in this.bullets) {
-                ctx.fillStyle = "rgba(255,255,255,1)";
                 ctx.fillRect(~~this.bullets[i].x, ~~this.bullets[i].y, 3, 3);
             }
         }
@@ -331,7 +331,7 @@ function resetGame() {
             var shadowColor = 'rgba(0,0,0,';
             var opacity = 1;
             var sparks, sparkAngle, sparkStart, sparkEnd;
-            var cooldown, size;
+            var cooldown, size, newColor;
             if(shadowEnabled) ctx.shadowBlur = 5;
             if(shadowEnabled) ctx.shadowOffsetX = 3;
             if(shadowEnabled) ctx.shadowOffsetY = 3;
@@ -340,7 +340,8 @@ function resetGame() {
                     size = this.enemy[i].size;
                     if(this.enemy[i].hp) {
                         if(shadowEnabled) ctx.shadowColor = shadowColor + '1)';
-                        ctx.fillStyle = this.enemy[i].color + ",1)";
+                        newColor = this.enemy[i].color + ",1)";
+                        if(ctx.fillStyle !== newColor) ctx.fillStyle = this.enemy[i].color + ",1)";
                         ctx.fillRect(~~this.enemy[i].x - (size >> 1), ~~this.enemy[i].y - (size >> 1), size, size);
                     } else {
                         this.enemy[i].cooldown -= (minusClock * 0.1);
