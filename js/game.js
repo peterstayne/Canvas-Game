@@ -445,13 +445,13 @@ function fail() {
         crosshair.x = (event.pageX - field.offset.left) / canvasScale;
         crosshair.y = (event.pageY - field.offset.top) / canvasScale;
     };
-    $(document).mousedown(function (event) {
+    document.onmousedown = function (event) {
         player.fireShot();
         player.firing = true;
         player.cooldown = 20;
         event.stopPropagation();
         return false;
-    });
+    };
     $(document).mouseup(function () {
         player.firing = false;
     });
