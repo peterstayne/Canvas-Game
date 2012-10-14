@@ -129,7 +129,7 @@ function resetGame() {
             if (this.moveDown && this.y < field.height && !this.moveUp) {
                 this.y += (0.12 * minusClock);
             }
-            if (this.firing && (this.cooldown = this.cooldown - minusClock) <= 0) {
+            if (this.firing && (this.cooldown = this.cooldown - (minusClock * 0.02)) <= 0) {
                 this.fireShot();
                 this.cooldown = 25;
             }
@@ -351,7 +351,7 @@ function resetGame() {
                         ctx.fillStyle = this.enemy[i].color + ",1)";
                         ctx.fillRect(~~this.enemy[i].x - (size >> 1), ~~this.enemy[i].y - (size >> 1), size, size);
                     } else {
-                        this.enemy[i].cooldown -= minusClock;
+                        this.enemy[i].cooldown -= (minusClock * 0.01);
                         cooldown = this.enemy[i].cooldown;
                         if (!cooldown) {
                             this.enemy.splice(i, 1);
