@@ -413,7 +413,7 @@ $(document).ready(function () {
     cheight = 660;
   //  resizeEverything();
  
-    $("#bgimg").load(function () {
+    $("#bgimg").one('load', function () {
         var $this = $(this);
         field.bgimg = {
             img: document.getElementById('bgimg'),
@@ -422,7 +422,9 @@ $(document).ready(function () {
         };
         console.log('got here');
         bgctx.drawImage(field.bgimg.img, 0, 0, field.bgimg.width, field.bgimg.height, 0, 0, cwidth, cheight);
-    });
+    }).each(function(){
+        if(this.complete) $(this).trigger("load");
+    });;
 
     canvas = document.getElementById('gamecanvas');
     ctx = canvas.getContext("2d");
