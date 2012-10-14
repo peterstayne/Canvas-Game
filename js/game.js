@@ -254,7 +254,7 @@ function resetGame() {
                 hp: 2,
                 color: 'rgba(255,255,0',
                 behavior: "wanderChase",
-                cooldown: 1900
+                cooldown: 2900
             },
             {
                 size: 22,
