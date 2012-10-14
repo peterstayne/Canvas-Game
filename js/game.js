@@ -129,7 +129,7 @@ function resetGame() {
             if (this.moveDown && this.y < field.height && !this.moveUp) {
                 this.y += (0.12 * minusClock);
             }
-            if (this.firing && --this.cooldown === 0) {
+            if (this.firing && (this.cooldown = this.cooldown - minusclock) <= 0) {
                 this.fireShot();
                 this.cooldown = 25;
             }
@@ -187,7 +187,7 @@ function resetGame() {
                 var cacheIndex = ~~ (enemies.enemy[i].angle * 100);
                 enemies.enemy[i].x += fS[cacheIndex] * (enemies.enemy[i].speed * minusClock);
                 enemies.enemy[i].y += fC[cacheIndex] * (enemies.enemy[i].speed * minusClock);
-                enemies.enemy[i].cooldown -= 1;
+                enemies.enemy[i].cooldown -= minusClock;
             },
             chase: function(i) {
                 enemies.enemy[i].angle = Math.atan2(player.x - enemies.enemy[i].x, player.y - enemies.enemy[i].y);
@@ -351,7 +351,7 @@ function resetGame() {
                         ctx.fillStyle = this.enemy[i].color + ",1)";
                         ctx.fillRect(~~this.enemy[i].x - (size >> 1), ~~this.enemy[i].y - (size >> 1), size, size);
                     } else {
-                        this.enemy[i].cooldown -= 1;
+                        this.enemy[i].cooldown -= minusClock;
                         cooldown = this.enemy[i].cooldown;
                         if (!cooldown) {
                             this.enemy.splice(i, 1);
