@@ -430,7 +430,6 @@ $(document).ready(function () {
             width: $this.width(),
             height: $this.height()
         };
-        console.log('got here');
         bgctx.drawImage(field.bgimg.img, 0, 0, field.bgimg.width, field.bgimg.height, 0, 0, cwidth, cheight);
     }).each(function(){
         if(this.complete) $(this).trigger("load");
@@ -476,6 +475,7 @@ $(document).ready(function () {
         player.firing = false;
     });
     $(window).keydown(function (event) {
+        console.log(event);
         switch (event.keyCode) {
         case 87:
             player.moveUp = true;
@@ -490,7 +490,6 @@ $(document).ready(function () {
             player.moveDown = true;
             break;
         case 32:
-            console.log('dsfasdfasdf');
             if (!gameOn) {
                 gameOn = true;
                 resetGame();
