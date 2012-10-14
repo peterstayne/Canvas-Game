@@ -17,6 +17,7 @@ var canvas, ctx, player = {},
     minusClock = 0,
     fpsCount = 0,
     fpsTimer = 0,
+    shadowEnabled = true,
     gameClock = Date.now();
 
 fS = [];
@@ -48,7 +49,7 @@ function drawText(params) {
     if(typeof params.text === "undefined" || params.text.length === 0) {
         return false;
     }
-    ctx.shadowColor = 'rgba(0,0,0,0)';
+    if(shadowEnabled) ctx.shadowColor = 'rgba(0,0,0,0)';
 
     ctx.font = params.size + "px arial";
     var thisTextWidth = ctx.measureText(params.text).width;
@@ -68,7 +69,7 @@ function preResetGame() {
     var titleY = ~~(cheight * 0.48);
     var pressSpaceY = ~~(cheight * 0.75);
 
-    ctx.shadowColor = 'rgba(0,0,0,0)';
+    if(shadowEnabled) ctx.shadowColor = 'rgba(0,0,0,0)';
 
     ctx.textBaseline = "alphabetic";
     ctx.fillStyle = "rgba(0,0,0,0.7)";
@@ -163,14 +164,14 @@ function resetGame() {
             }
         },
         render: function() {
-            ctx.shadowColor = 'rgba(0,0,0,1)';
-            ctx.shadowBlur = 5;
-            ctx.shadowOffsetX = 3;
-            ctx.shadowOffsetY = 3;
+            if(shadowEnabled) ctx.shadowColor = 'rgba(0,0,0,1)';
+            if(shadowEnabled) ctx.shadowBlur = 5;
+            if(shadowEnabled) ctx.shadowOffsetX = 3;
+            if(shadowEnabled) ctx.shadowOffsetY = 3;
             ctx.fillStyle = "#0f0";
             ctx.fillRect(player.x - 4, player.y - 4, 8, 8);
 
-            ctx.shadowColor = 'rgba(255,255,0,0)';
+            if(shadowEnabled) ctx.shadowColor = 'rgba(255,255,0,0)';
             for (var i in this.bullets) {
                 ctx.fillStyle = "rgba(255,255,255,1)";
                 ctx.fillRect(~~this.bullets[i].x, ~~this.bullets[i].y, 3, 3);
@@ -331,14 +332,14 @@ function resetGame() {
             var opacity = 1;
             var sparks, sparkAngle, sparkStart, sparkEnd;
             var cooldown, size;
-            ctx.shadowBlur = 5;
-            ctx.shadowOffsetX = 3;
-            ctx.shadowOffsetY = 3;
+            if(shadowEnabled) ctx.shadowBlur = 5;
+            if(shadowEnabled) ctx.shadowOffsetX = 3;
+            if(shadowEnabled) ctx.shadowOffsetY = 3;
             for (var i in this.enemy) {
                 if (this.enemy[i] !== undefined) {
                     size = this.enemy[i].size;
                     if(this.enemy[i].hp) {
-                        ctx.shadowColor = shadowColor + '1)';
+                        if(shadowEnabled) ctx.shadowColor = shadowColor + '1)';
                         ctx.fillStyle = this.enemy[i].color + ",1)";
                         ctx.fillRect(~~this.enemy[i].x - (size >> 1), ~~this.enemy[i].y - (size >> 1), size, size);
                     } else {
@@ -350,7 +351,7 @@ function resetGame() {
                         else {
                             if(cooldown > 84) {
                                 sparks = 3;
-                                ctx.shadowColor = 'rgba(0,0,0,0)';
+                                if(shadowEnabled) ctx.shadowColor = 'rgba(0,0,0,0)';
                                 ctx.strokeStyle = 'rgba(255, 255, 0, 1)';
                                 ctx.lineWidth = 2;
                                 ctx.beginPath();
@@ -368,7 +369,7 @@ function resetGame() {
                             this.enemy[i].x += fS[cacheIndex] * (cooldown * 0.01);
                             this.enemy[i].y += fC[cacheIndex] * (cooldown * 0.01);
                             opacity = (cooldown / 100).toFixed(2);
-                            ctx.shadowColor = shadowColor + opacity + ')';
+                            if(shadowEnabled) ctx.shadowColor = shadowColor + opacity + ')';
                             ctx.fillStyle = this.enemy[i].color + "," + opacity + ")";
                             size += ~~ (size * ((100 - cooldown) / 100));
                             ctx.fillRect(~~this.enemy[i].x - (size >> 1), ~~this.enemy[i].y - (size >> 1), size, size);
@@ -431,7 +432,7 @@ $(document).ready(function () {
         offset: $("#gamecanvas").offset(),
         image: 'gravel.png',
         render: function() {
-            ctx.shadowColor = 'rgba(0,0,0,0)';
+            if(shadowEnabled) ctx.shadowColor = 'rgba(0,0,0,0)';
             if (typeof this.bgimg === 'object') {
                 ctx.drawImage(this.bgimg.img, 0, 0, this.bgimg.width, this.bgimg.height, 0, 0, cwidth, cheight);
             } else {
@@ -445,13 +446,13 @@ $(document).ready(function () {
         x: 0,
         y: 0,
         render: function() {
-            ctx.shadowColor = 'rgba(0,0,0,0)';
+            if(shadowEnabled) ctx.shadowColor = 'rgba(0,0,0,0)';
             ctx.strokeStyle = "#0ff";
             ctx.strokeRect(crosshair.x - 4, crosshair.y - 4, 8, 8);
         }
     };
 
-    ctx.shadowColor = 'rgba(0,0,0,0)';
+    if(shadowEnabled) ctx.shadowColor = 'rgba(0,0,0,0)';
     ctx.fillStyle = "#000";
     ctx.fillRect(0, 0, cwidth, cheight);
 
@@ -497,6 +498,8 @@ $(document).ready(function () {
                     drawText({ text: "PAUSED", size: 60, color: "#538" });
                     drawText({ text: "Press space to unpause.", y: (cheight >> 1) + 100  });
                     paused = true;
+                    fpsCount = 0;
+                    fpsTimer = 0;
                 }
             }
         }
@@ -525,12 +528,17 @@ $(document).ready(function () {
             x: 80,
             y: 30
         });
+        var curFPS = ~~(fpsCount / (fpsTimer / 1000));
         drawText({
             color: "#f0f",
-            text: "FPS: " + ~~(fpsCount / (fpsTimer / 1000)),
+            text: "FPS: " + curFPS,
             x: 80,
             y: 55
         });
+        if(shadowEnabled && curFPS < 50 && fpsTimer > 10000) {
+            ctx.shadowColor = 'rgba(0,0,0,0)';
+            shadowEnabled = false;
+        }
     }
 
     function gameLogic() {
