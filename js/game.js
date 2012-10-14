@@ -15,6 +15,8 @@ var canvas, ctx, player = {},
     fakeLimit = (cpi360 * 200) >> 0,
     crosshair = {},
     minusClock = 0,
+    fpsCount = 0,
+    fpsTimer = 0,
     gameClock = Date.now();
 
 fS = [];
@@ -534,6 +536,12 @@ $(document).ready(function () {
             x: 80,
             y: 30
         });
+        drawText({
+            color: "#f0f",
+            text: "FPS: " + ~~(fpsTimer / fpsCount),
+            x: 80,
+            y: 55
+        });
     }
 
     function gameLogic() {
@@ -559,6 +567,8 @@ $(document).ready(function () {
         var newGameClock = Date.now();
         minusClock = newGameClock - gameClock;
         frame += (minusClock * 0.00002);
+        fpsCount++;
+        fpsTimer += minusClock;
         gameClock = newGameClock;
         gameLogic();
         renderFrame();
