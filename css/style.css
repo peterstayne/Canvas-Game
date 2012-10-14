@@ -18,6 +18,7 @@ body {
     font-family: 'Source Sans Pro', Verdana, sans-serif;
     line-height: 1.4;
     position: relative;
+    width: 900px;
 }
 p { color: #fff; }
 a, a:visited, a:hover, a:active {
