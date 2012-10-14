@@ -455,7 +455,7 @@ function fail() {
     document.onmouseup = function () {
         player.firing = false;
     };
-    $(window).keydown(function (event) {
+    window.onkeydown = function (event) {
         switch (event.keyCode) {
         case 87:
             player.moveUp = true;
@@ -488,8 +488,8 @@ function fail() {
                 }
             }
         }
-    });
-    $(window).keyup(function (event) {
+    };
+    window.onkeyup = function (event) {
         switch (event.keyCode) {
         case 87:
             player.moveUp = false;
@@ -504,7 +504,7 @@ function fail() {
             player.moveDown = false;
             break;
         }
-    });
+    };
 
     function updateScore() {
         drawText({
