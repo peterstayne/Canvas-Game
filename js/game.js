@@ -202,6 +202,9 @@ function resetGame() {
                 // -half PI = left
                 // +half PI = right
                 // 0 = down
+                if(enemies.enemy[i].angle > cpi) enemies.enemy[i].angle - cpi360;
+                if(enemies.enemy[i].angle < -cpi) enemies.enemy[i].angle + cpi360;
+                
                 var oldangle = enemies.enemy[i].angle;
                 if (enemies.enemy[i].x < 0) {
 /*                    if (enemies.enemy[i].angle < cpi3 && enemies.enemy[i].angle > cpi) {
