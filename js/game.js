@@ -433,7 +433,7 @@ function fail() {
             canvas.width = canvas.width;
         }
     };
-
+    console.log(field);
     crosshair = {
         x: 0,
         y: 0,
