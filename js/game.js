@@ -33,8 +33,7 @@ for (var i = -fakeLimit; i < fakeLimit; i++) {
 
 function findOffset(obj) {
     var curleft = curtop = 0;
-    curLeft = window.innerWidth / 2 - canvas.width / 2;
-    console.log(curLeft);
+    curLeft = window.innerWidth / 2 - obj.width / 2;
     curTop = obj.offsetTop;
     return { left: curleft, top: curtop };
 }    
@@ -434,7 +433,7 @@ function fail() {
             canvas.width = canvas.width;
         }
     };
-    console.log(field);
+    console.log(field.offset);
     crosshair = {
         x: 0,
         y: 0,
