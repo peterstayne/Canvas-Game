@@ -32,10 +32,10 @@ for (var i = -fakeLimit; i < fakeLimit; i++) {
 }
 
 function findOffset(obj) {
-    var curleft = curtop = 0;
-    curLeft = window.innerWidth / 2 - obj.width / 2;
-    curTop = obj.offsetTop;
-    return { left: curleft, top: curtop };
+    return {
+        left: (window.innerWidth / 2) - (obj.width / 2),
+        top: obj.offsetTop
+    };
 }    
 function drawText(params) {
     // params:
