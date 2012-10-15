@@ -369,7 +369,7 @@ function resetGame() {
                     } else {
                         this.enemy[i].cooldown -= (minusClock * 0.1);
                         cooldown = this.enemy[i].cooldown;
-                        if (!cooldown) {
+                        if (cooldown <= 0) {
                             this.enemy.splice(i, 1);
                         }
                         else {
