@@ -286,7 +286,7 @@ function resetGame() {
                 hp: 1,
                 color: 'rgba(255,120,120',
                 behavior: 'divebomb'
-            }.
+            },
             {
                 size: 42,
                 speed: 0.032,
