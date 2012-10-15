@@ -152,7 +152,8 @@ function resetGame() {
                 for (var j in enemies.enemy) {
                     var size = enemies.enemy[j].size >> 1;
                     if (this.bullets[i] !== undefined && this.bullets[i].x < enemies.enemy[j].x + enemies.enemy[j].size && this.bullets[i].x > enemies.enemy[j].x - enemies.enemy[j].size && this.bullets[i].y < enemies.enemy[j].y + enemies.enemy[j].size && this.bullets[i].y > enemies.enemy[j].y - enemies.enemy[j].size && enemies.enemy[j].hp > 0) {
-                        if (--enemies.enemy[j].hp <= 0) {
+                        enemies.enemy[j].hp--;
+                        if (enemies.enemy[j].hp <= 0) {
                             enemies.enemy[j].angle = this.bullets[i].angle;
                             enemies.enemy[j].cooldown = 100;
                             score++;
