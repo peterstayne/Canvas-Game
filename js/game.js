@@ -34,6 +34,7 @@ for (var i = -fakeLimit; i < fakeLimit; i++) {
 function findOffset(obj) {
     var curleft = curtop = 0;
     curLeft = window.innerWidth / 2 - canvas.width / 2;
+    console.log(curLeft);
     curTop = obj.offsetTop;
     return { left: curleft, top: curtop };
 }    
