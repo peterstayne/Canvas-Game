@@ -190,7 +190,7 @@ function resetGame() {
     enemies = {
         enemy: [],
         behaviors: {
-            wanderChase: function(i) {
+            'wanderChase': function(i) {
                 var angleToPlayer = Math.atan2(player.x - enemies.enemy[i].x, player.y - enemies.enemy[i].y);
                 if (enemies.enemy[i].cooldown < 0) {
                     enemies.enemy[i].angle = angleToPlayer;
@@ -201,13 +201,13 @@ function resetGame() {
                 enemies.enemy[i].y += fC[cacheIndex] * (enemies.enemy[i].speed * minusClock);
                 enemies.enemy[i].cooldown -= minusClock;
             },
-            chase: function(i) {
+            'chase': function(i) {
                 enemies.enemy[i].angle = Math.atan2(player.x - enemies.enemy[i].x, player.y - enemies.enemy[i].y);
                 var cacheIndex = ~~ (enemies.enemy[i].angle * 100);
                 enemies.enemy[i].x += fS[cacheIndex] * (enemies.enemy[i].speed * minusClock);
                 enemies.enemy[i].y += fC[cacheIndex] * (enemies.enemy[i].speed * minusClock);
             },
-            wander: function(i) {
+            'wander': function(i) {
                 // PI, -PI = up
                 // -half PI = left
                 // +half PI = right
