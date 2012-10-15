@@ -207,6 +207,14 @@ function resetGame() {
                 enemies.enemy[i].x += fS[cacheIndex] * (enemies.enemy[i].speed * minusClock);
                 enemies.enemy[i].y += fC[cacheIndex] * (enemies.enemy[i].speed * minusClock);
             },
+            'divebomb': function(i) {
+                var cacheIndex = ~~ (enemies.enemy[i].angle * 100);
+                enemies.enemy[i].x += fS[cacheIndex] * (enemies.enemy[i].speed * minusClock);
+                enemies.enemy[i].y += fC[cacheIndex] * (enemies.enemy[i].speed * minusClock);
+                if(enemies.enemy[i].x < 0 || enemies.enemy[i].x > field.width || enemies.enemy[i].y < 0 || enemies.enemy[i].y > field.height) {
+                    enemies.enemy[i].hp = 0;
+                }
+            },
             'wander': function(i) {
                 // PI, -PI = up
                 // -half PI = left
@@ -272,6 +280,13 @@ function resetGame() {
                 color: 'rgba(0,255,255',
                 behavior: "chase"
             },
+            {
+                size: 30,
+                speed: 0.17,
+                hp: 1,
+                color: 'rgba(255,120,120',
+                behavior: 'divebomb'
+            }.
             {
                 size: 42,
                 speed: 0.032,
