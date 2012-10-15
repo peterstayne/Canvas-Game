@@ -30,6 +30,16 @@ fC = [];
 for (var i = -fakeLimit; i < fakeLimit; i++) {
     fC[i] = Math.cos(i / 100);
 }
+
+function findPos(obj) {
+    var curleft = curtop = 0;
+    if (obj.offsetParent) {
+    do {
+        curleft += obj.offsetLeft;
+        curtop += obj.offsetTop;
+    } while (obj = obj.offsetParent);
+    return { left: curleft, top: curtop };
+}    
 function drawText(params) {
     // params:
     // text: the text of the string to display.
@@ -419,7 +429,7 @@ function fail() {
     field = {
         width: cwidth,
         height: cheight,
-        offset: $("#gamecanvas").offset(),
+        offset: findPos(canvas),
         image: 'gravel.png',
         render: function() {
             if(shadowEnabled) ctx.shadowColor = 'rgba(0,0,0,0)';
