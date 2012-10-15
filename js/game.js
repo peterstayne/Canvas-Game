@@ -213,6 +213,7 @@ function resetGame() {
                 enemies.enemy[i].y += fC[cacheIndex] * (enemies.enemy[i].speed * minusClock);
                 if(enemies.enemy[i].x < 0 || enemies.enemy[i].x > field.width || enemies.enemy[i].y < 0 || enemies.enemy[i].y > field.height) {
                     enemies.enemy[i].hp = 0;
+                    enemies.enemy[i].cooldown = 0;
                 }
             },
             'wander': function(i) {
