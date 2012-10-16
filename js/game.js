@@ -183,13 +183,13 @@ function resetGame() {
             ctx.fillRect(player.x - 4, player.y - 4, 8, 8);
 
             if(shadowEnabled) ctx.shadowColor = 'rgba(255,255,0,0)';
-            ctx.strokeStyle = 'rgba(255, 255, 0, 1)';
+            ctx.strokeStyle = 'rgba(255, 255, 255, 1)';
             ctx.lineWidth = 2;
             ctx.beginPath();
             for (var i in this.bullets) {
                 cacheIndex = ~~ (Math.atan2(player.x - ~~this.bullets[i].x, player.y - ~~this.bullets[i].y) * 100);
                 ctx.moveTo(~~this.bullets[i].x, ~~this.bullets[i].y);
-                ctx.lineTo(~~this.bullets[i].x + (fS[cacheIndex] * 4), ~~this.bullets[i].y + (fC[cacheIndex] * 4));
+                ctx.lineTo(~~this.bullets[i].x + (fS[cacheIndex] * 8), ~~this.bullets[i].y + (fC[cacheIndex] * 8));
             }
             ctx.stroke();
             ctx.closePath();
