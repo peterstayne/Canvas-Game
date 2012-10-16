@@ -147,8 +147,8 @@ function resetGame() {
             }
             for (var i in this.bullets) {
                 var cacheIndex = ~~ (this.bullets[i].angle * 100);
-                this.bullets[i].x += fS[cacheIndex] * (0.6 * minusClock);
-                this.bullets[i].y += fC[cacheIndex] * (0.6 * minusClock);
+                this.bullets[i].x += fS[cacheIndex] * (0.7 * minusClock);
+                this.bullets[i].y += fC[cacheIndex] * (0.7 * minusClock);
                 for (var j in enemies.enemy) {
                     var size = enemies.enemy[j].size >> 1;
                     if (this.bullets[i] !== undefined && this.bullets[i].x < enemies.enemy[j].x + enemies.enemy[j].size && this.bullets[i].x > enemies.enemy[j].x - enemies.enemy[j].size && this.bullets[i].y < enemies.enemy[j].y + enemies.enemy[j].size && this.bullets[i].y > enemies.enemy[j].y - enemies.enemy[j].size && enemies.enemy[j].hp > 0) {
@@ -176,7 +176,7 @@ function resetGame() {
         render: function() {
             var cacheIndex;
             if(shadowEnabled) ctx.shadowColor = 'rgba(0,0,0,1)';
-            if(shadowEnabled) ctx.shadowBlur = 5;
+            if(shadowEnabled) ctx.shadowBlur = 15;
             if(shadowEnabled) ctx.shadowOffsetX = 0;
             if(shadowEnabled) ctx.shadowOffsetY = 0;
             ctx.fillStyle = "#0f0";
