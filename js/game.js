@@ -109,7 +109,7 @@ function preResetGame() {
 function resetGame() {
     gameClock = Date.now();
     score = 0;
-    frame = 1;
+    frame = 1.2;
     player = {
         x: ~~ (cwidth / 2),
         y: ~~ (cheight / 2),
