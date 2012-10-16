@@ -177,8 +177,8 @@ function resetGame() {
             var cacheIndex;
             if(shadowEnabled) ctx.shadowColor = 'rgba(0,0,0,1)';
             if(shadowEnabled) ctx.shadowBlur = 5;
-            if(shadowEnabled) ctx.shadowOffsetX = 3;
-            if(shadowEnabled) ctx.shadowOffsetY = 3;
+            if(shadowEnabled) ctx.shadowOffsetX = 0;
+            if(shadowEnabled) ctx.shadowOffsetY = 0;
             ctx.fillStyle = "#0f0";
             ctx.fillRect(player.x - 4, player.y - 4, 8, 8);
 
