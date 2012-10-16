@@ -189,7 +189,7 @@ function resetGame() {
             for (var i in this.bullets) {
                 cacheIndex = ~~ (Math.atan2(player.x - ~~this.bullets[i].x, player.y - ~~this.bullets[i].y) * 100);
                 ctx.moveTo(~~this.bullets[i].x, ~~this.bullets[i].y);
-                ctx.lineTo(~~this.bullets[i].x + (fS[cacheIndex] * 8), ~~this.bullets[i].y + (fC[cacheIndex] * 8));
+                ctx.lineTo(~~this.bullets[i].x + (fS[cacheIndex] * 14), ~~this.bullets[i].y + (fC[cacheIndex] * 14));
             }
             ctx.stroke();
             ctx.closePath();
