@@ -174,6 +174,7 @@ function resetGame() {
             }
         },
         render: function() {
+            var cacheIndex;
             if(shadowEnabled) ctx.shadowColor = 'rgba(0,0,0,1)';
             if(shadowEnabled) ctx.shadowBlur = 5;
             if(shadowEnabled) ctx.shadowOffsetX = 3;
@@ -183,9 +184,14 @@ function resetGame() {
 
             if(shadowEnabled) ctx.shadowColor = 'rgba(255,255,0,0)';
             ctx.fillStyle = "rgba(255,255,255,1)";
+            ctx.beginPath();
             for (var i in this.bullets) {
-                ctx.fillRect(~~this.bullets[i].x, ~~this.bullets[i].y, 3, 3);
+                cacheIndex = ~~ (Math.atan2(player.x - ~~this.bullets[i].x, player.y - ~~this.bullets[i].y) * 100);
+                ctx.moveTo(~~this.bullets[i].x, ~~this.bullets[i].y);
+                ctx.lineTo(~~this.bullets[i].x + fS[cacheIndex], ~~this.bullets[i].y + fC[cacheIndex]);
             }
+            ctx.stroke();
+            ctx.closePath();
         }
     };
     enemies = {
