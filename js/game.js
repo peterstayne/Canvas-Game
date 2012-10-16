@@ -147,8 +147,8 @@ function resetGame() {
             }
             for (var i in this.bullets) {
                 var cacheIndex = ~~ (this.bullets[i].angle * 100);
-                this.bullets[i].x += fS[cacheIndex] * (0.5 * minusClock);
-                this.bullets[i].y += fC[cacheIndex] * (0.5 * minusClock);
+                this.bullets[i].x += fS[cacheIndex] * (0.6 * minusClock);
+                this.bullets[i].y += fC[cacheIndex] * (0.6 * minusClock);
                 for (var j in enemies.enemy) {
                     var size = enemies.enemy[j].size >> 1;
                     if (this.bullets[i] !== undefined && this.bullets[i].x < enemies.enemy[j].x + enemies.enemy[j].size && this.bullets[i].x > enemies.enemy[j].x - enemies.enemy[j].size && this.bullets[i].y < enemies.enemy[j].y + enemies.enemy[j].size && this.bullets[i].y > enemies.enemy[j].y - enemies.enemy[j].size && enemies.enemy[j].hp > 0) {
@@ -182,7 +182,7 @@ function resetGame() {
             ctx.fillStyle = "#0f0";
             ctx.fillRect(player.x - 4, player.y - 4, 8, 8);
 
-            if(shadowEnabled) ctx.shadowColor = 'rgba(255,255,0,0)';
+            if(shadowEnabled) ctx.shadowColor = 'rgba(255,255,0,1)';
             ctx.strokeStyle = 'rgba(255, 255, 255, 1)';
             ctx.lineWidth = 2;
             ctx.beginPath();
