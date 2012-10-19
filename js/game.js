@@ -274,11 +274,11 @@ function resetGame() {
             },
             {
                 size: 28,
-                speed: 0.102,
+                speed: 0.099,
                 hp: 2,
                 color: 'rgba(255,255,0',
                 behavior: "wanderChase",
-                cooldown: 2900
+                cooldown: 3900
             },
             {
                 size: 22,
@@ -291,7 +291,7 @@ function resetGame() {
                 size: 30,
                 speed: 0.17,
                 hp: 1,
-                color: 'rgba(255,120,120',
+                color: 'rgba(255,140,100',
                 behavior: 'divebomb'
             },
             {
