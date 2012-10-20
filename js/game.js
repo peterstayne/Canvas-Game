@@ -144,14 +144,15 @@ function resetGame() {
                 this.fireShot();
                 this.cooldown = 25;
             }
+            var cacheindex, thisbullet, thisenemy, size, j;
             for (var i in this.bullets) {
-                var thisbullet = this.bullets[i];
-                var cacheIndex = ~~ (thisbullet.angle * 100);
+                thisbullet = this.bullets[i];
+                cacheIndex = ~~ (thisbullet.angle * 100);
                 thisbullet.x += fS[cacheIndex] * (0.7 * minusClock);
                 thisbullet.y += fC[cacheIndex] * (0.7 * minusClock);
-                for (var j in enemies.enemy) {
-                    var thisenemy = enemies.enemy[j];
-                    var size = thisenemy.size >> 1;
+                for (j in enemies.enemy) {
+                    thisenemy = enemies.enemy[j];
+                    size = thisenemy.size >> 1;
                     if (thisbullet !== undefined && thisbullet.x < thisenemy.x + thisenemy.size && thisbullet.x > thisenemy.x - thisenemy.size && thisbullet.y < thisenemy.y + thisenemy.size && thisbullet.y > thisenemy.y - thisenemy.size && thisenemy.hp > 0) {
                         thisenemy.hp--;
                         if (thisenemy.hp <= 0) {
@@ -200,29 +201,32 @@ function resetGame() {
         enemy: [],
         behaviors: {
             'wanderChase': function(i) {
-                var angleToPlayer = Math.atan2(player.x - enemies.enemy[i].x, player.y - enemies.enemy[i].y);
-                if (enemies.enemy[i].cooldown < 0) {
-                    enemies.enemy[i].angle = angleToPlayer;
-                    enemies.enemy[i].cooldown = ~~ (Math.random() * 900) + 300;
+                var thisenemy = enemies.enemy[i];
+                var angleToPlayer = Math.atan2(player.x - thisenemy.x, player.y - thisenemy.y);
+                if (thisenemy.cooldown < 0) {
+                    thisenemy.angle = angleToPlayer;
+                    thisenemy.cooldown = ~~ (Math.random() * 900) + 300;
                 }
-                var cacheIndex = ~~ (enemies.enemy[i].angle * 100);
-                enemies.enemy[i].x += fS[cacheIndex] * (enemies.enemy[i].speed * minusClock);
-                enemies.enemy[i].y += fC[cacheIndex] * (enemies.enemy[i].speed * minusClock);
-                enemies.enemy[i].cooldown -= minusClock;
+                var cacheIndex = ~~ (thisenemy.angle * 100);
+                thisenemy.x += fS[cacheIndex] * (thisenemy.speed * minusClock);
+                thisenemy.y += fC[cacheIndex] * (thisenemy.speed * minusClock);
+                thisenemy.cooldown -= minusClock;
             },
             'chase': function(i) {
-                enemies.enemy[i].angle = Math.atan2(player.x - enemies.enemy[i].x, player.y - enemies.enemy[i].y);
-                var cacheIndex = ~~ (enemies.enemy[i].angle * 100);
-                enemies.enemy[i].x += fS[cacheIndex] * (enemies.enemy[i].speed * minusClock);
-                enemies.enemy[i].y += fC[cacheIndex] * (enemies.enemy[i].speed * minusClock);
+                var thisenemy = enemies.enemy[i];
+                thisenemy.angle = Math.atan2(player.x - thisenemy.x, player.y - thisenemy.y);
+                var cacheIndex = ~~ (thisenemy.angle * 100);
+                thisenemy.x += fS[cacheIndex] * (thisenemy.speed * minusClock);
+                thisenemy.y += fC[cacheIndex] * (thisenemy.speed * minusClock);
             },
             'divebomb': function(i) {
                 var cacheIndex = ~~ (enemies.enemy[i].angle * 100);
-                enemies.enemy[i].x += fS[cacheIndex] * (enemies.enemy[i].speed * minusClock);
-                enemies.enemy[i].y += fC[cacheIndex] * (enemies.enemy[i].speed * minusClock);
-                if(enemies.enemy[i].x < 0 || enemies.enemy[i].x > field.width || enemies.enemy[i].y < 0 || enemies.enemy[i].y > field.height) {
-                    enemies.enemy[i].hp = 0;
-                    enemies.enemy[i].cooldown = 0;
+                var thisenemy = enemies.enemy[i];
+                thisenemy.x += fS[cacheIndex] * (thisenemy.speed * minusClock);
+                thisenemy.y += fC[cacheIndex] * (thisenemy.speed * minusClock);
+                if(thisenemy.x < 0 || thisenemy.x > field.width || thisenemy.y < 0 || thisenemy.y > field.height) {
+                    thisenemy.hp = 0;
+                    thisenemy.cooldown = 0;
                 }
             },
             'wander': function(i) {
@@ -230,25 +234,27 @@ function resetGame() {
                 // -half PI = left
                 // +half PI = right
                 // 0 = down
-                if(enemies.enemy[i].angle > pi) enemies.enemy[i].angle -= piDouble;
-                if(enemies.enemy[i].angle < -pi) enemies.enemy[i].angle += piDouble;
+                var thisenemy = enemies.enemy[i];
+
+                if(thisenemy.angle > pi) thisenemy.angle -= piDouble;
+                if(thisenemy.angle < -pi) thisenemy.angle += piDouble;
                 
-                var oldangle = enemies.enemy[i].angle;
-                if (enemies.enemy[i].x < 0) {
-                    if(enemies.enemy[i].angle < 0) enemies.enemy[i].angle = -enemies.enemy[i].angle;
-                } else if (enemies.enemy[i].x > field.width) {
-                    if(enemies.enemy[i].angle > 0) enemies.enemy[i].angle = -enemies.enemy[i].angle;
+                var oldangle = thisenemy.angle;
+                if (thisenemy.x < 0) {
+                    if(thisenemy.angle < 0) thisenemy.angle = -thisenemy.angle;
+                } else if (thisenemy.x > field.width) {
+                    if(thisenemy.angle > 0) thisenemy.angle = -thisenemy.angle;
                 }
-                if (enemies.enemy[i].y < 0) {
-                    if(enemies.enemy[i].angle < -piHalf) enemies.enemy[i].angle = -piHalf + (-piHalf - enemies.enemy[i].angle);
-                    if(enemies.enemy[i].angle > piHalf) enemies.enemy[i].angle = piHalf + (piHalf - enemies.enemy[i].angle);
-                } else if (enemies.enemy[i].y > field.height) {
-                    if(enemies.enemy[i].angle < 0 && enemies.enemy[i].angle > -piHalf) enemies.enemy[i].angle = -piHalf + (-piHalf - enemies.enemy[i].angle);
-                    if(enemies.enemy[i].angle > 0 && enemies.enemy[i].angle < piHalf) enemies.enemy[i].angle = piHalf + (piHalf - enemies.enemy[i].angle);
+                if (thisenemy.y < 0) {
+                    if(thisenemy.angle < -piHalf) thisenemy.angle = -piHalf + (-piHalf - thisenemy.angle);
+                    if(thisenemy.angle > piHalf) thisenemy.angle = piHalf + (piHalf - thisenemy.angle);
+                } else if (thisenemy.y > field.height) {
+                    if(thisenemy.angle < 0 && thisenemy.angle > -piHalf) thisenemy.angle = -piHalf + (-piHalf - thisenemy.angle);
+                    if(thisenemy.angle > 0 && thisenemy.angle < piHalf) thisenemy.angle = piHalf + (piHalf - thisenemy.angle);
                 }
-                var cacheIndex = ~~ (enemies.enemy[i].angle * 100);
-                enemies.enemy[i].x += fS[cacheIndex] * (enemies.enemy[i].speed * minusClock);
-                enemies.enemy[i].y += fC[cacheIndex] * (enemies.enemy[i].speed * minusClock);
+                var cacheIndex = ~~ (thisenemy.angle * 100);
+                thisenemy.x += fS[cacheIndex] * (thisenemy.speed * minusClock);
+                thisenemy.y += fC[cacheIndex] * (thisenemy.speed * minusClock);
             }            
         },
         types: [
@@ -341,15 +347,17 @@ function resetGame() {
                     break;
                 }
             }
+            var thisenemy;
             for (var i in enemies.enemy) {
-                if (this.enemy[i] !== undefined) {
-                    if (this.enemy[i].hp) {
-                        this.behaviors[this.enemy[i].behavior](i);
+                thisenemy = this.enemy[i];
+                if (thisenemy !== undefined) {
+                    if (thisenemy.hp) {
+                        this.behaviors[thisenemy.behavior](i);
                         if (
-                            this.enemy[i].x < player.x + (this.enemy[i].size >> 1) && 
-                            this.enemy[i].x > player.x - (this.enemy[i].size >> 1) && 
-                            this.enemy[i].y < player.y + (this.enemy[i].size >> 1) && 
-                            this.enemy[i].y > player.y - (this.enemy[i].size >> 1)
+                            thisenemy.x < player.x + (thisenemy.size >> 1) && 
+                            thisenemy.x > player.x - (thisenemy.size >> 1) && 
+                            thisenemy.y < player.y + (thisenemy.size >> 1) && 
+                            thisenemy.y > player.y - (thisenemy.size >> 1)
                         ) {
                             clearInterval(to);
                             gameOn = false;
