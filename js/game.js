@@ -7,14 +7,13 @@ var canvas, ctx, player = {},
     frame = 0.7,
     score = 0,
     to, gameOn = false, paused = false,
-    cpi = Math.PI,
-    cpi2 = Math.PI / 2,
-    cpi4 = Math.PI / 4,
-    cpi3 = cpi + cpi2,
-    cpi360 = Math.PI * 2,
+    pi = Math.PI,
+    piHalf = Math.PI / 2,
+    piQuarter = Math.PI / 4,
+    piDouble = Math.PI * 2,
     cwidth, cheight,
     fC, fS,
-    fakeLimit = (cpi360 * 200) >> 0,
+    fakeLimit = (piDouble * 200) >> 0,
     crosshair = {},
     minusClock = 0,
     fpsCount = 0,
@@ -229,8 +228,8 @@ function resetGame() {
                 // -half PI = left
                 // +half PI = right
                 // 0 = down
-                if(enemies.enemy[i].angle > cpi) enemies.enemy[i].angle -= cpi360;
-                if(enemies.enemy[i].angle < -cpi) enemies.enemy[i].angle += cpi360;
+                if(enemies.enemy[i].angle > pi) enemies.enemy[i].angle -= piDouble;
+                if(enemies.enemy[i].angle < -pi) enemies.enemy[i].angle += piDouble;
                 
                 var oldangle = enemies.enemy[i].angle;
                 if (enemies.enemy[i].x < 0) {
@@ -239,11 +238,11 @@ function resetGame() {
                     if(enemies.enemy[i].angle > 0) enemies.enemy[i].angle = -enemies.enemy[i].angle;
                 }
                 if (enemies.enemy[i].y < 0) {
-                    if(enemies.enemy[i].angle < -cpi2) enemies.enemy[i].angle = -cpi2 + (-cpi2 - enemies.enemy[i].angle);
-                    if(enemies.enemy[i].angle > cpi2) enemies.enemy[i].angle = cpi2 + (cpi2 - enemies.enemy[i].angle);
+                    if(enemies.enemy[i].angle < -piHalf) enemies.enemy[i].angle = -piHalf + (-piHalf - enemies.enemy[i].angle);
+                    if(enemies.enemy[i].angle > piHalf) enemies.enemy[i].angle = piHalf + (piHalf - enemies.enemy[i].angle);
                 } else if (enemies.enemy[i].y > field.height) {
-                    if(enemies.enemy[i].angle < 0 && enemies.enemy[i].angle > -cpi2) enemies.enemy[i].angle = -cpi2 + (-cpi2 - enemies.enemy[i].angle);
-                    if(enemies.enemy[i].angle > 0 && enemies.enemy[i].angle < cpi2) enemies.enemy[i].angle = cpi2 + (cpi2 - enemies.enemy[i].angle);
+                    if(enemies.enemy[i].angle < 0 && enemies.enemy[i].angle > -piHalf) enemies.enemy[i].angle = -piHalf + (-piHalf - enemies.enemy[i].angle);
+                    if(enemies.enemy[i].angle > 0 && enemies.enemy[i].angle < piHalf) enemies.enemy[i].angle = piHalf + (piHalf - enemies.enemy[i].angle);
                 }
                 var cacheIndex = ~~ (enemies.enemy[i].angle * 100);
                 enemies.enemy[i].x += fS[cacheIndex] * (enemies.enemy[i].speed * minusClock);
