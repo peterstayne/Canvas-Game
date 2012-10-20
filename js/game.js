@@ -145,28 +145,30 @@ function resetGame() {
                 this.cooldown = 25;
             }
             for (var i in this.bullets) {
-                var cacheIndex = ~~ (this.bullets[i].angle * 100);
-                this.bullets[i].x += fS[cacheIndex] * (0.7 * minusClock);
-                this.bullets[i].y += fC[cacheIndex] * (0.7 * minusClock);
+                var thisbullet = this.bullets[i];
+                var cacheIndex = ~~ (thisbullet.angle * 100);
+                thisbullet.x += fS[cacheIndex] * (0.7 * minusClock);
+                thisbullet.y += fC[cacheIndex] * (0.7 * minusClock);
                 for (var j in enemies.enemy) {
-                    var size = enemies.enemy[j].size >> 1;
-                    if (this.bullets[i] !== undefined && this.bullets[i].x < enemies.enemy[j].x + enemies.enemy[j].size && this.bullets[i].x > enemies.enemy[j].x - enemies.enemy[j].size && this.bullets[i].y < enemies.enemy[j].y + enemies.enemy[j].size && this.bullets[i].y > enemies.enemy[j].y - enemies.enemy[j].size && enemies.enemy[j].hp > 0) {
-                        enemies.enemy[j].hp--;
-                        if (enemies.enemy[j].hp <= 0) {
-                            enemies.enemy[j].angle = this.bullets[i].angle;
-                            enemies.enemy[j].cooldown = 100;
+                    var thisenemy = enemies.enemy[j];
+                    var size = thisenemy.size >> 1;
+                    if (thisbullet !== undefined && thisbullet.x < thisenemy.x + thisenemy.size && thisbullet.x > thisenemy.x - thisenemy.size && thisbullet.y < thisenemy.y + thisenemy.size && thisbullet.y > thisenemy.y - thisenemy.size && thisenemy.hp > 0) {
+                        thisenemy.hp--;
+                        if (thisenemy.hp <= 0) {
+                            thisenemy.angle = thisbullet.angle;
+                            thisenemy.cooldown = 100;
                             score++;
-                            enemies.enemy[j].death = {
-                                x: this.bullets[i].x,
-                                y: this.bullets[i].y
+                            thisenemy.death = {
+                                x: thisbullet.x,
+                                y: thisbullet.y
                             };
                         }
                         this.bullets.splice(i, 1);
                         break;
                     }
                 }
-                if (this.bullets[i] !== undefined) {
-                    if (this.bullets[i].x < 0 || this.bullets[i].x > field.width || this.bullets[i].y < 0 || this.bullets[i].y > field.height) {
+                if (thisbullet !== undefined) {
+                    if (thisbullet.x < 0 || thisbullet.x > field.width || thisbullet.y < 0 || thisbullet.y > field.height) {
                         this.bullets.splice(i, 1);
                     }
                 }
