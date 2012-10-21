@@ -510,6 +510,10 @@ function resetGame() {
                         }
                         ctx.fillRect(~~this.enemy[i].x - (size >> 1), ~~this.enemy[i].y - (size >> 1), size, size);
                     } else {
+                        var thisEnemyColor = this.enemy[i].color;
+                        if(this.enemy[i].cooldown === 100) {
+                            thisEnemyColor = "rgba(255,255,255";
+                        }
                         this.enemy[i].cooldown -= (minusClock * 0.1);
                         cooldown = this.enemy[i].cooldown;
                         if (cooldown <= 0) {
@@ -517,7 +521,7 @@ function resetGame() {
                         }
                         else {
                             if(shadowEnabled) ctx.shadowColor = 'rgba(0,0,0,0)';
-                            if(cooldown > 84) {
+                            if(cooldown > 90) {
                                 sparks = 3;
                                 ctx.strokeStyle = 'rgba(255, 255, 0, 1)';
                                 ctx.lineWidth = 4;
@@ -536,7 +540,7 @@ function resetGame() {
                             this.enemy[i].x += fS[cacheIndex] * (cooldown * 0.03);
                             this.enemy[i].y += fC[cacheIndex] * (cooldown * 0.03);
                             opacity = (cooldown / 100).toFixed(2);
-                            ctx.fillStyle = this.enemy[i].color + "," + opacity + ")";
+                            ctx.fillStyle = thisEnemyColor + "," + opacity + ")";
                             size += ~~ (size * ((100 - cooldown) / 100));
                             ctx.fillRect(~~this.enemy[i].x - (size >> 1), ~~this.enemy[i].y - (size >> 1), size, size);
                         }
