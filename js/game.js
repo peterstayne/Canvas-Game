@@ -207,7 +207,7 @@ function resetGame() {
                 var angleToPlayer = Math.atan2(player.x - thisenemy.x, player.y - thisenemy.y);
                 if (thisenemy.cooldown < 0) {
                     thisenemy.angle = angleToPlayer;
-                    thisenemy.cooldown = ~~ (Math.random() * 900) + 300;
+                    thisenemy.cooldown = ~~ (Math.random() * 3900) + 2300;
                 }
                 var cacheIndex = ~~ (thisenemy.angle * 100);
                 thisenemy.x += fS[cacheIndex] * (thisenemy.speed * minusClock);
@@ -265,21 +265,24 @@ function resetGame() {
                 speed: 0.042 ,
                 hp: 1,
                 color: 'rgba(255,0,0',
-                behavior: "wander"
+                behavior: "wander",
+                cooldown: 0
             },
             {
                 size: 22,
                 speed: 0.092,
                 hp: 1,
                 color: 'rgba(255,100,0',
-                behavior: "wander"
+                behavior: "wander",
+                cooldown: 0
             },
             {
                 size: 52,
                 speed: 0.022,
                 hp: 3,
                 color: 'rgba(255,0,120',
-                behavior: "chase"
+                behavior: "chase",
+                cooldown: 0
             },
             {
                 size: 28,
@@ -294,21 +297,24 @@ function resetGame() {
                 speed: 0.064,
                 hp: 1,
                 color: 'rgba(0,255,255',
-                behavior: "chase"
+                behavior: "chase",
+                cooldown: 0
             },
             {
                 size: 30,
                 speed: 0.17,
                 hp: 1,
                 color: 'rgba(255,140,100',
-                behavior: 'divebomb'
+                behavior: 'divebomb',
+                cooldown: 0
             },
             {
                 size: 42,
                 speed: 0.032,
                 hp: 5,
                 color: 'rgba(255,155,255',
-                behavior: "wander"
+                behavior: "wander",
+                cooldown: 0
             }
         ],
         spawnEnemy: function(newEnemy) {
@@ -329,7 +335,8 @@ function resetGame() {
                     speed: thisType.speed,
                     hp: thisType.hp,
                     color: thisType.color,
-                    behavior: thisType.behavior
+                    behavior: thisType.behavior,
+                    cooldown: thisType.cooldown
                 };
 
                 switch (whichwall) {
