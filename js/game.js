@@ -99,7 +99,7 @@ function preResetGame() {
        "y": pressSpaceY - 18
     });
     drawText({
-       "text": "Controls: W, A, S, D to move; Mouse to aim and fire",
+       "text": "Controls: Arrow keys or W, A, S, D to move; Mouse to aim and fire",
        "y": pressSpaceY + 18
     });
     gameClock = Date.now();
