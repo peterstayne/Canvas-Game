@@ -162,9 +162,14 @@ function resetGame() {
                 for (j in enemies.enemy) {
                     thisenemy = enemies.enemy[j];
                     size = thisenemy.size >> 1;
-                    if (thisbullet !== undefined && thisbullet.x < thisenemy.x + thisenemy.size && thisbullet.x > thisenemy.x - thisenemy.size && thisbullet.y < thisenemy.y + thisenemy.size && thisbullet.y > thisenemy.y - thisenemy.size && thisenemy.hp > 0) {
+                    if (thisbullet !== undefined && thisbullet.x < thisenemy.x + thisenemy.size && thisbullet.x > thisenemy.x - thisenemy.size && thisbullet.y < thisenemy.y + thisenemy.size && thisbullet.y > thisenemy.y - thisenemy.size && thisenemy.status !== "dead") {
                         thisenemy.hp--;
-                        if (thisenemy.hp <= 0) {
+                        if (thisenemy.hp > 0) {
+                            thisenemy.status = "wounded";
+                            thisenemy.x += fS[cacheIndex] * 6;
+                            thisenemy.y += fC[cacheIndex] * 6;
+                        } else {
+                            thisenemy.status = "dead";
                             thisenemy.angle = thisbullet.angle;
                             thisenemy.cooldown = 100;
                             score++;
@@ -260,6 +265,7 @@ function resetGame() {
                                 behavior: 'centipede',
                                 color: thisenemy.color,
                                 hp: 1,
+                                status: "alive",
                                 speed: thisenemy.speed,
                                 tail: thisenemy.tail - 1
                             });
@@ -267,9 +273,12 @@ function resetGame() {
                         }
                     }
                 }
-                if(thisenemy.follow === '' || enemies.enemy[thisenemy.follow].hp <= 0) {
+                if(thisenemy.follow === '' || enemies.enemy[thisenemy.follow].status === "dead") {
+                    if(thisenemy.follow !== '') {
+                        thisenemy.follow = '';
+                        thisenemy.hp ++;
+                    }
                     thisenemy.color = 'rgba(0,190,240';
-                    thisenemy.follow = '';
                     if(thisenemy.adjustCooldown > 0) {
                         thisenemy.adjustCooldown -= minusClock;
                         if(thisenemy.adjustCooldown <= 0) {
@@ -352,11 +361,11 @@ function resetGame() {
             {
                 size: 35,
                 speed: 0.092,
-                hp: 1,
+                hp: 2,
                 color: 'rgba(0,170,220',
                 behavior: "centipede",
                 cooldown: 500,
-                spawnChance: 0.2
+                spawnChance: 0.13
             },
             {
                 size: 28,
@@ -415,7 +424,8 @@ function resetGame() {
                         hp: thisType.hp,
                         color: thisType.color,
                         behavior: thisType.behavior,
-                        cooldown: thisType.cooldown
+                        cooldown: thisType.cooldown,
+                        status: "alive"
                     };
 
                     switch (whichwall) {
@@ -458,7 +468,7 @@ function resetGame() {
             for (var i in enemies.enemy) {
                 thisenemy = this.enemy[i];
                 if (thisenemy !== undefined) {
-                    if (thisenemy.hp) {
+                    if (thisenemy.status !== "dead") {
                         this.behaviors[thisenemy.behavior](i);
                         if (
                             thisenemy.x < player.x + (thisenemy.size >> 1) && 
@@ -487,10 +497,17 @@ function resetGame() {
             for (var i in this.enemy) {
                 if (this.enemy[i] !== undefined) {
                     size = this.enemy[i].size;
-                    if(this.enemy[i].hp) {
+                    if(this.enemy[i].status !== "dead") {
                         if(shadowEnabled) ctx.shadowColor = shadowColor + '1)';
-                        newColor = this.enemy[i].color + ",1)";
-                        if(ctx.fillStyle !== newColor) ctx.fillStyle = this.enemy[i].color + ",1)";
+                        if(this.enemy[i].status !== "wounded") {
+                            newColor = this.enemy[i].color + ",1)";
+                        } else {
+                            this.enemy[i].status = "alive";
+                            newColor = "rgba(255,255,255,1)";
+                        }
+                        if(ctx.fillStyle !== newColor) {
+                            ctx.fillStyle = newColor;
+                        }
                         ctx.fillRect(~~this.enemy[i].x - (size >> 1), ~~this.enemy[i].y - (size >> 1), size, size);
                     } else {
                         this.enemy[i].cooldown -= (minusClock * 0.1);
