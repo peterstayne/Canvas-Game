@@ -290,7 +290,7 @@ function resetGame() {
                     enemies.behaviors['wander'](i);
                     return;
                 }
-                thisenemy.color = 'rgba(140,0.140';
+                thisenemy.color = 'rgba(140,0,140';
                 var followEnemy = enemies.enemy[thisenemy.follow];
                 if(findDistance(thisenemy.x, thisenemy.y, followEnemy.x, followEnemy.y) > 20) {
                     thisenemy.speed = 0.092;
