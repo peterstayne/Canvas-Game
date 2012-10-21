@@ -186,12 +186,12 @@ function resetGame() {
 
             if(shadowEnabled) ctx.shadowColor = 'rgba(255,255,0,1)';
             ctx.strokeStyle = 'rgba(255, 255, 255, 1)';
-            ctx.lineWidth = 2;
+            ctx.lineWidth = 4;
             ctx.beginPath();
             for (var i in this.bullets) {
                 cacheIndex = ~~ (Math.atan2(player.x - ~~this.bullets[i].x, player.y - ~~this.bullets[i].y) * 100);
                 ctx.moveTo(~~this.bullets[i].x, ~~this.bullets[i].y);
-                ctx.lineTo(~~this.bullets[i].x + (fS[cacheIndex] * 14), ~~this.bullets[i].y + (fC[cacheIndex] * 14));
+                ctx.lineTo(~~this.bullets[i].x + (fS[cacheIndex] * 18), ~~this.bullets[i].y + (fC[cacheIndex] * 18));
             }
             ctx.stroke();
             ctx.closePath();
@@ -259,15 +259,15 @@ function resetGame() {
         },
         types: [
             {
-                size: 36,
-                speed: 0.038,
+                size: 46,
+                speed: 0.042 ,
                 hp: 1,
                 color: 'rgba(255,0,0',
                 behavior: "wander"
             },
             {
-                size: 20,
-                speed: 0.082,
+                size: 22,
+                speed: 0.092,
                 hp: 1,
                 color: 'rgba(255,100,0',
                 behavior: "wander"
@@ -288,7 +288,7 @@ function resetGame() {
                 cooldown: 3900
             },
             {
-                size: 22,
+                size: 20,
                 speed: 0.064,
                 hp: 1,
                 color: 'rgba(0,255,255',
@@ -309,43 +309,51 @@ function resetGame() {
                 behavior: "wander"
             }
         ],
-        spawnEnemy: function(x, y, type) {
-            type = type + "";
-            var thisenemy = {
-                x: x,
-                y: y, 
-                angle: Math.atan2(player.x - x, player.y - y)
-            };
-            for(var i in this.types[type]) {
-                thisenemy[i] = thisenemy[i] ? thisenemy[i] : this.types[type][i];
-            }
-            this.enemy.push(thisenemy);
+        spawnEnemy: function(newEnemy) {
+            this.enemy.push(newEnemy);
         },
         logic: function() {
             if (frame > Math.random() * 100) {
+                var newEnemy;
                 var whichwall = ~~(Math.random() * 4);
                 var type = ~~(Math.random() * ~~frame);
                 if (type > this.types.length - 1) {
                     type = this.types.length - 1;
                 }
+                var thisType = this.types[type];
+                // direct assignment instead of obj copy
+                newEnemy = {
+                    size: thisType.size,
+                    speed: thisType.speed,
+                    hp: thisType.hp,
+                    color: thisType.color,
+                    behavior: thisType.behavior
+                };
+
                 switch (whichwall) {
                 case 0:
                     // top wall
-                    this.spawnEnemy(~~(Math.random() * field.width), 0, type);
+                    newEnemy.x = ~~(Math.random() * field.width);
+                    newEnemy.y = 0;
                     break;
                 case 1:
                     // bottom wall
-                    this.spawnEnemy(~~(Math.random() * field.width), field.height, type);
+                    newEnemy.x = ~~(Math.random() * field.width);
+                    newEnemy.y = field.height;
                     break;
                 case 2:
                     // left wall
-                    this.spawnEnemy(0, ~~(Math.random() * field.height), type);
+                    newEnemy.x = 0;
+                    newEnemy.y = ~~(Math.random() * field.height);
                     break;
                 case 3:
                     // right wall
-                    this.spawnEnemy(field.width, ~~(Math.random() * field.height), type);
+                    newEnemy.x = field.width;
+                    newEnemy.y = ~~(Math.random() * field.height);
                     break;
                 }
+                newEnemy.angle = Math.atan2(player.x - newEnemy.x, player.y - newEnemy.y)
+                this.spawnEnemy(newEnemy);
             }
             var thisenemy;
             for (var i in enemies.enemy) {
@@ -394,7 +402,7 @@ function resetGame() {
                             if(cooldown > 84) {
                                 sparks = 3;
                                 ctx.strokeStyle = 'rgba(255, 255, 0, 1)';
-                                ctx.lineWidth = 2;
+                                ctx.lineWidth = 4;
                                 ctx.beginPath();
                                 sparkStart = Math.random() * (110 - cooldown);
                                 sparkEnd = Math.random() * (140 - cooldown);
@@ -407,8 +415,8 @@ function resetGame() {
                                 ctx.closePath();
                             }
                             cacheIndex = ~~ (this.enemy[i].angle * 100);
-                            this.enemy[i].x += fS[cacheIndex] * (cooldown * 0.01);
-                            this.enemy[i].y += fC[cacheIndex] * (cooldown * 0.01);
+                            this.enemy[i].x += fS[cacheIndex] * (cooldown * 0.03);
+                            this.enemy[i].y += fC[cacheIndex] * (cooldown * 0.03);
                             opacity = (cooldown / 100).toFixed(2);
                             ctx.fillStyle = this.enemy[i].color + "," + opacity + ")";
                             size += ~~ (size * ((100 - cooldown) / 100));
@@ -493,16 +501,21 @@ function fail() {
         player.firing = false;
     };
     window.onkeydown = function (event) {
+        console.log(event.keyCode);
         switch (event.keyCode) {
+        case 38:
         case 87:
             player.moveUp = true;
             break;
+        case 37:
         case 65:
             player.moveLeft = true;
             break;
+        case 39:
         case 68:
             player.moveRight = true;
             break;
+        case 40:
         case 83:
             player.moveDown = true;
             break;
@@ -528,15 +541,19 @@ function fail() {
     };
     window.onkeyup = function (event) {
         switch (event.keyCode) {
+        case 38:
         case 87:
             player.moveUp = false;
             break;
+        case 37:
         case 65:
             player.moveLeft = false;
             break;
+        case 39:
         case 68:
             player.moveRight = false;
             break;
+        case 40:
         case 83:
             player.moveDown = false;
             break;
