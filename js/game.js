@@ -19,6 +19,7 @@ var canvas, ctx, player = {},
     fpsCount = 0,
     fpsTimer = 0,
     shadowEnabled = true,
+    enemyCount = 0;
     gameClock = Date.now();
 
 fS = [];
@@ -200,7 +201,7 @@ function resetGame() {
         }
     };
     enemies = {
-        enemy: [],
+        enemy: {},
         behaviors: {
             'wanderChase': function(i) {
                 var thisenemy = enemies.enemy[i];
@@ -318,7 +319,8 @@ function resetGame() {
             }
         ],
         spawnEnemy: function(newEnemy) {
-            this.enemy.push(newEnemy);
+            enemyCount ++;
+            this.enemy['e' + enemyCount] = newEnemy;
         },
         logic: function() {
             if (frame > Math.random() * 100) {
@@ -406,7 +408,7 @@ function resetGame() {
                         this.enemy[i].cooldown -= (minusClock * 0.1);
                         cooldown = this.enemy[i].cooldown;
                         if (cooldown <= 0) {
-                            this.enemy.splice(i, 1);
+                            delete this.enemy[i];
                         }
                         else {
                             if(shadowEnabled) ctx.shadowColor = 'rgba(0,0,0,0)';
@@ -512,7 +514,6 @@ function fail() {
         player.firing = false;
     };
     window.onkeydown = function (event) {
-        console.log(event.keyCode);
         switch (event.keyCode) {
         case 38:
         case 87:
