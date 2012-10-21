@@ -177,10 +177,12 @@ function resetGame() {
         },
         render: function() {
             var cacheIndex;
-            if(shadowEnabled) ctx.shadowColor = 'rgba(0,0,0,1)';
-            if(shadowEnabled) ctx.shadowBlur = 15;
-            if(shadowEnabled) ctx.shadowOffsetX = 0;
-            if(shadowEnabled) ctx.shadowOffsetY = 0;
+            if(shadowEnabled) {
+                ctx.shadowColor = 'rgba(0,0,0,1)';
+                ctx.shadowBlur = 15;
+                ctx.shadowOffsetX = 0;
+                ctx.shadowOffsetY = 0;
+            }
             ctx.fillStyle = "#0f0";
             ctx.fillRect(player.x - 4, player.y - 4, 8, 8);
 
@@ -380,9 +382,11 @@ function resetGame() {
             var opacity = 1;
             var sparks, sparkAngle, sparkStart, sparkEnd;
             var cooldown, size, newColor;
-            if(shadowEnabled) ctx.shadowBlur = 5;
-            if(shadowEnabled) ctx.shadowOffsetX = 3;
-            if(shadowEnabled) ctx.shadowOffsetY = 3;
+            if(shadowEnabled) {
+                ctx.shadowBlur = 5;
+                ctx.shadowOffsetX = 3;
+                ctx.shadowOffsetY = 3;
+            }
             for (var i in this.enemy) {
                 if (this.enemy[i] !== undefined) {
                     size = this.enemy[i].size;
