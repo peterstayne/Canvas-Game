@@ -325,7 +325,7 @@ function resetGame() {
                                 adjustCooldown: 6000,
                                 angleAdjust: (Math.random() * 0.04) - 0.02,
                                 follow: i,
-                                cooldown: 100,
+                                cooldown: 200,
                                 behavior: 'centipede',
                                 color: thisenemy.color,
                                 hp: 1,
@@ -347,7 +347,7 @@ function resetGame() {
                 }
                 thisenemy.color = 'rgba(140,0,140';
                 var followEnemy = enemies.enemy[thisenemy.follow];
-                if(findDistance(thisenemy.x, thisenemy.y, followEnemy.x, followEnemy.y) > 20) {
+                if(findDistance(thisenemy.x, thisenemy.y, followEnemy.x, followEnemy.y) > 25) {
                     thisenemy.speed = 0.112;
                 } else {
                     thisenemy.speed = 0.050;
@@ -428,7 +428,7 @@ function resetGame() {
                 hp: 1,
                 color: 'rgba(220,0,220',
                 behavior: "centipede",
-                cooldown: 100,
+                cooldown: 200,
                 spawnChance: 0.10
             },
             {
