@@ -245,10 +245,74 @@ function resetGame() {
                     thisenemy.cooldown = 0;
                 }
             },
+            'wanderCurve': function(i) {
+                var thisenemy = enemies.enemy[i];
+                if(thisenemy.adjustCooldown > 0) {
+                    thisenemy.adjustCooldown -= minusClock;
+                    if(thisenemy.adjustCooldown <= 0) {
+                        thisenemy.adjustCooldown = 6000;
+                        thisenemy.angleAdjust = (Math.random() * 0.04) - 0.02;
+                    }
+                }
+                thisenemy.angle += thisenemy.angleAdjust;
+                enemies.behaviors['wander'](i);
+            },
+            'ringerHub': function(i) {
+                var thisenemy = enemies.enemy[i];
+                if(thisenemy.satellites) {
+                    var sepAngle = piDouble / thisenemy.satellites;
+                    var radii = Math.random() * 50 + 50;
+                    var thisAdjust = (Math.random() * 0.04) - 0.02
+                    for(var j=0; j<thisenemy.satellites; j++) {
+                        enemies.spawnEnemy({
+                            x: thisenemy.x,
+                            y: thisenemy.y,
+                            size: 32,
+                            angle: j * sepAngle,
+                            follow: i,
+                            cooldown: 1500,
+                            radii: radii,
+                            behavior: 'ringer',
+                            color: 'rgba(212,212,212',
+                            hp: 1,
+                            angleAdjust: thisAdjust,
+                            status: "alive",
+                            speed: thisenemy.speed,
+                            tail: thisenemy.tail - 1
+                        });
+                    }
+                    thisenemy.satellites = 0;
+                }
+                enemies.behaviors['wanderCurve'](i);
+            },
+            'ringer': function(i) {
+                var thisenemy = enemies.enemy[i];
+                if(thisenemy.follow === '' || enemies.enemy[thisenemy.follow].status === "dead") {
+                    thisenemy.behavior = "wander";
+                    enemies.behaviors['wander'](i);
+                    return true;
+                }
+                var thisradii = thisenemy.radii;
+                var followEnemy = enemies.enemy[thisenemy.follow];
+                if(thisenemy.cooldown > 0) {
+                    thisenemy.cooldown -= minusClock;
+                    thisradii = ((1500 - thisenemy.cooldown) / 1500) * thisenemy.radii;
+                }
+                var cacheIndex = ~~ (thisenemy.angle * 100);
+                thisenemy.x = fC[cacheIndex] * thisradii + followEnemy.x;
+                thisenemy.y = fS[cacheIndex] * thisradii + followEnemy.y;
+                thisenemy.angle += thisenemy.angleAdjust;
+                if(thisenemy.angle > pi) {
+                    thisenemy.angle -= piDouble;
+                }
+                if(thisenemy.angle < -pi) {
+                    thisenemy.angle += piDouble;
+                }
+            },
             'centipede': function(i) {
                 var thisenemy = enemies.enemy[i];
                 if(thisenemy.cooldown > 0) {
-                    thisenemy.cooldown -= minusClock;                    
+                    thisenemy.cooldown -= minusClock;
                     if(thisenemy.cooldown <= 0) {
                         if(thisenemy.tail) {
                             enemies.spawnEnemy({
@@ -279,15 +343,7 @@ function resetGame() {
                         thisenemy.hp ++;
                     }
                     thisenemy.color = 'rgba(220,0,220';
-                    if(thisenemy.adjustCooldown > 0) {
-                        thisenemy.adjustCooldown -= minusClock;
-                        if(thisenemy.adjustCooldown <= 0) {
-                            thisenemy.adjustCooldown = 6000;
-                            thisenemy.angleAdjust = (Math.random() * 0.04) - 0.02;
-                        }
-                    }
-                    thisenemy.angle += thisenemy.angleAdjust;
-                    enemies.behaviors['wander'](i);
+                    enemies.behaviors['wanderCurve'](i);
                     return;
                 }
                 thisenemy.color = 'rgba(140,0,140';
@@ -359,7 +415,16 @@ function resetGame() {
                 spawnChance: 1
             },
             {
-                size: 35,
+                size: 22,
+                speed: 0.042 ,
+                hp: 5,
+                color: 'rgba(64,64,64',
+                behavior: "ringerHub",
+                cooldown: 6000,
+                spawnChance: 0.11
+            },
+            {
+                size: 31,
                 speed: 0.092,
                 hp: 2,
                 color: 'rgba(220,0,220',
@@ -369,7 +434,7 @@ function resetGame() {
             },
             {
                 size: 28,
-                speed: 0.099,
+                speed: 0.09,
                 hp: 2,
                 color: 'rgba(255,255,0',
                 behavior: "wanderChase",
@@ -452,6 +517,12 @@ function resetGame() {
                     }
                     newEnemy.angle = Math.atan2(player.x - newEnemy.x, player.y - newEnemy.y)
                     switch (newEnemy.behavior) {
+                        case "ringerHub":
+                            newEnemy.satellites = ~~(Math.random() * 4) + 8;
+                            newEnemy.angleAdjust = (Math.random() * 0.04) - 0.02;
+                            newEnemy.adjustCooldown = 6000;
+                            this.spawnEnemy(newEnemy);
+                            break;
                         case "centipede":
                             newEnemy.follow = '';
                             newEnemy.tail = ~~(Math.random() * 10) + 8;
@@ -459,6 +530,8 @@ function resetGame() {
                             newEnemy.oldY = newEnemy.y;
                             newEnemy.angleAdjust = (Math.random() * 0.04) - 0.02;
                             newEnemy.adjustCooldown = 6000;
+                            this.spawnEnemy(newEnemy);
+                            break;
                         default:
                             this.spawnEnemy(newEnemy);
                     }
