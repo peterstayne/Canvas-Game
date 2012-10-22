@@ -273,7 +273,7 @@ function resetGame() {
                             cooldown: 1500,
                             radii: radii,
                             behavior: 'ringer',
-                            color: 'rgba(212,212,212',
+                            color: 'rgba(112,112,212',
                             hp: 1,
                             angleAdjust: thisAdjust,
                             status: "alive",
@@ -348,7 +348,7 @@ function resetGame() {
                 thisenemy.color = 'rgba(140,0,140';
                 var followEnemy = enemies.enemy[thisenemy.follow];
                 if(findDistance(thisenemy.x, thisenemy.y, followEnemy.x, followEnemy.y) > 20) {
-                    thisenemy.speed = 0.092;
+                    thisenemy.speed = 0.112;
                 } else {
                     thisenemy.speed = 0.050;
                 }
@@ -408,7 +408,7 @@ function resetGame() {
                 size: 52,
                 speed: 0.022,
                 hp: 3,
-                color: 'rgba(255,0,120',
+                color: 'rgba(0,0,220',
                 behavior: "chase",
                 cooldown: 0,
                 spawnChance: 1
@@ -417,14 +417,14 @@ function resetGame() {
                 size: 22,
                 speed: 0.042 ,
                 hp: 4,
-                color: 'rgba(64,64,64',
+                color: 'rgba(64,64,124',
                 behavior: "ringerHub",
                 cooldown: 6000,
                 spawnChance: 0.11
             },
             {
                 size: 31,
-                speed: 0.092,
+                speed: 0.112,
                 hp: 1,
                 color: 'rgba(220,0,220',
                 behavior: "centipede",
@@ -435,7 +435,7 @@ function resetGame() {
                 size: 28,
                 speed: 0.09,
                 hp: 2,
-                color: 'rgba(255,255,0',
+                color: 'rgba(255,0,0',
                 behavior: "wanderChase",
                 cooldown: 3900,
                 spawnChance: 1
@@ -453,7 +453,7 @@ function resetGame() {
                 size: 30,
                 speed: 0.17,
                 hp: 1,
-                color: 'rgba(255,0,0',
+                color: 'rgba(255,255,0',
                 behavior: 'divebomb',
                 cooldown: 0,
                 spawnChance: 1
@@ -462,7 +462,7 @@ function resetGame() {
                 size: 42,
                 speed: 0.032,
                 hp: 5,
-                color: 'rgba(255,155,255',
+                color: 'rgba(0,0,120',
                 behavior: "wander",
                 cooldown: 0,
                 spawnChance: 1
