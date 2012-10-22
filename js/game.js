@@ -408,7 +408,7 @@ function resetGame() {
                 size: 52,
                 speed: 0.022,
                 hp: 3,
-                color: 'rgba(0,0,220',
+                color: 'rgba(0,0,180',
                 behavior: "chase",
                 cooldown: 0,
                 spawnChance: 1
@@ -462,7 +462,7 @@ function resetGame() {
                 size: 42,
                 speed: 0.032,
                 hp: 5,
-                color: 'rgba(0,0,120',
+                color: 'rgba(0,0,80',
                 behavior: "wander",
                 cooldown: 0,
                 spawnChance: 1
