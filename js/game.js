@@ -273,7 +273,7 @@ function resetGame() {
                             cooldown: 1500,
                             radii: radii,
                             behavior: 'ringer',
-                            color: 'rgba(112,255,112',
+                            color: 'rgba(112,255,152',
                             hp: 1,
                             angleAdjust: thisAdjust,
                             status: "alive",
@@ -325,7 +325,7 @@ function resetGame() {
                                 adjustCooldown: 6000,
                                 angleAdjust: (Math.random() * 0.04) - 0.02,
                                 follow: i,
-                                cooldown: 500,
+                                cooldown: 100,
                                 behavior: 'centipede',
                                 color: thisenemy.color,
                                 hp: 1,
@@ -415,12 +415,12 @@ function resetGame() {
             },
             {
                 size: 22,
-                speed: 0.042 ,
+                speed: 0.052 ,
                 hp: 4,
-                color: 'rgba(64,124,64',
+                color: 'rgba(64,124,84',
                 behavior: "ringerHub",
                 cooldown: 6000,
-                spawnChance: 0.11
+                spawnChance: 0.10
             },
             {
                 size: 31,
@@ -428,7 +428,7 @@ function resetGame() {
                 hp: 1,
                 color: 'rgba(220,0,220',
                 behavior: "centipede",
-                cooldown: 500,
+                cooldown: 100,
                 spawnChance: 0.10
             },
             {
