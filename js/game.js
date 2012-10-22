@@ -262,7 +262,7 @@ function resetGame() {
                 if(thisenemy.satellites) {
                     var sepAngle = piDouble / thisenemy.satellites;
                     var radii = Math.random() * 50 + 50;
-                    var thisAdjust = (Math.random() * 0.04) - 0.02
+                    var thisAdjust = ([-1,1][Math.round(Math.random())]) * ((Math.random() * 0.04) + 0.06);
                     for(var j=0; j<thisenemy.satellites; j++) {
                         enemies.spawnEnemy({
                             x: thisenemy.x,
@@ -390,7 +390,7 @@ function resetGame() {
                 size: 46,
                 speed: 0.042 ,
                 hp: 1,
-                color: 'rgba(255,0,0',
+                color: 'rgba(64,64,255',
                 behavior: "wander",
                 cooldown: 0,
                 spawnChance: 1
@@ -416,7 +416,7 @@ function resetGame() {
             {
                 size: 22,
                 speed: 0.042 ,
-                hp: 5,
+                hp: 4,
                 color: 'rgba(64,64,64',
                 behavior: "ringerHub",
                 cooldown: 6000,
@@ -453,7 +453,7 @@ function resetGame() {
                 size: 30,
                 speed: 0.17,
                 hp: 1,
-                color: 'rgba(255,140,100',
+                color: 'rgba(255,0,0',
                 behavior: 'divebomb',
                 cooldown: 0,
                 spawnChance: 1
