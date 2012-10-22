@@ -340,7 +340,6 @@ function resetGame() {
                 if(thisenemy.follow === '' || enemies.enemy[thisenemy.follow].status === "dead") {
                     if(thisenemy.follow !== '') {
                         thisenemy.follow = '';
-                        thisenemy.hp ++;
                     }
                     thisenemy.color = 'rgba(220,0,220';
                     enemies.behaviors['wanderCurve'](i);
@@ -426,11 +425,11 @@ function resetGame() {
             {
                 size: 31,
                 speed: 0.092,
-                hp: 2,
+                hp: 1,
                 color: 'rgba(220,0,220',
                 behavior: "centipede",
                 cooldown: 500,
-                spawnChance: 0.13
+                spawnChance: 0.10
             },
             {
                 size: 28,
