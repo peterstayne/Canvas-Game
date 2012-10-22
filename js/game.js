@@ -273,7 +273,7 @@ function resetGame() {
                             cooldown: 1500,
                             radii: radii,
                             behavior: 'ringer',
-                            color: 'rgba(112,112,212',
+                            color: 'rgba(112,255,112',
                             hp: 1,
                             angleAdjust: thisAdjust,
                             status: "alive",
@@ -417,7 +417,7 @@ function resetGame() {
                 size: 22,
                 speed: 0.042 ,
                 hp: 4,
-                color: 'rgba(64,64,124',
+                color: 'rgba(64,124,64',
                 behavior: "ringerHub",
                 cooldown: 6000,
                 spawnChance: 0.11
