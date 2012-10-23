@@ -157,9 +157,6 @@ function resetGame() {
             for (var i = 0, l = this.bullets.length; i < l; ++i) {
                 removed = false;
                 thisbullet = this.bullets[i];
-                if(typeof thisbullet === "undefined") {
-                    console.log(i, l, thisbullet, this.bullets);
-                }
                 cacheIndex = ~~ (thisbullet.angle * 100);
                 thisbullet.x += fS[cacheIndex] * (0.7 * minusClock);
                 thisbullet.y += fC[cacheIndex] * (0.7 * minusClock);
