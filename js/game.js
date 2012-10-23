@@ -537,11 +537,11 @@ function resetGame() {
                 }
             }
             var thisenemy;
-            for (var i in enemies.enemy) {
-                thisenemy = this.enemy[i];
+            for (var i = 0, keys = Object.keys(this.enemy), l = keys.length; i < l; ++i) {
+                thisenemy = this.enemy[keys[i]];
                 if (thisenemy !== undefined) {
                     if (thisenemy.status !== "dead") {
-                        this.behaviors[thisenemy.behavior](i);
+                        this.behaviors[thisenemy.behavior](keys[i]);
                         if (
                             thisenemy.x < player.x + (thisenemy.size >> 1) && 
                             thisenemy.x > player.x - (thisenemy.size >> 1) && 
