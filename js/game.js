@@ -63,7 +63,7 @@ function drawText(params) {
     for(var i in defaults) {
         params[i] = params[i] ? params[i] : defaults[i];
     }
-    if(typeof params.text === "undefined" || params.text.length === 0) {
+    if(params.text === undefined || !params.text.length) {
         return false;
     }
     if(shadowEnabled) ctx.shadowColor = 'rgba(0,0,0,0)';
