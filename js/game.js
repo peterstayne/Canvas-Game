@@ -117,7 +117,7 @@ function preResetGame() {
 function resetGame() {
     gameClock = Date.now();
     score = 0;
-    frame = 1.3;
+    frame = 1.9;
     player = {
         x: ~~ (cwidth / 2),
         y: ~~ (cheight / 2),
@@ -153,14 +153,18 @@ function resetGame() {
                 this.fireShot();
                 this.cooldown = 25;
             }
-            var cacheindex, thisbullet, thisenemy, size, j;
-            for (var i in this.bullets) {
+            var cacheindex, thisbullet, thisenemy, size, j, removed;
+            for (var i = 0, l = this.bullets.length; i < l; ++i) {
+                removed = false;
                 thisbullet = this.bullets[i];
+                if(typeof thisbullet === "undefined") {
+                    console.log(i, l, thisbullet, this.bullets);
+                }
                 cacheIndex = ~~ (thisbullet.angle * 100);
                 thisbullet.x += fS[cacheIndex] * (0.7 * minusClock);
                 thisbullet.y += fC[cacheIndex] * (0.7 * minusClock);
-                for (j in enemies.enemy) {
-                    thisenemy = enemies.enemy[j];
+                for (var j = 0, keysE = Object.keys(enemies.enemy), lE = keysE.length; j < lE; ++j) {
+                    thisenemy = enemies.enemy[keysE[j]];
                     size = thisenemy.size >> 1;
                     if (thisbullet !== undefined && thisbullet.x < thisenemy.x + thisenemy.size && thisbullet.x > thisenemy.x - thisenemy.size && thisbullet.y < thisenemy.y + thisenemy.size && thisbullet.y > thisenemy.y - thisenemy.size && thisenemy.status !== "dead") {
                         thisenemy.hp--;
@@ -178,14 +182,18 @@ function resetGame() {
                                 y: thisbullet.y
                             };
                         }
-                        this.bullets.splice(i, 1);
+                        removed = true;
                         break;
                     }
                 }
-                if (thisbullet !== undefined) {
+                if (!removed) {
                     if (thisbullet.x < 0 || thisbullet.x > field.width || thisbullet.y < 0 || thisbullet.y > field.height) {
-                        this.bullets.splice(i, 1);
+                        removed = true;
                     }
+                }
+                if(removed) {
+                    this.bullets.splice(i, 1);
+                    l--; i--;
                 }
             }
         },
@@ -204,10 +212,12 @@ function resetGame() {
             ctx.strokeStyle = 'rgba(255, 255, 255, 1)';
             ctx.lineWidth = 4;
             ctx.beginPath();
-            for (var i in this.bullets) {
-                cacheIndex = ~~ (Math.atan2(player.x - ~~this.bullets[i].x, player.y - ~~this.bullets[i].y) * 100);
-                ctx.moveTo(~~this.bullets[i].x, ~~this.bullets[i].y);
-                ctx.lineTo(~~this.bullets[i].x + (fS[cacheIndex] * 18), ~~this.bullets[i].y + (fC[cacheIndex] * 18));
+            var thisbullet;
+            for (var i = 0, keys = Object.keys(this.bullets), l = keys.length; i < l; ++i) {
+                thisbullet = this.bullets[keys[i]];
+                cacheIndex = ~~ (Math.atan2(player.x - ~~thisbullet.x, player.y - ~~thisbullet.y) * 100);
+                ctx.moveTo(~~thisbullet.x, ~~thisbullet.y);
+                ctx.lineTo(~~thisbullet.x + (fS[cacheIndex] * 18), ~~thisbullet.y + (fC[cacheIndex] * 18));
             }
             ctx.stroke();
             ctx.closePath();
@@ -263,12 +273,12 @@ function resetGame() {
                     var sepAngle = piDouble / thisenemy.satellites;
                     var radii = Math.random() * 50 + 50;
                     var thisAdjust = ([-1,1][Math.round(Math.random())]) * ((Math.random() * 0.04) + 0.06);
-                    for(var j=0; j<thisenemy.satellites; j++) {
+                    while(thisenemy.satellites--) {
                         enemies.spawnEnemy({
                             x: thisenemy.x,
                             y: thisenemy.y,
                             size: 32,
-                            angle: j * sepAngle,
+                            angle: thisenemy.satellites * sepAngle,
                             follow: i,
                             cooldown: 1500,
                             radii: radii,
@@ -566,30 +576,32 @@ function resetGame() {
                 ctx.shadowOffsetX = 3;
                 ctx.shadowOffsetY = 3;
             }
-            for (var i in this.enemy) {
-                if (this.enemy[i] !== undefined) {
-                    size = this.enemy[i].size;
-                    if(this.enemy[i].status !== "dead") {
+            var thisenemy;
+            for (var i = 0, keys = Object.keys(this.enemy), l = keys.length; i < l; ++i) {
+//                if (this.enemy[i] !== undefined) {
+                    thisenemy = this.enemy[keys[i]];
+                    size = thisenemy.size;
+                    if(thisenemy.status !== "dead") {
                         if(shadowEnabled) ctx.shadowColor = shadowColor + '1)';
-                        if(this.enemy[i].status !== "wounded") {
-                            newColor = this.enemy[i].color + ",1)";
+                        if(thisenemy.status !== "wounded") {
+                            newColor = thisenemy.color + ",1)";
                         } else {
-                            this.enemy[i].status = "alive";
+                            thisenemy.status = "alive";
                             newColor = "rgba(255,255,255,1)";
                         }
                         if(ctx.fillStyle !== newColor) {
                             ctx.fillStyle = newColor;
                         }
-                        ctx.fillRect(~~this.enemy[i].x - (size >> 1), ~~this.enemy[i].y - (size >> 1), size, size);
+                        ctx.fillRect(~~thisenemy.x - (size >> 1), ~~thisenemy.y - (size >> 1), size, size);
                     } else {
-                        var thisEnemyColor = this.enemy[i].color;
-                        if(this.enemy[i].cooldown === 100) {
+                        var thisEnemyColor = thisenemy.color;
+                        if(thisenemy.cooldown === 100) {
                             thisEnemyColor = "rgba(255,255,255";
                         }
-                        this.enemy[i].cooldown -= (minusClock * 0.1);
-                        cooldown = this.enemy[i].cooldown;
+                        thisenemy.cooldown -= (minusClock * 0.1);
+                        cooldown = thisenemy.cooldown;
                         if (cooldown <= 0) {
-                            delete this.enemy[i];
+                            delete this.enemy[keys[i]];
                         }
                         else {
                             if(shadowEnabled) ctx.shadowColor = 'rgba(0,0,0,0)';
@@ -602,22 +614,22 @@ function resetGame() {
                                 sparkEnd = Math.random() * (140 - cooldown);
                                 while(--sparks) {
                                     sparkAngle = ~~((Math.random() * 628) - 314);
-                                    ctx.moveTo(~~(this.enemy[i].death.x + fS[sparkAngle] * sparkStart), ~~(this.enemy[i].death.y + fC[sparkAngle] * sparkStart));
-                                    ctx.lineTo(~~(this.enemy[i].death.x + fS[sparkAngle] * sparkEnd), ~~(this.enemy[i].death.y + fC[sparkAngle] * sparkEnd));
+                                    ctx.moveTo(~~(thisenemy.death.x + fS[sparkAngle] * sparkStart), ~~(thisenemy.death.y + fC[sparkAngle] * sparkStart));
+                                    ctx.lineTo(~~(thisenemy.death.x + fS[sparkAngle] * sparkEnd), ~~(thisenemy.death.y + fC[sparkAngle] * sparkEnd));
                                 }
                                 ctx.stroke();
                                 ctx.closePath();
                             }
-                            cacheIndex = ~~ (this.enemy[i].angle * 100);
-                            this.enemy[i].x += fS[cacheIndex] * (cooldown * 0.03);
-                            this.enemy[i].y += fC[cacheIndex] * (cooldown * 0.03);
+                            cacheIndex = ~~ (thisenemy.angle * 100);
+                            thisenemy.x += fS[cacheIndex] * (cooldown * 0.03);
+                            thisenemy.y += fC[cacheIndex] * (cooldown * 0.03);
                             opacity = (cooldown / 100).toFixed(2);
                             ctx.fillStyle = thisEnemyColor + "," + opacity + ")";
                             size += ~~ (size * ((100 - cooldown) / 100));
-                            ctx.fillRect(~~this.enemy[i].x - (size >> 1), ~~this.enemy[i].y - (size >> 1), size, size);
+                            ctx.fillRect(~~thisenemy.x - (size >> 1), ~~thisenemy.y - (size >> 1), size, size);
                         }
                     }
-                }
+//                }
             }
         }
     };
@@ -779,7 +791,6 @@ function fail() {
     }
 
     function renderFrame() {
-
         field.render();
         enemies.render();
         player.render();
