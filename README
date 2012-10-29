@@ -1,9 +1,11 @@
-Untitled Canvas Game
+SQUARE'D
 
-Game based on the controls from the old arcade game SmashTV where 
-movement and firing are separate directional controls.
+Dual-axis control scheme game made with HTML5 Canvas 2D. Drawing inspiration from
+old games like SmashTV, Robotron 2094, Crimson Land, and Geometry Wars: Retro Evolved.
 
-In this case, it's W,A,S,D for moving, and the mouse for aiming
-and shooting.
+Controls
+W,A,S,D or arrow keys to move.
+Mouse to aim, click to fire (hold down button for rapid fire)
 
-Should be obvious that everything is placeholder at this point.
+Should be obvious that everything is placeholder at this point. This game is still
+in extreme pre-alpha.
