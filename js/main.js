@@ -21,18 +21,6 @@ g.canvas.setAttribute('height', g.cheight);
 g.bgcanvas.setAttribute('width', g.cwidth);
 g.bgcanvas.setAttribute('height', g.cheight);
 
-function resetGame() {
-    g.game.gameClock = Date.now();
-    g.game.score = 0;
-    g.game.frame = 1.9;
-    g.game.field.bgload();
-    if(g.game.init.length) {
-        for(var i = 0, il = g.game.init.length; i < il; i++){
-            g.game.init[i]();
-        }
-    }
-}
-
 function gameLogic() {
     g.game.player.logic();
     g.game.enemies.logic();
@@ -103,7 +91,7 @@ window.onload = function() {
         case 32:
             if (!g.game.gameOn) {
                 g.game.gameOn = true;
-                resetGame();
+                g.game.resetGame();
                 requestAnimationFrame(doFrame);
             } else {
                 if(g.game.paused) {
@@ -111,8 +99,7 @@ window.onload = function() {
                     g.game.paused = false;
                     requestAnimationFrame(doFrame);
                 } else {
-                    g.ui.drawText({ text: "PAUSED", size: 60, color: "#538" });
-                    g.ui.drawText({ text: "Press space to unpause.", y: (g.cheight >> 1) + 100  });
+                    g.ui.showPausedScreen();
                     g.game.paused = true;
                     g.fpsCount = 0;
                     g.fpsTimer = 0;
@@ -141,7 +128,7 @@ window.onload = function() {
         }
     };
     g.game.preResetGame();
-    resetGame();
+    g.game.resetGame();
 }
 
 })();
