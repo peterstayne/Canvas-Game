@@ -1,6 +1,13 @@
 ;(function() {
 
-window.g = window.g || {};
+window.g = g || {};
+
+// empty GA object to satisfy Closure Advanced Optimizations
+window._gaq = _gaq || {
+    push: function() {
+        return false;
+    }
+};
 
 g = {
     shadowEnabled: true,

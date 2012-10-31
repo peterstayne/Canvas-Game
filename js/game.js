@@ -1,4 +1,3 @@
-
 g.game = {
     score: 0,
     gameOn: false,
@@ -20,6 +19,7 @@ g.game = {
         g.game.gameClock = Date.now();
     },
     fail: function() {
+        _gaq.push(['_trackEvent', 'Game', 'Death', 'Score', g.game.score]);
         g.game.preResetGame();
     },
     resetGame: function() {
