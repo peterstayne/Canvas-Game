@@ -30,10 +30,6 @@ g.bgcanvas.setAttribute('height', g.cheight);
 
 window.onload = function() {
 
-    if(g.shadowEnabled) g.ctx.shadowColor = 'rgba(0,0,0,0)';
-    g.ctx.fillStyle = "#000";
-    g.ctx.fillRect(0, 0, g.cwidth, g.cheight);
-
     g.game.preResetGame();
     g.game.resetGame();
 }

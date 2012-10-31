@@ -7,6 +7,8 @@ g.game = {
     gameClock: Date.now(),
     init: [],
     preResetGame: function() {
+        if(g.shadowEnabled) g.ctx.shadowColor = 'rgba(0,0,0,0)';
+
         g.helpers.fS = [];
         for (var i = -g.helpers.fakeLimit; i < g.helpers.fakeLimit; i++) {
             g.helpers.fS[i] = Math.sin(i / 100);
