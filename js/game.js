@@ -17,6 +17,7 @@ g.game = {
         }
         g.ui.showTitleScreen();
         g.game.gameClock = Date.now();
+        g.game.bindControls();
     },
     fail: function() {
         _gaq.push(['_trackEvent', 'Game', 'Death', 'Score', g.game.score]);
@@ -32,6 +33,106 @@ g.game = {
                 g.game.init[i]();
             }
         }
+    },
+    gameLogic: function() {
+        g.game.player.logic();
+        g.game.enemies.logic();
+    },
+    renderFrame: function() {
+        g.game.field.render();
+        g.game.enemies.render();
+        g.game.player.render();
+        g.ui.crosshair.render();
+        g.ui.updateScore();
+
+        if(!g.game.gameOn) {
+            g.game.fail();
+        }
+    },
+    doFrame: function() {
+        if(!g.game.gameOn || g.game.paused) return false;
+        var newGameClock = Date.now();
+        g.game.minusClock = newGameClock - g.game.gameClock;
+        g.game.frame += (g.game.minusClock * 0.00002);
+        g.fpsCount++;
+        g.fpsTimer += g.game.minusClock;
+        g.game.gameClock = newGameClock;
+        g.game.gameLogic();
+        g.game.renderFrame();
+        requestAnimationFrame(g.game.doFrame);
+    },
+    bindControls: function() {
+        document.onmousemove = function (event) {
+            g.ui.crosshair.x = (event.pageX - g.game.field.offset.left) / g.canvasScale;
+            g.ui.crosshair.y = (event.pageY - g.game.field.offset.top) / g.canvasScale;
+        };
+        document.onmousedown = function (event) {
+            g.game.player.fireShot();
+            g.game.player.firing = true;
+            g.game.player.cooldown = 20;
+            event.stopPropagation();
+            return false;
+        };
+        document.onmouseup = function () {
+            g.game.player.firing = false;
+        };
+        window.onkeydown = function (event) {
+            switch (event.keyCode) {
+            case 38:
+            case 87:
+                g.game.player.moveUp = true;
+                break;
+            case 37:
+            case 65:
+                g.game.player.moveLeft = true;
+                break;
+            case 39:
+            case 68:
+                g.game.player.moveRight = true;
+                break;
+            case 40:
+            case 83:
+                g.game.player.moveDown = true;
+                break;
+            case 32:
+                if (!g.game.gameOn) {
+                    g.game.gameOn = true;
+                    g.game.resetGame();
+                    requestAnimationFrame(g.game.doFrame);
+                } else {
+                    if(g.game.paused) {
+                        g.game.gameClock = Date.now();
+                        g.game.paused = false;
+                        requestAnimationFrame(g.game.doFrame);
+                    } else {
+                        g.ui.showPausedScreen();
+                        g.game.paused = true;
+                        g.fpsCount = 0;
+                        g.fpsTimer = 0;
+                    }
+                }
+            }
+        };
+        window.onkeyup = function (event) {
+            switch (event.keyCode) {
+            case 38:
+            case 87:
+                g.game.player.moveUp = false;
+                break;
+            case 37:
+            case 65:
+                g.game.player.moveLeft = false;
+                break;
+            case 39:
+            case 68:
+                g.game.player.moveRight = false;
+                break;
+            case 40:
+            case 83:
+                g.game.player.moveDown = false;
+                break;
+            }
+        };
     }
 };
 
