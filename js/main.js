@@ -1,6 +1,6 @@
 ;(function() {
 
-window.g = g || {};
+window.g = window.g || {};
 
 // empty GA object to satisfy Closure Advanced Optimizations
 window._gaq = _gaq || {
