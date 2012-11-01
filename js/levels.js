@@ -54,7 +54,7 @@ g.levels = {
             newEnemy.y = newEnemy.oldY = newCoordinate.y;
             newEnemy.angle = Math.atan2(g.game.player.x - newEnemy.x, g.game.player.y - newEnemy.y);
             newEnemy.followers = ~~(Math.random() * 4) + 8;
-            newEnemy.angleAdjust = (Math.random() * 0.04) - 0.02;
+            newEnemy.angleAdjust = (Math.random() * 0.02) - 0.01;
             newEnemy.adjustCooldown = 6000;
             g.game.enemies.spawnEnemy(newEnemy);
         }
@@ -79,14 +79,14 @@ g.levels = {
             switch (newEnemy.behavior) {
                 case "ringerHub":
                     newEnemy.followers = ~~(Math.random() * 4) + 8;
-                    newEnemy.angleAdjust = (Math.random() * 0.04) - 0.02;
+                    newEnemy.angleAdjust = (Math.random() * 0.02) - 0.01;
                     newEnemy.adjustCooldown = 6000;
                     g.game.enemies.spawnEnemy(newEnemy);
                     break;
                 case "centipede":
                     newEnemy.follow = '';
                     newEnemy.followers = ~~(Math.random() * 10) + 8;
-                    newEnemy.angleAdjust = (Math.random() * 0.04) - 0.02;
+                    newEnemy.angleAdjust = (Math.random() * 0.02) - 0.01;
                     newEnemy.adjustCooldown = 6000;
                     g.game.enemies.spawnEnemy(newEnemy);
                     break;

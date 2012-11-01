@@ -38,7 +38,7 @@ g.game.init.push(function(){
                     thisenemy.adjustCooldown -= g.game.minusClock;
                     if(thisenemy.adjustCooldown <= 0) {
                         thisenemy.adjustCooldown = 6000;
-                        thisenemy.angleAdjust = (Math.random() * 0.04) - 0.02;
+                        thisenemy.angleAdjust = (Math.random() * 0.02) - 0.01;
                     }
                 }
                 thisenemy.angle += thisenemy.angleAdjust;
@@ -110,7 +110,7 @@ g.game.init.push(function(){
                                 size: thisenemy.size,
                                 angle: thisenemy.angle,
                                 adjustCooldown: 6000,
-                                angleAdjust: (Math.random() * 0.04) - 0.02,
+                                angleAdjust: (Math.random() * 0.02) - 0.01,
                                 follow: i,
                                 cooldown: 200,
                                 behavior: 'centipede',
