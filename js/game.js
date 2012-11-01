@@ -8,7 +8,7 @@ g.game = {
     init: [],
     preResetGame: function() {
         if(g.shadowEnabled) g.ctx.shadowColor = 'rgba(0,0,0,0)';
-
+        g.currentLevel = "survival";
         g.helpers.fS = [];
         for (var i = -g.helpers.fakeLimit; i < g.helpers.fakeLimit; i++) {
             g.helpers.fS[i] = Math.sin(i / 100);
@@ -22,7 +22,7 @@ g.game = {
         g.game.bindControls();
     },
     fail: function() {
-        _gaq.push(['_trackEvent', 'Game', 'Death', 'Score', g.game.score]);
+        _gaq.push(['_trackEvent', 'Game', g.currentLevel, 'Score', g.game.score]);
         g.game.preResetGame();
     },
     resetGame: function() {
@@ -37,6 +37,7 @@ g.game = {
         }
     },
     gameLogic: function() {
+        g.levels[g.currentLevel]();
         g.game.player.logic();
         g.game.enemies.logic();
     },
@@ -99,6 +100,7 @@ g.game = {
             case 32:
                 if (!g.game.gameOn) {
                     g.game.gameOn = true;
+                    g.game.logic = g.levels[g.currentLevel];
                     g.game.resetGame();
                     requestAnimationFrame(g.game.doFrame);
                 } else {

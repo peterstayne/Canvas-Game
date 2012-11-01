@@ -46,16 +46,16 @@ g.game.init.push(function(){
             },
             'ringerHub': function(i) {
                 var thisenemy = g.game.enemies.enemy[i];
-                if(thisenemy.satellites) {
-                    var sepAngle = g.helpers.piDouble / thisenemy.satellites;
+                if(thisenemy.followers) {
+                    var sepAngle = g.helpers.piDouble / (thisenemy.followers - 1);
                     var radii = Math.random() * 50 + 50;
                     var thisAdjust = ([-1,1][Math.round(Math.random())]) * ((Math.random() * 0.04) + 0.06);
-                    while(thisenemy.satellites--) {
+                    while(--thisenemy.followers) {
                         g.game.enemies.spawnEnemy({
                             x: thisenemy.x,
                             y: thisenemy.y,
                             size: 32,
-                            angle: thisenemy.satellites * sepAngle,
+                            angle: thisenemy.followers * sepAngle,
                             follow: i,
                             cooldown: 1500,
                             radii: radii,
@@ -65,10 +65,10 @@ g.game.init.push(function(){
                             angleAdjust: thisAdjust,
                             status: "alive",
                             speed: thisenemy.speed,
-                            tail: thisenemy.tail - 1
+                            tail: thisenemy.followers - 1
                         });
                     }
-                    thisenemy.satellites = 0;
+                    thisenemy.followers = 0;
                 }
                 g.game.enemies.behaviors['wanderCurve'](i);
             },
@@ -101,7 +101,7 @@ g.game.init.push(function(){
                 if(thisenemy.cooldown > 0) {
                     thisenemy.cooldown -= g.game.minusClock;
                     if(thisenemy.cooldown <= 0) {
-                        if(thisenemy.tail) {
+                        if(thisenemy.followers) {
                             g.game.enemies.spawnEnemy({
                                 x: thisenemy.oldX,
                                 y: thisenemy.oldY,
@@ -118,9 +118,9 @@ g.game.init.push(function(){
                                 hp: 1,
                                 status: "alive",
                                 speed: thisenemy.speed,
-                                tail: thisenemy.tail - 1
+                                followers: thisenemy.followers - 1
                             });
-                            thisenemy.tail = 0;
+                            thisenemy.followers = 0;
                         }
                     }
                 }
@@ -172,89 +172,80 @@ g.game.init.push(function(){
                 thisenemy.y += g.helpers.fC[cacheIndex] * (thisenemy.speed * g.game.minusClock);
             }            
         },
-        types: [
-            {
+        types: {
+            "dumbo":{
                 size: 46,
                 speed: 0.042 ,
                 hp: 1,
                 color: 'rgba(64,64,255',
                 behavior: "wander",
-                cooldown: 0,
-                spawnChance: 1
+                cooldown: 0
             },
-            {
+            "brat":{
                 size: 22,
                 speed: 0.092,
                 hp: 1,
                 color: 'rgba(255,100,0',
                 behavior: "wander",
-                cooldown: 0,
-                spawnChance: 1
+                cooldown: 0
             },
-            {
+            "dumbo-fat":{
                 size: 52,
                 speed: 0.022,
                 hp: 3,
                 color: 'rgba(0,0,180',
                 behavior: "chase",
-                cooldown: 0,
-                spawnChance: 1
+                cooldown: 0
             },
-            {
+            "ringer-weak":{
                 size: 22,
                 speed: 0.052 ,
                 hp: 4,
                 color: 'rgba(64,124,84',
                 behavior: "ringerHub",
-                cooldown: 6000,
-                spawnChance: 0.10
+                cooldown: 6000
             },
-            {
+            "snake":{
                 size: 31,
                 speed: 0.112,
                 hp: 1,
                 color: 'rgba(220,0,220',
                 behavior: "centipede",
-                cooldown: 200,
-                spawnChance: 0.10
+                cooldown: 200
             },
-            {
+            "little-red":{
                 size: 28,
                 speed: 0.09,
                 hp: 2,
                 color: 'rgba(255,0,0',
                 behavior: "wanderChase",
-                cooldown: 3900,
-                spawnChance: 1
+                cooldown: 3900
             },
-            {
+            "cyanide":{
                 size: 20,
                 speed: 0.064,
                 hp: 1,
                 color: 'rgba(0,255,255',
                 behavior: "chase",
-                cooldown: 0,
-                spawnChance: 1
+                cooldown: 0
             },
-            {
+            "arrow":{
                 size: 30,
                 speed: 0.17,
                 hp: 1,
                 color: 'rgba(255,255,0',
                 behavior: 'divebomb',
-                cooldown: 0,
-                spawnChance: 1
+                cooldown: 0
             },
-            {
+            "dumbo-obese":{
                 size: 42,
                 speed: 0.032,
                 hp: 5,
                 color: 'rgba(0,0,80',
                 behavior: "wander",
-                cooldown: 0,
-                spawnChance: 1
+                cooldown: 0
             }
-        ],
+        },
         spawnEnemy: function(newEnemy) {
             g.game.enemies.enemyCount ++;
             var newIndex = 'e' + g.game.enemies.enemyCount;
@@ -262,67 +253,6 @@ g.game.init.push(function(){
             return newIndex;
         },
         logic: function() {
-            if (g.game.frame > Math.random() * 100) {
-                var whichwall = ~~(Math.random() * 4);
-                var type = ~~(Math.random() * Math.min(~~g.game.frame, g.game.enemies.types.length - 1));
-                var thisType = g.game.enemies.types[type];
-                // direct assignment instead of obj copy
-                if(thisType.spawnChance === 1 || Math.random() < thisType.spawnChance) {
-                    var newEnemy = {
-                        size: thisType.size,
-                        speed: thisType.speed,
-                        hp: thisType.hp,
-                        color: thisType.color,
-                        behavior: thisType.behavior,
-                        cooldown: thisType.cooldown,
-                        status: "alive",
-                        x: 0,
-                        y: 0
-                    };
-                    switch (whichwall) {
-                    case 0:
-                        // top wall
-                        newEnemy.x = ~~(Math.random() * g.game.field.width);
-                        newEnemy.y = 0;
-                        break;
-                    case 1:
-                        // bottom wall
-                        newEnemy.x = ~~(Math.random() * g.game.field.width);
-                        newEnemy.y = g.game.field.height;
-                        break;
-                    case 2:
-                        // left wall
-                        newEnemy.x = 0;
-                        newEnemy.y = ~~(Math.random() * g.game.field.height);
-                        break;
-                    case 3:
-                        // right wall
-                        newEnemy.x = g.game.field.width;
-                        newEnemy.y = ~~(Math.random() * g.game.field.height);
-                        break;
-                    }
-                    newEnemy.angle = Math.atan2(g.game.player.x - newEnemy.x, g.game.player.y - newEnemy.y)
-                    switch (newEnemy.behavior) {
-                        case "ringerHub":
-                            newEnemy.satellites = ~~(Math.random() * 4) + 8;
-                            newEnemy.angleAdjust = (Math.random() * 0.04) - 0.02;
-                            newEnemy.adjustCooldown = 6000;
-                            g.game.enemies.spawnEnemy(newEnemy);
-                            break;
-                        case "centipede":
-                            newEnemy.follow = '';
-                            newEnemy.tail = ~~(Math.random() * 10) + 8;
-                            newEnemy.oldX = newEnemy.x;
-                            newEnemy.oldY = newEnemy.y;
-                            newEnemy.angleAdjust = (Math.random() * 0.04) - 0.02;
-                            newEnemy.adjustCooldown = 6000;
-                            g.game.enemies.spawnEnemy(newEnemy);
-                            break;
-                        default:
-                            g.game.enemies.spawnEnemy(newEnemy);
-                    }
-                }
-            }
             var thisenemy;
             for (var i = 0, keys = Object.keys(g.game.enemies.enemy), l = keys.length; i < l; ++i) {
                 thisenemy = g.game.enemies.enemy[keys[i]];

@@ -48,7 +48,7 @@ g.ui = {
             y: 55
         });
         if(g.shadowEnabled && curFPS < 50 && g.fpsTimer > 10000) {
-            ctx.shadowColor = 'rgba(0,0,0,0)';
+            g.ctx.shadowColor = 'rgba(0,0,0,0)';
             g.shadowEnabled = false;
         }
     },
