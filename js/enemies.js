@@ -65,7 +65,7 @@ g.game.init.push(function(){
                             angleAdjust: thisAdjust,
                             status: "alive",
                             speed: thisenemy.speed,
-                            tail: thisenemy.followers - 1
+                            followers: thisenemy.followers - 1
                         });
                     }
                     thisenemy.followers = 0;
