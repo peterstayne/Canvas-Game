@@ -65,7 +65,7 @@ g.levels = {
         var type = '';
         var randseed = Math.random() * 100;
         if (g.game.frame > randseed) {
-            if ((g.game.frame / 10) > randseed) {
+            if ((g.game.frame / 40) > randseed) {
                 type = rares[~~(Math.random() * Math.min(~~g.game.frame, rares.length - 1))];
             } else {
                 type = commons[~~(Math.random() * Math.min(~~g.game.frame, commons.length - 1))];

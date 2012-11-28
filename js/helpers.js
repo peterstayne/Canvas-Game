@@ -19,5 +19,26 @@ g.helpers = {
             left: (window.innerWidth / 2) - (obj.width / 2),
             top: obj.offsetTop
         };
+    },
+    objectCopy: function(o){ //http://jsperf.com/deep-object-copy-vs-json
+      if(!o){return {};}
+      var key,
+          ret={};
+      for(key in o){
+         if(o.hasOwnProperty(key)){
+             ret[key]= g.helpers.objectCopyHelp(o[key]);
+         }
+      }
+      return ret;
+    },
+    objectCopyHelp: function(v){
+        if(Array.isArray(v)){
+            return v.map(g.helpers.ObjectCopyHelp);
+        }
+        if(typeof v==="object"){ 
+            return manual(v);
+        }
+        
+        return v;
     }
 };

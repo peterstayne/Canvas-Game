@@ -252,6 +252,9 @@ g.game.init.push(function(){
             g.game.enemies.enemy[newIndex] = newEnemy;
             return newIndex;
         },
+        spawnNamedEnemy: function(enemyName) {
+            g.helpers.objectCopy(g.game.enemies.types[enemyName]);
+        },
         logic: function() {
             var thisenemy;
             for (var i = 0, keys = Object.keys(g.game.enemies.enemy), l = keys.length; i < l; ++i) {
