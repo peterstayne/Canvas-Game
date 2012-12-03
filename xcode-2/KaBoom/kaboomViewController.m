@@ -24,19 +24,25 @@
 
     arrayNames = [[NSMutableArray alloc] init];
     [arrayNames addObject:@"A-Bomb"];
+    [arrayNames addObject:@"Big Bang"];
     [arrayNames addObject:@"Catastrophe"];
     [arrayNames addObject:@"Explosion"];
     [arrayNames addObject:@"Fireball"];
+    [arrayNames addObject:@"Hit and Run"];
     [arrayNames addObject:@"Howitzer"];
     [arrayNames addObject:@"Laser Beam"];
+    [arrayNames addObject:@"Ray Gun"];
     
     arraySounds = [[NSMutableArray alloc] init];
-    [arraySounds addObject:@"A-Bomb.mp3"];
-    [arraySounds addObject:@"Catastrophe.mp3"];
-    [arraySounds addObject:@"Explosion.mp3"];
-    [arraySounds addObject:@"Fireball.mp3"];
-    [arraySounds addObject:@"Howitzer.mp3"];
-    [arraySounds addObject:@"Laser Beam.mp3"];
+    [arraySounds addObject:@"A-Bomb"];
+    [arraySounds addObject:@"big-bang"];
+    [arraySounds addObject:@"Catastrophe"];
+    [arraySounds addObject:@"Explosion"];
+    [arraySounds addObject:@"Fireball"];
+    [arraySounds addObject:@"hit-and-run"];
+    [arraySounds addObject:@"Howitzer"];
+    [arraySounds addObject:@"Laser Beam"];
+    [arraySounds addObject:@"ray-gun"];
 
 }
 
@@ -74,7 +80,7 @@
 
 - (IBAction)functionclick:(id)sender {
     NSInteger selectedOption = [pickerView selectedRowInComponent:0];
-    NSString *filePath = [arrayNames objectAtIndex:selectedOption];
+    NSString *filePath = [arraySounds objectAtIndex:selectedOption];
 	NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:filePath ofType:@"mp3"]];
  //   NSLog(@"%@", filePath);
     
