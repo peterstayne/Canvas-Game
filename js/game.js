@@ -52,6 +52,23 @@ g.game = {
             g.game.fail();
         }
     },
+    startGame: function() {
+        g.game.gameOn = true;
+        g.game.logic = g.levels[g.currentLevel];
+        g.game.resetGame();
+        requestAnimationFrame(g.game.doFrame);
+    },
+    pauseIt: function() {
+        g.game.gameClock = Date.now();
+        g.game.paused = false;
+        requestAnimationFrame(g.game.doFrame);
+    },
+    unPauseIt: function() {
+        g.ui.showPausedScreen();
+        g.game.paused = true;
+        g.fpsCount = 0;
+        g.fpsTimer = 0;
+    },
     doFrame: function() {
         if(!g.game.gameOn || g.game.paused) return false;
         var newGameClock = Date.now();
@@ -99,20 +116,12 @@ g.game = {
                 break;
             case 32:
                 if (!g.game.gameOn) {
-                    g.game.gameOn = true;
-                    g.game.logic = g.levels[g.currentLevel];
-                    g.game.resetGame();
-                    requestAnimationFrame(g.game.doFrame);
+                    g.game.startGame();
                 } else {
                     if(g.game.paused) {
-                        g.game.gameClock = Date.now();
-                        g.game.paused = false;
-                        requestAnimationFrame(g.game.doFrame);
+                        g.game.pauseIt();
                     } else {
-                        g.ui.showPausedScreen();
-                        g.game.paused = true;
-                        g.fpsCount = 0;
-                        g.fpsTimer = 0;
+                        g.game.unPauseIt();
                     }
                 }
             }
