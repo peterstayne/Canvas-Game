@@ -35,3 +35,11 @@ window.onload = function() {
 }
 
 })();
+
+var winWidth = window.innerWidth;
+var winHeight = window.innerHeight;
+window.onresize = function() {
+    winWidth = window.innerWidth;
+    winHeight = window.innerHeight;
+    
+}
