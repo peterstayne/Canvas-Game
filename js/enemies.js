@@ -48,8 +48,8 @@ g.game.init.push(function(){
                 var thisenemy = g.game.enemies.enemy[i];
                 if(thisenemy.followers) {
                     var sepAngle = g.helpers.piDouble / (thisenemy.followers - 1);
-                    var radii = Math.random() * 50 + 50;
-                    var thisAdjust = ([-1,1][Math.round(Math.random())]) * ((Math.random() * 0.04) + 0.06);
+                    var radii = Math.random() * 150 + 50;
+                    var thisAdjust = ([-1,1][Math.round(Math.random())]) * ((Math.random() * 0.05) + 0.02);
                     while(--thisenemy.followers) {
                         g.game.enemies.spawnEnemy({
                             x: thisenemy.x,
@@ -57,7 +57,7 @@ g.game.init.push(function(){
                             size: 32,
                             angle: thisenemy.followers * sepAngle,
                             follow: i,
-                            cooldown: 1500,
+                            cooldown: 4500,
                             radii: radii,
                             behavior: 'ringer',
                             color: 'rgba(112,255,152',
@@ -83,7 +83,7 @@ g.game.init.push(function(){
                 var followEnemy = g.game.enemies.enemy[thisenemy.follow];
                 if(thisenemy.cooldown > 0) {
                     thisenemy.cooldown -= g.game.minusClock;
-                    thisradii = ((1500 - thisenemy.cooldown) / 1500) * thisenemy.radii;
+                    thisradii = ((4500 - thisenemy.cooldown) / 4500) * thisenemy.radii;
                 }
                 var cacheIndex = ~~ (thisenemy.angle * 100);
                 thisenemy.x = g.helpers.fC[cacheIndex] * thisradii + followEnemy.x;
@@ -112,10 +112,10 @@ g.game.init.push(function(){
                                 adjustCooldown: 6000,
                                 angleAdjust: (Math.random() * 0.02) - 0.01,
                                 follow: i,
-                                cooldown: 200,
+                                cooldown: 300,
                                 behavior: 'snake',
                                 color: thisenemy.color,
-                                hp: 1,
+                                hp: 2,
                                 status: "alive",
                                 speed: thisenemy.speed,
                                 followers: thisenemy.followers - 1
@@ -175,7 +175,7 @@ g.game.init.push(function(){
         types: {
             "dumbo":{
                 size: 46,
-                speed: 0.052 ,
+                speed: 0.062 ,
                 hp: 1,
                 color: 'rgba(64,64,255',
                 behavior: "wander",
@@ -183,7 +183,7 @@ g.game.init.push(function(){
             },
             "brat":{
                 size: 22,
-                speed: 0.112,
+                speed: 0.132,
                 hp: 1,
                 color: 'rgba(255,100,0',
                 behavior: "wander",
@@ -199,7 +199,7 @@ g.game.init.push(function(){
             },
             "ringer-weak":{
                 size: 22,
-                speed: 0.052 ,
+                speed: 0.072 ,
                 hp: 4,
                 color: 'rgba(64,124,84',
                 behavior: "ringerHub",
@@ -207,7 +207,7 @@ g.game.init.push(function(){
             },
             "snake":{
                 size: 31,
-                speed: 0.112,
+                speed: 0.132,
                 hp: 1,
                 color: 'rgba(220,0,220',
                 behavior: "snake",

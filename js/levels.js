@@ -63,7 +63,7 @@ g.levels = {
         var commons = ["dumbo", "brat", "dumbo-fat", "little-red", "cyanide", "arrow", "dumbo-obese"];
         var rares = ["ringer-weak", "snake"];
         var type = '';
-        var randseed = Math.random() * 100;
+        var randseed = Math.random() * 200;
         if (g.game.frame > randseed) {
             if ((g.game.frame / 40) > randseed) {
                 type = rares[~~(Math.random() * 2)];
@@ -85,7 +85,7 @@ g.levels = {
                     break;
                 case "snake":
                     newEnemy.follow = '';
-                    newEnemy.followers = ~~(Math.random() * 10) + 8;
+                    newEnemy.followers = ~~(Math.random() * 20) + 8;
                     newEnemy.angleAdjust = (Math.random() * 0.02) - 0.01;
                     newEnemy.adjustCooldown = 6000;
                     g.game.enemies.spawnEnemy(newEnemy);
