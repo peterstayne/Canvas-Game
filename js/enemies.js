@@ -112,7 +112,7 @@ g.game.init.push(function(){
                                 adjustCooldown: 6000,
                                 angleAdjust: (Math.random() * 0.02) - 0.01,
                                 follow: i,
-                                cooldown: 300,
+                                cooldown: 200,
                                 behavior: 'snake',
                                 color: thisenemy.color,
                                 hp: 2,

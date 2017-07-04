@@ -8,6 +8,8 @@ g.game.init.push(function() {
         moveLeft: false,
         moveRight: false,
         firing: false,
+        speed: 0.2,
+        bulletSpeed: 0.9,
         cooldown: 25,
         bullets: [],
         fireShot: function () {
@@ -19,16 +21,16 @@ g.game.init.push(function() {
         },
         logic: function() {
             if (g.game.player.moveLeft && g.game.player.x > 0 && !g.game.player.moveRight) {
-                g.game.player.x -= (0.12 * g.game.minusClock);
+                g.game.player.x -= (g.game.player.speed * g.game.minusClock);
             }
             if (g.game.player.moveRight && g.game.player.x < g.game.field.width && !g.game.player.moveLeft) {
-                g.game.player.x += (0.12 * g.game.minusClock);
+                g.game.player.x += (g.game.player.speed * g.game.minusClock);
             }
             if (g.game.player.moveUp && g.game.player.y > 0 && !g.game.player.moveDown) {
-                g.game.player.y -= (0.12 * g.game.minusClock);
+                g.game.player.y -= (g.game.player.speed * g.game.minusClock);
             }
             if (g.game.player.moveDown && g.game.player.y < g.game.field.height && !g.game.player.moveUp) {
-                g.game.player.y += (0.12 * g.game.minusClock);
+                g.game.player.y += (g.game.player.speed * g.game.minusClock);
             }
             if (g.game.player.firing && (g.game.player.cooldown = g.game.player.cooldown - (g.game.minusClock * 0.2)) <= 0) {
                 g.game.player.fireShot();
@@ -39,8 +41,8 @@ g.game.init.push(function() {
                 removed = false;
                 thisbullet = g.game.player.bullets[i];
                 cacheIndex = ~~ (thisbullet.angle * 100);
-                thisbullet.x += g.helpers.fS[cacheIndex] * (0.7 * g.game.minusClock);
-                thisbullet.y += g.helpers.fC[cacheIndex] * (0.7 * g.game.minusClock);
+                thisbullet.x += g.helpers.fS[cacheIndex] * (g.game.player.bulletSpeed * g.game.minusClock);
+                thisbullet.y += g.helpers.fC[cacheIndex] * (g.game.player.bulletSpeed * g.game.minusClock);
                 for (var j = 0, keysE = Object.keys(g.game.enemies.enemy), lE = keysE.length; j < lE; ++j) {
                     thisenemy = g.game.enemies.enemy[keysE[j]];
                     size = thisenemy.size >> 1;
