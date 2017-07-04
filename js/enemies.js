@@ -49,7 +49,7 @@ g.game.init.push(function(){
                 if(thisenemy.followers) {
                     var sepAngle = g.helpers.piDouble / (thisenemy.followers - 1);
                     var radii = Math.random() * 150 + 50;
-                    var thisAdjust = ([-1,1][Math.round(Math.random())]) * ((Math.random() * 0.05) + 0.02);
+                    var thisAdjust = ([-1,1][Math.round(Math.random())]) * ((Math.random() * 0.04) + 0.01);
                     while(--thisenemy.followers) {
                         g.game.enemies.spawnEnemy({
                             x: thisenemy.x,
@@ -112,7 +112,7 @@ g.game.init.push(function(){
                                 adjustCooldown: 6000,
                                 angleAdjust: (Math.random() * 0.02) - 0.01,
                                 follow: i,
-                                cooldown: 200,
+                                cooldown: 300,
                                 behavior: 'snake',
                                 color: thisenemy.color,
                                 hp: 2,
@@ -175,7 +175,7 @@ g.game.init.push(function(){
         types: {
             "dumbo":{
                 size: 46,
-                speed: 0.062 ,
+                speed: 0.082 ,
                 hp: 1,
                 color: 'rgba(64,64,255',
                 behavior: "wander",
@@ -183,7 +183,7 @@ g.game.init.push(function(){
             },
             "brat":{
                 size: 22,
-                speed: 0.132,
+                speed: 0.152,
                 hp: 1,
                 color: 'rgba(255,100,0',
                 behavior: "wander",
