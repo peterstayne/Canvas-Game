@@ -89,7 +89,7 @@ g.game = {
         document.onmousedown = function (event) {
             g.game.player.fireShot();
             g.game.player.firing = true;
-            g.game.player.cooldown = 20;
+            g.game.player.cooldown = 15;
             event.stopPropagation();
             return false;
         };

@@ -12,6 +12,7 @@ window._gaq = window._gaq || {
 g = {
     shadowEnabled: true,
     canvasScale: 1,
+    cAspectRatio: 1.5,
     cwidth: 900,
     cheight: 600,
     fpsCount: 0,
@@ -23,23 +24,41 @@ g = {
 g.ctx = g.canvas.getContext("2d");
 g.bgctx = g.bgcanvas.getContext("2d");
 
-g.canvas.setAttribute('width', g.cwidth);
-g.canvas.setAttribute('height', g.cheight);
-g.bgcanvas.setAttribute('width', g.cwidth);
-g.bgcanvas.setAttribute('height', g.cheight);
-
-window.onload = function() {
-
+window.addEventListener('load', function() {
+    resizeWindow();
     g.game.preResetGame();
     g.game.resetGame();
+});
+
+var winWidth = null;
+var winHeight = null;
+
+window.addEventListener('resize', resizeWindow);
+
+function resizeWindow() {
+    winWidth = window.innerWidth;
+    winHeight = window.innerHeight;
+    if(winWidth / winHeight > g.cAspectRatio) {
+        g.cwidth = ~~(winHeight * g.cAspectRatio);
+        g.cheight = winHeight;
+    } else {
+        g.cheight = ~~(winWidth / g.cAspectRatio);
+        g.cwidth = winWidth;
+    }
+
+    document.body.style.width = g.cwidth + 'px';
+
+    g.game.field.width = g.cwidth;
+    g.game.field.height = g.cheight;
+
+    g.canvas.setAttribute('width', g.cwidth);
+    g.canvas.setAttribute('height', g.cheight);
+    g.bgcanvas.setAttribute('width', g.cwidth);
+    g.bgcanvas.setAttribute('height', g.cheight);
+
+    g.game.field.offset = g.helpers.findOffset(g.canvas)
 }
+
 
 })();
 
-var winWidth = window.innerWidth;
-var winHeight = window.innerHeight;
-window.onresize = function() {
-    winWidth = window.innerWidth;
-    winHeight = window.innerHeight;
-    
-}
