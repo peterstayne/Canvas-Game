@@ -66,7 +66,7 @@ g.levels = {
         var randseed = Math.random() * 100;
         if (g.game.frame > randseed) {
             if ((g.game.frame / 40) > randseed) {
-                type = rares[~~(Math.random() * Math.min(~~g.game.frame, rares.length - 1))];
+                type = rares[~~(Math.random() * 2)];
             } else {
                 type = commons[~~(Math.random() * Math.min(~~g.game.frame, commons.length - 1))];
             }
@@ -83,7 +83,7 @@ g.levels = {
                     newEnemy.adjustCooldown = 6000;
                     g.game.enemies.spawnEnemy(newEnemy);
                     break;
-                case "centipede":
+                case "snake":
                     newEnemy.follow = '';
                     newEnemy.followers = ~~(Math.random() * 10) + 8;
                     newEnemy.angleAdjust = (Math.random() * 0.02) - 0.01;

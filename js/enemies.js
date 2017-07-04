@@ -96,7 +96,7 @@ g.game.init.push(function(){
                     thisenemy.angle += g.helpers.piDouble;
                 }
             },
-            'centipede': function(i) {
+            'snake': function(i) {
                 var thisenemy = g.game.enemies.enemy[i];
                 if(thisenemy.cooldown > 0) {
                     thisenemy.cooldown -= g.game.minusClock;
@@ -113,7 +113,7 @@ g.game.init.push(function(){
                                 angleAdjust: (Math.random() * 0.02) - 0.01,
                                 follow: i,
                                 cooldown: 200,
-                                behavior: 'centipede',
+                                behavior: 'snake',
                                 color: thisenemy.color,
                                 hp: 1,
                                 status: "alive",
@@ -175,7 +175,7 @@ g.game.init.push(function(){
         types: {
             "dumbo":{
                 size: 46,
-                speed: 0.042 ,
+                speed: 0.052 ,
                 hp: 1,
                 color: 'rgba(64,64,255',
                 behavior: "wander",
@@ -183,7 +183,7 @@ g.game.init.push(function(){
             },
             "brat":{
                 size: 22,
-                speed: 0.092,
+                speed: 0.112,
                 hp: 1,
                 color: 'rgba(255,100,0',
                 behavior: "wander",
@@ -210,7 +210,7 @@ g.game.init.push(function(){
                 speed: 0.112,
                 hp: 1,
                 color: 'rgba(220,0,220',
-                behavior: "centipede",
+                behavior: "snake",
                 cooldown: 200
             },
             "little-red":{
