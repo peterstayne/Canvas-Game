@@ -1,8 +1,8 @@
 <!doctype html>
 <html>
 <head>
-	<title>Game!</title>
-	<link rel="stylesheet" type="text/css" href="css/style.css" />
+  <title>Game!</title>
+  <link rel="stylesheet" type="text/css" href="css/style.css" />
 <script type="text/javascript">
 
   var _gaq = _gaq || [];
@@ -18,11 +18,19 @@
 </script>
 </head>
 <body>
-		<canvas id="bgcanvas"></canvas>
-		<canvas id="gamecanvas"></canvas>
+    <canvas id="bgcanvas"></canvas>
+    <canvas id="gamecanvas"></canvas>
 
-			<img src="images/grayblur.png" id="bgimg" />
+      <img src="images/grayblur.png" id="bgimg" />
 
-	<script type="text/javascript" src="js/game.min.js"></script>
+  <script type="text/javascript" src="js/requestAnimationFrame-shim.js"></script>
+  <script type="text/javascript" src="js/main.js"></script>
+  <script type="text/javascript" src="js/helpers.js"></script>
+  <script type="text/javascript" src="js/game.js"></script>
+  <script type="text/javascript" src="js/levels.js"></script>
+  <script type="text/javascript" src="js/field.js"></script>
+  <script type="text/javascript" src="js/ui.js"></script>
+  <script type="text/javascript" src="js/players.js"></script>
+  <script type="text/javascript" src="js/enemies.js"></script>
 </body>
 </html>
