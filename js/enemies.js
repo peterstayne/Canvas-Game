@@ -192,7 +192,7 @@ g.game.init.push(function(){
             "dumbo-fat":{
                 size: 92,
                 speed: 0.022,
-                hp: 3,
+                hp: 5,
                 color: 'rgba(0,0,180',
                 behavior: "chase",
                 cooldown: 0

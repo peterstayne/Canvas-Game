@@ -10,7 +10,7 @@ g.game.init.push(function() {
         firing: false,
         speed: 0.2,
         bulletSpeed: 0.9,
-        cooldown: 25,
+        cooldown: 15,
         bullets: [],
         fireShot: function () {
             g.game.player.bullets.push({
@@ -34,7 +34,7 @@ g.game.init.push(function() {
             }
             if (g.game.player.firing && (g.game.player.cooldown = g.game.player.cooldown - (g.game.minusClock * 0.2)) <= 0) {
                 g.game.player.fireShot();
-                g.game.player.cooldown = 25;
+                g.game.player.cooldown = 15;
             }
             var cacheindex, thisbullet, thisenemy, size, j, removed;
             for (var i = 0, l = g.game.player.bullets.length; i < l; ++i) {
