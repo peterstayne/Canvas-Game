@@ -190,7 +190,7 @@ g.game.init.push(function(){
                 cooldown: 0
             },
             "dumbo-fat":{
-                size: 52,
+                size: 92,
                 speed: 0.022,
                 hp: 3,
                 color: 'rgba(0,0,180',
@@ -313,13 +313,13 @@ g.game.init.push(function(){
                     }
                     else {
                         if(g.shadowEnabled) g.ctx.shadowColor = 'rgba(0,0,0,0)';
-                        if(cooldown > 90) {
-                            sparks = 3;
+                        if(cooldown > 95) {
+                            sparks = 4;
                             g.ctx.strokeStyle = 'rgba(255, 255, 0, 1)';
                             g.ctx.lineWidth = 4;
                             g.ctx.beginPath();
                             sparkStart = Math.random() * (110 - cooldown);
-                            sparkEnd = Math.random() * (140 - cooldown);
+                            sparkEnd = Math.random() * (240 - cooldown);
                             while(--sparks) {
                                 sparkAngle = ~~((Math.random() * 628) - 314);
                                 g.ctx.moveTo(~~(thisenemy.death.x + g.helpers.fS[sparkAngle] * sparkStart), ~~(thisenemy.death.y + g.helpers.fC[sparkAngle] * sparkStart));

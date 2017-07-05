@@ -50,12 +50,13 @@ g.game.init.push(function() {
                         thisenemy.hp--;
                         if (thisenemy.hp > 0) {
                             thisenemy.status = "wounded";
-                            thisenemy.x += g.helpers.fS[cacheIndex] * 6;
-                            thisenemy.y += g.helpers.fC[cacheIndex] * 6;
+                            thisenemy.x += g.helpers.fS[cacheIndex] * 12;
+                            thisenemy.y += g.helpers.fC[cacheIndex] * 12;
                         } else {
                             thisenemy.status = "dead";
                             thisenemy.angle = thisbullet.angle;
                             thisenemy.cooldown = 100;
+                            thisenemy.speed = 0.65;
                             g.game.score++;
                             thisenemy.death = {
                                 x: thisbullet.x,

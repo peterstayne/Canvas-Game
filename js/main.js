@@ -55,7 +55,15 @@ function resizeWindow() {
     g.canvas.setAttribute('height', g.cheight);
     g.bgcanvas.setAttribute('width', g.cwidth);
     g.bgcanvas.setAttribute('height', g.cheight);
-
+    g.game.field.bgload();
+    if(g.game.gameOn) {
+        g.game.renderFrame();
+        if(g.game.paused) {
+            g.ui.showPausedScreen();
+        }
+    } else {
+        g.ui.showTitleScreen();
+    }
     g.game.field.offset = g.helpers.findOffset(g.canvas)
 }
 
