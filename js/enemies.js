@@ -134,11 +134,7 @@ g.game.init.push(function(){
                 }
                 thisenemy.color = 'rgba(140,0,140';
                 var followEnemy = g.game.enemies.enemy[thisenemy.follow];
-                if(g.helpers.findDistance(thisenemy.x, thisenemy.y, followEnemy.x, followEnemy.y) > 25) {
-                    thisenemy.speed = 0.112;
-                } else {
-                    thisenemy.speed = 0.050;
-                }
+                thisenemy.speed = 0.112;
                 thisenemy.angle = Math.atan2(followEnemy.x - thisenemy.x, followEnemy.y - thisenemy.y);
                 var cacheIndex = ~~ (thisenemy.angle * 100);
                 thisenemy.x += g.helpers.fS[cacheIndex] * (thisenemy.speed * g.game.minusClock);
@@ -280,17 +276,15 @@ g.game.init.push(function(){
             var opacity = 1;
             var sparks, sparkAngle, sparkStart, sparkEnd;
             var cooldown, size, newColor;
-            if(g.shadowEnabled) {
-                g.ctx.shadowBlur = 5;
-                g.ctx.shadowOffsetX = 3;
-                g.ctx.shadowOffsetY = 3;
-            }
+            g.ctx.shadowBlur = 5;
+            g.ctx.shadowOffsetX = 3;
+            g.ctx.shadowOffsetY = 3;
             var thisenemy;
             for (var i = 0, keys = Object.keys(g.game.enemies.enemy), l = keys.length; i < l; ++i) {
                 thisenemy = g.game.enemies.enemy[keys[i]];
                 size = thisenemy.size;
                 if(thisenemy.status !== "dead") {
-                    if(g.shadowEnabled) g.ctx.shadowColor = shadowColor + '1)';
+                    g.ctx.shadowColor = shadowColor + '1)';
                     if(thisenemy.status !== "wounded") {
                         newColor = thisenemy.color + ",1)";
                     } else {
@@ -312,7 +306,7 @@ g.game.init.push(function(){
                         delete g.game.enemies.enemy[keys[i]];
                     }
                     else {
-                        if(g.shadowEnabled) g.ctx.shadowColor = 'rgba(0,0,0,0)';
+                        g.ctx.shadowColor = 'rgba(0,0,0,0)';
                         if(cooldown > 95) {
                             sparks = 4;
                             g.ctx.strokeStyle = 'rgba(255, 255, 0, 1)';

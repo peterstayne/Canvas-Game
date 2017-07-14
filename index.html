@@ -20,6 +20,7 @@
 <body>
     <canvas id="bgcanvas"></canvas>
     <canvas id="gamecanvas"></canvas>
+    <canvas id="uicanvas"></canvas>
 
       <img src="images/greenblur.png" id="bgimg" />
 
@@ -32,5 +33,8 @@
   <script type="text/javascript" src="js/ui.js"></script>
   <script type="text/javascript" src="js/players.js"></script>
   <script type="text/javascript" src="js/enemies.js"></script>
+  <script>
+    requestAnimationFrame(g.game.doFrame);
+  </script>
 </body>
 </html>

@@ -20,7 +20,7 @@ g.ui = {
         if(params.text === undefined || !params.text.length) {
             return false;
         }
-        if(g.shadowEnabled) g.ctx.shadowColor = 'rgba(0,0,0,0)';
+        g.ctx.shadowColor = 'rgba(0,0,0,0)';
 
         g.ctx.font = params.size + "px arial";
         var thisTextWidth = g.ctx.measureText(params.text).width;
@@ -47,17 +47,14 @@ g.ui = {
             x: 80,
             y: 55
         });
-        if(g.shadowEnabled && curFPS < 50 && g.fpsTimer > 10000) {
-            g.ctx.shadowColor = 'rgba(0,0,0,0)';
-            g.shadowEnabled = false;
-        }
+        g.ctx.shadowColor = 'rgba(0,0,0,0)';
     },
 	showTitleScreen: function() {
         var centerX = g.cwidth >> 1;
         var titleY = ~~(g.cheight * 0.48);
         var pressSpaceY = ~~(g.cheight * 0.75);
 
-        if(g.shadowEnabled) g.ctx.shadowColor = 'rgba(0,0,0,0)';
+        g.ctx.shadowColor = 'rgba(0,0,0,0)';
 
         g.ctx.textBaseline = "alphabetic";
         g.ctx.fillStyle = "rgba(0,0,0,0.7)";
@@ -91,7 +88,7 @@ g.ui = {
         x: 0,
         y: 0,
         render: function() {
-            if(g.shadowEnabled) g.ctx.shadowColor = 'rgba(0,0,0,0)';
+            g.ctx.shadowColor = 'rgba(0,0,0,0)';
             g.ctx.strokeStyle = "#0ff";
             g.ctx.strokeRect(g.ui.crosshair.x - 4, g.ui.crosshair.y - 4, 8, 8);
         }

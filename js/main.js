@@ -10,7 +10,6 @@ window._gaq = window._gaq || {
 };
 
 g = {
-    shadowEnabled: true,
     canvasScale: 1,
     cAspectRatio: 1.5,
     cwidth: 900,
@@ -18,11 +17,14 @@ g = {
     fpsCount: 0,
     fpsTimer: 0,
     canvas: document.getElementById('gamecanvas'),
-    bgcanvas: document.getElementById('bgcanvas')
+    bgcanvas: document.getElementById('bgcanvas'),
+    uicanvas: document.getElementById('uicanvas'),
+    loaded: false
 };
 
 g.ctx = g.canvas.getContext("2d");
 g.bgctx = g.bgcanvas.getContext("2d");
+g.uictx = g.uicanvas.getContext("2d");
 
 window.addEventListener('load', function() {
     resizeWindow();

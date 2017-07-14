@@ -7,7 +7,7 @@ g.game = {
     gameClock: Date.now(),
     init: [],
     preResetGame: function() {
-        if(g.shadowEnabled) g.ctx.shadowColor = 'rgba(0,0,0,0)';
+        g.ctx.shadowColor = 'rgba(0,0,0,0)';
         g.currentLevel = "survival";
         g.helpers.fS = [];
         for (var i = -g.helpers.fakeLimit; i < g.helpers.fakeLimit; i++) {
@@ -17,7 +17,6 @@ g.game = {
         for (var i = -g.helpers.fakeLimit; i < g.helpers.fakeLimit; i++) {
             g.helpers.fC[i] = Math.cos(i / 100);
         }
-        g.ui.showTitleScreen();
         g.game.gameClock = Date.now();
         g.game.bindControls();
     },
@@ -35,6 +34,7 @@ g.game = {
                 g.game.init[i]();
             }
         }
+        g.loaded = true;
     },
     gameLogic: function() {
         g.levels[g.currentLevel]();
@@ -42,10 +42,8 @@ g.game = {
         g.game.enemies.logic();
     },
     renderFrame: function() {
-        g.game.field.render();
         g.game.enemies.render();
         g.game.player.render();
-        g.ui.crosshair.render();
         g.ui.updateScore();
 
         if(!g.game.gameOn) {
@@ -56,29 +54,33 @@ g.game = {
         g.game.gameOn = true;
         g.game.logic = g.levels[g.currentLevel];
         g.game.resetGame();
-        requestAnimationFrame(g.game.doFrame);
+        //requestAnimationFrame(g.game.doFrame);
     },
     pauseIt: function() {
-        g.game.gameClock = Date.now();
+        //g.game.gameClock = Date.now();
         g.game.paused = false;
-        requestAnimationFrame(g.game.doFrame);
+        //requestAnimationFrame(g.game.doFrame);
     },
     unPauseIt: function() {
-        g.ui.showPausedScreen();
         g.game.paused = true;
-        g.fpsCount = 0;
-        g.fpsTimer = 0;
     },
     doFrame: function() {
-        if(!g.game.gameOn || g.game.paused) return false;
         var newGameClock = Date.now();
         g.game.minusClock = newGameClock - g.game.gameClock;
-        g.game.frame += (g.game.minusClock * 0.00002);
         g.fpsCount++;
         g.fpsTimer += g.game.minusClock;
         g.game.gameClock = newGameClock;
-        g.game.gameLogic();
-        g.game.renderFrame();
+        g.game.field.render();
+        g.ui.crosshair.render();
+        if(g.loaded) g.game.renderFrame();
+        if(g.game.gameOn && !g.game.paused) {
+            g.game.frame += (g.game.minusClock * 0.00002);
+            g.game.gameLogic();
+        } else if(!g.game.gameOn) {
+            g.ui.showTitleScreen();
+        } else if(g.game.paused) {
+            g.ui.showPausedScreen();
+        }
         requestAnimationFrame(g.game.doFrame);
     },
     bindControls: function() {

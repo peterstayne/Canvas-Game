@@ -4,7 +4,7 @@ g.game.field = {
     offset: g.helpers.findOffset(g.canvas),
     image: 'gravel.png',
     render: function() {
-        if(g.shadowEnabled) g.ctx.shadowColor = 'rgba(0,0,0,0)';
+        g.ctx.shadowColor = 'rgba(0,0,0,0)';
         g.canvas.width = g.canvas.width;
     },
     bgload: function() {
