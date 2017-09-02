@@ -81,27 +81,27 @@ g.game.init.push(function() {
         render: function() {
             var cacheIndex;
             if(g.shadowEnabled) {
-                g.ctx.shadowColor = 'rgba(0,0,0,1)';
-                g.ctx.shadowBlur = 15;
-                g.ctx.shadowOffsetX = 0;
-                g.ctx.shadowOffsetY = 0;
+                g.renderer.ctx.shadowColor = 'rgba(0,0,0,1)';
+                g.renderer.ctx.shadowBlur = 15;
+                g.renderer.ctx.shadowOffsetX = 0;
+                g.renderer.ctx.shadowOffsetY = 0;
             }
-            g.ctx.fillStyle = "#0f0";
-            g.ctx.fillRect(g.game.player.x - 4, g.game.player.y - 4, 8, 8);
+            g.renderer.ctx.fillStyle = "#0f0";
+            g.renderer.ctx.fillRect(g.game.player.x - 4, g.game.player.y - 4, 8, 8);
 
-            if(g.shadowEnabled) g.ctx.shadowColor = 'rgba(255,255,0,1)';
-            g.ctx.strokeStyle = 'rgba(255, 255, 255, 1)';
-            g.ctx.lineWidth = 4;
-            g.ctx.beginPath();
+            if(g.shadowEnabled) g.renderer.ctx.shadowColor = 'rgba(255,255,0,1)';
+            g.renderer.ctx.strokeStyle = 'rgba(255, 255, 255, 1)';
+            g.renderer.ctx.lineWidth = 3;
+            g.renderer.ctx.beginPath();
             var thisbullet;
             for (var i = 0, keys = Object.keys(g.game.player.bullets), l = keys.length; i < l; ++i) {
                 thisbullet = g.game.player.bullets[keys[i]];
                 cacheIndex = ~~ (Math.atan2(g.game.player.x - ~~thisbullet.x, g.game.player.y - ~~thisbullet.y) * 100);
-                g.ctx.moveTo(~~thisbullet.x, ~~thisbullet.y);
-                g.ctx.lineTo(~~thisbullet.x + (g.helpers.fS[cacheIndex] * 18), ~~thisbullet.y + (g.helpers.fC[cacheIndex] * 18));
+                g.renderer.ctx.moveTo(~~thisbullet.x, ~~thisbullet.y);
+                g.renderer.ctx.lineTo(~~thisbullet.x + (g.helpers.fS[cacheIndex] * 18), ~~thisbullet.y + (g.helpers.fC[cacheIndex] * 18));
             }
-            g.ctx.stroke();
-            g.ctx.closePath();
+            g.renderer.ctx.stroke();
+            g.renderer.ctx.closePath();
         }
     };
 });

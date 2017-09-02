@@ -20,56 +20,56 @@ g.ui = {
         if(params.text === undefined || !params.text.length) {
             return false;
         }
-        g.ctx.shadowColor = 'rgba(0,0,0,0)';
+        g.renderer.ctx.shadowColor = 'rgba(0,0,0,0)';
 
-        g.ctx.font = params.size + "px arial";
-        var thisTextWidth = g.ctx.measureText(params.text).width;
+        g.renderer.ctx.font = params.size + "px arial";
+        var thisTextWidth = g.renderer.ctx.measureText(params.text).width;
 
-        g.ctx.fillStyle = "rgba(0,0,0,0.7)";
-        g.ctx.fillRect(params.x - (thisTextWidth >> 1)- 10, params.y - 8, thisTextWidth + 17, params.size + 18);
+        g.renderer.ctx.fillStyle = "rgba(0,0,0,0.7)";
+        g.renderer.ctx.fillRect(params.x - (thisTextWidth >> 1)- 10, params.y - 8, thisTextWidth + 17, params.size + 18);
 
-        g.ctx.textAlign = params.align;
-        g.ctx.textBaseline = "top";
-        g.ctx.fillStyle = params.color;
-        g.ctx.fillText(params.text, params.x, params.y);
+        g.renderer.ctx.textAlign = params.align;
+        g.renderer.ctx.textBaseline = "top";
+        g.renderer.ctx.fillStyle = params.color;
+        g.renderer.ctx.fillText(params.text, params.x, params.y);
     },
 	updateScore: function() {
         g.ui.drawText({
-            color: "#f0f",
+            color: "#ffa",
             text: "Score: " + g.game.score,
             x: 80,
             y: 30
         });
         var curFPS = ~~(g.fpsCount / (g.fpsTimer / 1000));
         g.ui.drawText({
-            color: "#f0f",
+            color: "#faf",
             text: "FPS: " + curFPS,
             x: 80,
-            y: 55
+            y: 65
         });
-        g.ctx.shadowColor = 'rgba(0,0,0,0)';
+        g.renderer.ctx.shadowColor = 'rgba(0,0,0,0)';
     },
 	showTitleScreen: function() {
         var centerX = g.cwidth >> 1;
         var titleY = ~~(g.cheight * 0.48);
         var pressSpaceY = ~~(g.cheight * 0.75);
 
-        g.ctx.shadowColor = 'rgba(0,0,0,0)';
+        g.renderer.ctx.shadowColor = 'rgba(0,0,0,0)';
 
-        g.ctx.textBaseline = "alphabetic";
-        g.ctx.fillStyle = "rgba(0,0,0,0.7)";
-        g.ctx.fillRect(centerX - 255, titleY - 88, 510, 106);
+        g.renderer.ctx.textBaseline = "alphabetic";
+        g.renderer.ctx.fillStyle = "rgba(0,0,0,0.7)";
+        g.renderer.ctx.fillRect(centerX - 255, titleY - 88, 510, 106);
 
-        g.ctx.font = "98px arial";
-        g.ctx.fillStyle = "#538";
-        g.ctx.textAlign = "center";
-        g.ctx.fillText("SQUARE'D", centerX, titleY);
+        g.renderer.ctx.font = "98px helvetica";
+        g.renderer.ctx.fillStyle = "#538";
+        g.renderer.ctx.textAlign = "center";
+        g.renderer.ctx.fillText("SQUARE'D", centerX, titleY);
 
-        g.ctx.font = "100px arial";
-        g.ctx.lineWidth = 1;
-        g.ctx.strokeStyle = "#a7f";
-        g.ctx.textAlign = "center";
-        g.ctx.strokeText("SQUARE'D", centerX, titleY);
+        g.renderer.ctx.font = "100px helvetica";
+        g.renderer.ctx.lineWidth = 1;
+        g.renderer.ctx.strokeStyle = "#a7f";
+        g.renderer.ctx.textAlign = "center";
+        g.renderer.ctx.strokeText("SQUARE'D", centerX, titleY);
 
         g.ui.drawText({
            "text": "Press space to start",
@@ -88,9 +88,9 @@ g.ui = {
         x: 0,
         y: 0,
         render: function() {
-            g.ctx.shadowColor = 'rgba(0,0,0,0)';
-            g.ctx.strokeStyle = "#0ff";
-            g.ctx.strokeRect(g.ui.crosshair.x - 4, g.ui.crosshair.y - 4, 8, 8);
+            g.renderer.ctx.shadowColor = 'rgba(0,0,0,0)';
+            g.renderer.ctx.strokeStyle = "#0ff";
+            g.renderer.ctx.strokeRect(g.ui.crosshair.x - 4, g.ui.crosshair.y - 4, 8, 8);
         }
     }
 };

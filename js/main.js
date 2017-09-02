@@ -16,59 +16,22 @@ g = {
     cheight: 600,
     fpsCount: 0,
     fpsTimer: 0,
-    canvas: document.getElementById('gamecanvas'),
-    bgcanvas: document.getElementById('bgcanvas'),
-    uicanvas: document.getElementById('uicanvas'),
     loaded: false
 };
 
-g.ctx = g.canvas.getContext("2d");
-g.bgctx = g.bgcanvas.getContext("2d");
-g.uictx = g.uicanvas.getContext("2d");
+g.renderer = canvasRender;
+
+g.renderer.init();
 
 window.addEventListener('load', function() {
-    resizeWindow();
+    g.renderer.resizeWindow();
     g.game.preResetGame();
     g.game.resetGame();
+    window.addEventListener('resize', g.renderer.resizeWindow);
 });
 
 var winWidth = null;
 var winHeight = null;
-
-window.addEventListener('resize', resizeWindow);
-
-function resizeWindow() {
-    winWidth = window.innerWidth;
-    winHeight = window.innerHeight;
-    if(winWidth / winHeight > g.cAspectRatio) {
-        g.cwidth = ~~(winHeight * g.cAspectRatio);
-        g.cheight = winHeight;
-    } else {
-        g.cheight = ~~(winWidth / g.cAspectRatio);
-        g.cwidth = winWidth;
-    }
-
-    document.body.style.width = g.cwidth + 'px';
-
-    g.game.field.width = g.cwidth;
-    g.game.field.height = g.cheight;
-
-    g.canvas.setAttribute('width', g.cwidth);
-    g.canvas.setAttribute('height', g.cheight);
-    g.bgcanvas.setAttribute('width', g.cwidth);
-    g.bgcanvas.setAttribute('height', g.cheight);
-    g.game.field.bgload();
-    if(g.game.gameOn) {
-        g.game.renderFrame();
-        if(g.game.paused) {
-            g.ui.showPausedScreen();
-        }
-    } else {
-        g.ui.showTitleScreen();
-    }
-    g.game.field.offset = g.helpers.findOffset(g.canvas)
-}
-
 
 })();
 

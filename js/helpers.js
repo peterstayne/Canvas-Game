@@ -15,6 +15,7 @@ g.helpers = {
         return Math.sqrt(x + y);
     },
     findOffset: function(obj) {
+      console.log('fo', obj)
         console.log('findoffset', obj.width, window.innerWidth, (window.innerWidth / 2) - (obj.width / 2));
         return {
             left: (window.innerWidth / 2) - (obj.width / 2),

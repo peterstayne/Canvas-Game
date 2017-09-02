@@ -1,5 +1,23 @@
 g.game.init.push(function(){
     g.game.enemies = {
+        getEnemyTemplate: function(type) {
+            var thisType = g.game.enemies.types[type];
+            return {
+                size: thisType.size,
+                speed: thisType.speed,
+                hp: thisType.hp,
+                color: thisType.color,
+                behavior: thisType.behavior,
+                cooldown: thisType.cooldown,
+                status: "alive",
+                x: 0,
+                y: 0,
+                followers: 0,
+                follow: '',
+                angleAdjust: null,
+                adjustCooldown: null
+            };
+        },
         enemyCount: 0,
         enemy: {},
         behaviors: {
@@ -8,7 +26,7 @@ g.game.init.push(function(){
                 var angleToPlayer = Math.atan2(g.game.player.x - thisenemy.x, g.game.player.y - thisenemy.y);
                 if (thisenemy.cooldown < 0) {
                     thisenemy.angle = angleToPlayer;
-                    thisenemy.cooldown = ~~ (Math.random() * 3900) + 2300;
+                    thisenemy.cooldown = ~~ (Math.random() * 2300) + 1200;
                 }
                 var cacheIndex = ~~ (thisenemy.angle * 100);
                 thisenemy.x += g.helpers.fS[cacheIndex] * (thisenemy.speed * g.game.minusClock);
@@ -211,11 +229,11 @@ g.game.init.push(function(){
             },
             "little-red":{
                 size: 28,
-                speed: 0.09,
+                speed: 0.17,
                 hp: 2,
                 color: 'rgba(255,0,0',
                 behavior: "wanderChase",
-                cooldown: 3900
+                cooldown: 3200
             },
             "cyanide":{
                 size: 20,
@@ -227,7 +245,7 @@ g.game.init.push(function(){
             },
             "arrow":{
                 size: 30,
-                speed: 0.17,
+                speed: 0.37,
                 hp: 1,
                 color: 'rgba(255,255,0',
                 behavior: 'divebomb',
@@ -276,25 +294,25 @@ g.game.init.push(function(){
             var opacity = 1;
             var sparks, sparkAngle, sparkStart, sparkEnd;
             var cooldown, size, newColor;
-            g.ctx.shadowBlur = 5;
-            g.ctx.shadowOffsetX = 3;
-            g.ctx.shadowOffsetY = 3;
+            g.renderer.ctx.shadowBlur = 5;
+            g.renderer.ctx.shadowOffsetX = 3;
+            g.renderer.ctx.shadowOffsetY = 3;
             var thisenemy;
             for (var i = 0, keys = Object.keys(g.game.enemies.enemy), l = keys.length; i < l; ++i) {
                 thisenemy = g.game.enemies.enemy[keys[i]];
                 size = thisenemy.size;
                 if(thisenemy.status !== "dead") {
-                    g.ctx.shadowColor = shadowColor + '1)';
+                    g.renderer.ctx.shadowColor = shadowColor + '1)';
                     if(thisenemy.status !== "wounded") {
                         newColor = thisenemy.color + ",1)";
                     } else {
                         thisenemy.status = "alive";
                         newColor = "rgba(255,255,255,1)";
                     }
-                    if(g.ctx.fillStyle !== newColor) {
-                        g.ctx.fillStyle = newColor;
+                    if(g.renderer.ctx.fillStyle !== newColor) {
+                        g.renderer.ctx.fillStyle = newColor;
                     }
-                    g.ctx.fillRect(~~thisenemy.x - (size >> 1), ~~thisenemy.y - (size >> 1), size, size);
+                    g.renderer.ctx.fillRect(~~thisenemy.x - (size >> 1), ~~thisenemy.y - (size >> 1), size, size);
                 } else {
                     var thisEnemyColor = thisenemy.color;
                     if(thisenemy.cooldown === 100) {
@@ -306,29 +324,29 @@ g.game.init.push(function(){
                         delete g.game.enemies.enemy[keys[i]];
                     }
                     else {
-                        g.ctx.shadowColor = 'rgba(0,0,0,0)';
+                        g.renderer.ctx.shadowColor = 'rgba(0,0,0,0)';
                         if(cooldown > 95) {
                             sparks = 4;
-                            g.ctx.strokeStyle = 'rgba(255, 255, 0, 1)';
-                            g.ctx.lineWidth = 4;
-                            g.ctx.beginPath();
+                            g.renderer.ctx.strokeStyle = 'rgba(255, 255, 0, 1)';
+                            g.renderer.ctx.lineWidth = 4;
+                            g.renderer.ctx.beginPath();
                             sparkStart = Math.random() * (110 - cooldown);
                             sparkEnd = Math.random() * (240 - cooldown);
                             while(--sparks) {
                                 sparkAngle = ~~((Math.random() * 628) - 314);
-                                g.ctx.moveTo(~~(thisenemy.death.x + g.helpers.fS[sparkAngle] * sparkStart), ~~(thisenemy.death.y + g.helpers.fC[sparkAngle] * sparkStart));
-                                g.ctx.lineTo(~~(thisenemy.death.x + g.helpers.fS[sparkAngle] * sparkEnd), ~~(thisenemy.death.y + g.helpers.fC[sparkAngle] * sparkEnd));
+                                g.renderer.ctx.moveTo(~~(thisenemy.death.x + g.helpers.fS[sparkAngle] * sparkStart), ~~(thisenemy.death.y + g.helpers.fC[sparkAngle] * sparkStart));
+                                g.renderer.ctx.lineTo(~~(thisenemy.death.x + g.helpers.fS[sparkAngle] * sparkEnd), ~~(thisenemy.death.y + g.helpers.fC[sparkAngle] * sparkEnd));
                             }
-                            g.ctx.stroke();
-                            g.ctx.closePath();
+                            g.renderer.ctx.stroke();
+                            g.renderer.ctx.closePath();
                         }
                         cacheIndex = ~~ (thisenemy.angle * 100);
                         thisenemy.x += g.helpers.fS[cacheIndex] * (cooldown * 0.03);
                         thisenemy.y += g.helpers.fC[cacheIndex] * (cooldown * 0.03);
                         opacity = (cooldown / 100).toFixed(2);
-                        g.ctx.fillStyle = thisEnemyColor + "," + opacity + ")";
+                        g.renderer.ctx.fillStyle = thisEnemyColor + "," + opacity + ")";
                         size += ~~ (size * ((100 - cooldown) / 100));
-                        g.ctx.fillRect(~~thisenemy.x - (size >> 1), ~~thisenemy.y - (size >> 1), size, size);
+                        g.renderer.ctx.fillRect(~~thisenemy.x - (size >> 1), ~~thisenemy.y - (size >> 1), size, size);
                     }
                 }
             }

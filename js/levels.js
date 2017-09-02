@@ -1,23 +1,5 @@
 g.levels = {
     helpers: {
-        getEnemyTemplate: function(type) {
-            var thisType = g.game.enemies.types[type];
-            return {
-                size: thisType.size,
-                speed: thisType.speed,
-                hp: thisType.hp,
-                color: thisType.color,
-                behavior: thisType.behavior,
-                cooldown: thisType.cooldown,
-                status: "alive",
-                x: 0,
-                y: 0,
-                followers: 0,
-                follow: '',
-                angleAdjust: null,
-                adjustCooldown: null
-            };
-        },
         getRandomWallCoordinate: function() {
             var whichwall = ~~(Math.random() * 4);
             var returnCoordinate = { x: null, y: null };
@@ -48,7 +30,7 @@ g.levels = {
     },
     "ringers": function() {
         if (g.game.frame > Math.random() * 100) {
-            var newEnemy = g.levels.helpers.getEnemyTemplate("ringer-weak");
+            var newEnemy = g.game.enemies.getEnemyTemplate("ringer-weak");
             var newCoordinate = g.levels.helpers.getRandomWallCoordinate();
             newEnemy.x = newEnemy.oldX = newCoordinate.x;
             newEnemy.y = newEnemy.oldY = newCoordinate.y;
@@ -70,8 +52,9 @@ g.levels = {
             } else {
                 type = commons[~~(Math.random() * Math.min(~~g.game.frame, commons.length - 1))];
             }
+            // type = "little-red";
             // direct assignment instead of obj copy
-            var newEnemy = g.levels.helpers.getEnemyTemplate(type);
+            var newEnemy = g.game.enemies.getEnemyTemplate(type);
             var newCoordinate = g.levels.helpers.getRandomWallCoordinate();
             newEnemy.x = newEnemy.oldX = newCoordinate.x;
             newEnemy.y = newEnemy.oldY = newCoordinate.y;

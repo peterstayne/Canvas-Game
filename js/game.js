@@ -2,12 +2,12 @@ g.game = {
     score: 0,
     gameOn: false,
     paused: false,
-    frame: 0.7,
+    frame: 8,
     minusClock: 0,
     gameClock: Date.now(),
     init: [],
     preResetGame: function() {
-        g.ctx.shadowColor = 'rgba(0,0,0,0)';
+        g.renderer.ctx.shadowColor = 'rgba(0,0,0,0)';
         g.currentLevel = "survival";
         g.helpers.fS = [];
         for (var i = -g.helpers.fakeLimit; i < g.helpers.fakeLimit; i++) {
@@ -27,7 +27,7 @@ g.game = {
     resetGame: function() {
         g.game.gameClock = Date.now();
         g.game.score = 0;
-        g.game.frame = 1.9;
+        g.game.frame = 11.9;
         g.game.field.bgload();
         if(g.game.init.length) {
             for(var i = 0, il = g.game.init.length; i < il; i++){
